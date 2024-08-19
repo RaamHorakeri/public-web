@@ -23,7 +23,6 @@ module.exports = {
         'ml': '16px',
         'lg': '24px',
         'xl': '36px',
-        'round': '999px',
       },
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
