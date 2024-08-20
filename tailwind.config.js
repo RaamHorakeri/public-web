@@ -10,9 +10,11 @@ module.exports = {
       colors: {
         primary: '#7C56CF',
         'primary-100': '#F4F1FA',
+        'primary-1600':'#3B2174',
         alert: '#FF6F61',
         secondary: '#1A1A1A',
         'secondary-100': '#FAFAFA',
+        'secondary-1000':'#868686'
       },
       borderRadius: {
         'xxs': '2px',
