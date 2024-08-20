@@ -8,6 +8,9 @@ import {
 } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import Image from 'next/image';
+
+
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,12 +22,12 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white shadow">
-      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-        <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 p-1.5 flex items-center">
-            <img src="/path-to-logo/logo.png" alt="Logo" className="h-10 w-10 mr-3" />
-            <span className="text-xl font-semibold text-[#7C56CF]">Brand Name</span>
+    <header className="bg-white shadow h-[137px] p-[20px_60px_20px_60px] ">
+      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between  ">
+        <div className="flex lg:flex-1 w-[300px] h-[96.61px]">
+          <a href="/" className="-m-1.5 p-1.5 flex items-center gap-6">
+            <Image src="/images/headerIcon.png" width={80} height={96.61} alt="Logo" className=" mr-3" />
+            <span className="text-m font-semibold text-[#7C56CF] w-[198px] h-[38px] leading-m ">Brand Name</span>
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -37,26 +40,27 @@ export default function Header() {
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
           </button>
         </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
+        <PopoverGroup className="flex justify-between w-[857px] h-[48px] gap-[50px] items-center ">
           {['Home', 'Courses', 'Consultation', 'Community', 'Terms & Policy'].map((item) => (
             <Link
             href={`/features/${item.toLowerCase()}`}
               key={item}
               onClick={() => handleMenuItemClick(item)}
-              className={`text-sm font-semibold leading-6 ${activeItem === item ? 'text-[#7C56CF]' : 'text-[#868686]'}`}
+              className={`text-xs font-normal font-roboto leading-xs ${activeItem === item ? 'text-primary' : 'text-secondary-1000'}`}
             >
               {item}
             </Link>
           ))}
-        </PopoverGroup>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end flex space-x-4">
-          <Link href="/features/auth/login" className="text-sm px-4 py-2 text-[#7C56CF] border-2 border-[#7C56CF] rounded">
-            Log in
+           <div className="lg:flex  flex justify-between gap-[21px] w-[205px] h-[48px]">
+          <Link href="/features/auth/login" className=" text-center text-s font-normal leading-6 font-roboto flex justify-center items-center text-primary border border-primary rounded-m w-[102px] h-[48px] ">
+            Login
           </Link>
-          <Link href="/features/auth/signup"  className="text-sm px-4 py-2 bg-[#7C56CF] text-white rounded hover:bg-blue-700">
+          <Link href="/features/auth/signup"  className="text-center text-s font-normal leading-6 font-roboto flex justify-center items-center bg-[#7C56CF] text-white rounded-m w-[102px] h-[48px]">
             Sign Up
           </Link>
         </div>
+        </PopoverGroup>
+       
       </nav>
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
         <div className="fixed inset-0 z-10" />
