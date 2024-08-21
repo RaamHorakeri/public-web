@@ -52,10 +52,10 @@ export default function Header() {
             </Link>
           ))}
            <div className="lg:flex  flex justify-between gap-[21px] w-[205px] h-[48px]">
-          <Link href="/features/auth/login" className=" text-center text-s font-normal leading-6 font-roboto flex justify-center items-center text-primary border border-primary rounded-m w-[102px] h-[48px] ">
+          <Link href="/features/auth/login" className=" text-center text-s font-medium leading-6 font-roboto flex justify-center items-center text-primary border border-primary rounded-m w-[82px] h-[48px] ">
             Login
           </Link>
-          <Link href="/features/auth/signup"  className="text-center text-s font-normal leading-6 font-roboto flex justify-center items-center bg-[#7C56CF] text-white rounded-m w-[102px] h-[48px]">
+          <Link href="/features/auth/signup"  className="text-center text-s font-medium leading-6 font-roboto flex justify-center items-center bg-[#7C56CF] text-white rounded-m w-[102px] h-[48px]">
             Sign Up
           </Link>
         </div>
