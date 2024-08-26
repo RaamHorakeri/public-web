@@ -44,8 +44,8 @@ const page = () => {
 
       
       <div className="w-[520px] flex justify-between mb-[24px]">
-        <button className=" flex items-center justify-center space-x-2 w-[244px] h-[50px] rounded-3xl p-3 bg-white border border-[#B7B7B7]  "> <Image src="/images/google.png" width={20} height={20} alt='googleLogo' /> <span className="text-[#0A0A0B] text-xs font-roboto text-xs leading-[19.2px] font-normal ">Sign in with Google</span> </button>
-        <button className=" flex items-center justify-center space-x-2 w-[244px] h-[50px] rounded-3xl p-3 bg-white border border-[#B7B7B7]  "> <Image src="/images/Github.png" width={20} height={20} alt='googleLogo' /> <span className="text-[#0A0A0B] text-xs font-roboto text-xs leading-[19.2px] font-normal">Sign in with GitHub</span> </button>
+        <button className=" flex items-center justify-center space-x-2 w-[244px] h-[50px] rounded-3xl p-3 bg-white border border-[#B7B7B7]  "> <Image src="/images/google.png" width={20} height={20} alt='googleLogo' /> <span className="text-[#0A0A0B]  font-roboto text-xs leading-[19.2px] font-normal ">Sign in with Google</span> </button>
+        <button className=" flex items-center justify-center space-x-2 w-[244px] h-[50px] rounded-3xl p-3 bg-white border border-[#B7B7B7]  "> <Image src="/images/Github.png" width={20} height={20} alt='googleLogo' /> <span className="text-[#0A0A0B]  font-roboto text-xs leading-[19.2px] font-normal">Sign in with GitHub</span> </button>
       </div>
 
      
