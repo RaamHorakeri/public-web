@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 
-const page = () => {
+const Page = () => {
 
   const [open, setOpen] = useState(false)
 
@@ -127,4 +127,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
