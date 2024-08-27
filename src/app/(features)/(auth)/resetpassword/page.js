@@ -18,16 +18,16 @@ const Page = () => {
         <h1 className="w-[520px] h-[35px] mx-auto font-roboto font-bold text-m leading-[35.2px] text-center text-[#21272A]">
           Reset Password
         </h1>
-        <form onSubmit={handleSubmit} className="mt-[40px] flex flex-col items-center">
+        <form onSubmit={handleSubmit} className="mt-[40px] flex flex-col items-center gap-1">
           <label className="w-[520px] text-left font-roboto font-medium text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
             Create New Password
           </label>
-          <Input type='password' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+          <Input type='password'  />
 
           <label className="w-[520px] text-left font-roboto font-medium text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
             Confirm Password
           </label>
-                <Input type='password' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+                <Input type='password'  />
 
 
           <button
@@ -64,7 +64,7 @@ const Page = () => {
                       </div>
                       <div className="flex items-center justify-center px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                         <Link
-                        href='/features/auth/login'
+                        href='login'
                           type="button"
                           onClick={() => setOpen(false)}
                           className="flex w-[82px] h-[48px] rounded-md bg-white leading-[24px] items-center justify-center py-2 text-s font-medium text-primary border border-primary"

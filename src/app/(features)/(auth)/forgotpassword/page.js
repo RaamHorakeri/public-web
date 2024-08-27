@@ -9,12 +9,12 @@ const Page = () => {
                 <h1 className="w-[520px] h-[35px] mx-auto font-roboto font-bold text-m leading-[35.2px] text-center text-[#21272A]">
                     Forgot Password
                 </h1>
-                <form className="mt-[40px] flex flex-col items-center">
+                <form className="mt-[40px] flex flex-col items-center gap-1">
                  
                     <label className="w-[520px] text-left font-roboto font-medium text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
                         Enter Email to get OTP
                     </label>
-                    <Input type='text' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+                    <Input type='text'  />
 
                    
 
@@ -23,7 +23,7 @@ const Page = () => {
                         Enter OTP
                     </label>
                   
-                          <Input type='text' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+                          <Input type='text'  />
 
                     <div className="w-[520px] flex justify-end items-center mb-[24px]">
                         
@@ -33,7 +33,7 @@ const Page = () => {
 
 
 
-                    <Link href="/features/auth/resetpassword"><button className="w-[520px] h-[48px] bg-primary text-secondary-100 font-medium text-xs leading-[16px] mt-6">
+                    <Link href="/resetpassword"><button className="w-[520px] h-[48px] bg-primary text-secondary-100 font-medium text-xs leading-[16px] mt-6">
                         Next
                     </button></Link>
                 </form>

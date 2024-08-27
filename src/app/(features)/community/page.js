@@ -43,7 +43,7 @@ const Page = () => {
                     <div className="relative  w-[342px] h-[49px] mb-12">
                        
                               <Input type='text' placeholder="Search in Community"
-                            className=" px-4 py-2 border rounded w-[342px] h-[45px]" />
+                            className=" px-4 py-2 border" width='w-[342px]' height='h-[45px]' />
 
                         <button className="absolute right-0 top w[45.4px] h-[45.9px] ">
                             <Image src='/images/searchIcon.png' width={45} height={45} alt='searchIcon' />

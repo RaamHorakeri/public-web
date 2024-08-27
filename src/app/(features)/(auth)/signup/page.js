@@ -21,17 +21,17 @@ const Page = () => {
                 <h1 className="w-[520px] h-[35px] mx-auto font-roboto font-bold text-m leading-[35.2px] text-center text-[#21272A]">
                     Register
                 </h1>
-                <form onSubmit={handleSubmit} className="mt-[40px] flex flex-col items-center">
+                <form onSubmit={handleSubmit} className="mt-[40px] flex flex-col items-center gap-2">
 
                     <label className="w-[520px] text-left font-roboto font-normal text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
                         User Name
                     </label>
-                    <Input type='text' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+                    <Input type='text'  />
 
                     <label className="w-[520px] text-left font-roboto font-normal text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
                         Email
                     </label>
-                    <Input type='email' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+                    <Input type='email'  />
 
 
 
@@ -41,7 +41,7 @@ const Page = () => {
                                 Password
                             </label>
                           
-                                  <Input type='password' className='w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+                                  <Input type='password' width='w-[252px]' />
 
                         </div>
 
@@ -50,7 +50,7 @@ const Page = () => {
                                 Re Enter Password
                             </label>
                           
-                                  <Input type='password' className='w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+                                  <Input type='password' width='w-[252px]' />
 
                         </div>
                     </div>
@@ -109,7 +109,7 @@ const Page = () => {
                                                     Cancel
                                                 </Link>
                                                 <Link
-                                                    href='/features/auth/login'
+                                                    href='/login'
                                                     type="button"
                                                     onClick={() => setOpen(false)}
                                                     className="flex w-[74px] h-[48px] rounded-md bg-primary leading-[24px] items-center justify-center py-2 text-s font-medium text-secondary-100 border border-primary"

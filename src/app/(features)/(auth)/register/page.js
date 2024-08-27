@@ -10,14 +10,14 @@ const Page = () => {
     <h1 className="w-[520px] h-[35px] mx-auto font-roboto font-bold text-m leading-[35.2px] text-center text-[#21272A]">
       Personal Details
     </h1>
-    <form className="mt-[40px] flex flex-col items-center">
+    <form className="mt-[40px] flex flex-col items-center gap-2">
         <div className='flex justify justify-center gap-3 ' >
             <div className='flex flex-col ' >
             <label className="w-[252px] text-left font-roboto font-normal text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
         First Name
       </label>
      
-            <Input type='text' className='w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+            <Input type='text' width='w-[252px]' />
 
             </div>
       
@@ -26,7 +26,7 @@ const Page = () => {
        Last Name
       </label>
      
-            <Input type='text' className='w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+            <Input type='text' width='w-[252px]' />
 
             </div>
         </div>
@@ -36,7 +36,7 @@ const Page = () => {
         Phone
       </label>
      
-            <Input type='text' className='w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+            <Input type='text' width='w-[252px]' />
 
             </div>
       
@@ -45,7 +45,7 @@ const Page = () => {
        Email
       </label>
      
-            <Input type='text' className='w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+            <Input type='text' width='w-[252px]' />
 
             </div>
         </div>
@@ -55,7 +55,7 @@ const Page = () => {
         Qualification
       </label>
     
-            <Input type='text' className='w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+            <Input type='text' width='w-[252px]' />
 
             </div>
       
@@ -64,7 +64,7 @@ const Page = () => {
       Stream
       </label>
      
-            <Input type='text' className='w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+            <Input type='text' width='w-[252px]' />
 
             </div>
         </div>
@@ -73,13 +73,13 @@ const Page = () => {
       City/State/Country
       </label>
      
-            <Input type='text' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+            <Input type='text'  />
 
 
 
       
      
-     <Link href='/features/auth/signup' > <button className="w-[520px] h-[48px] bg-primary text-secondary-100 font-roboto font-medium text-xs leading-[16px] mt-6">
+     <Link href='/signup' > <button className="w-[520px] h-[48px] bg-primary text-secondary-100 font-roboto font-medium text-xs leading-[16px] mt-6">
 
         Next
       </button></Link>
