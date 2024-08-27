@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import Link from 'next/link';
+import Input from '@/components/Input';
 
 const Page = () => {
   const [open, setOpen] = useState(false)
@@ -21,19 +22,13 @@ const Page = () => {
           <label className="w-[520px] text-left font-roboto font-medium text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
             Create New Password
           </label>
-          <input
-            type="password"
-            className="w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none"
-            required
-          />
+          <Input type='password' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+
           <label className="w-[520px] text-left font-roboto font-medium text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
             Confirm Password
           </label>
-          <input
-            type="password"
-            className="w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none"
-            required
-          />
+                <Input type='password' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+
 
           <button
             type="submit"

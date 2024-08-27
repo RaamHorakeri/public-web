@@ -43,7 +43,7 @@ export default function Header() {
         <PopoverGroup className="flex justify-between w-[857px] h-[48px] gap-[50px] items-center ">
           {['Home', 'Courses', 'Consultation', 'Community', 'Terms & Policy'].map((item) => (
             <Link
-            href={`/features/${item.toLowerCase()}`}
+            href={`/${item.toLowerCase()}`}
               key={item}
               onClick={() => handleMenuItemClick(item)}
               className={`text-xs font-normal font-roboto leading-xs ${activeItem === item ? 'text-primary' : 'text-secondary-1000'}`}
@@ -52,10 +52,10 @@ export default function Header() {
             </Link>
           ))}
            <div className="lg:flex  flex justify-between gap-[21px] w-[205px] h-[48px]">
-          <Link href="/features/auth/login" className=" text-center text-s font-medium leading-6 font-roboto flex justify-center items-center text-primary border border-primary rounded-m w-[82px] h-[48px] ">
+          <Link href="/login" className=" text-center text-s font-medium leading-6 font-roboto flex justify-center items-center text-primary border border-primary rounded-m w-[82px] h-[48px] ">
             Login
           </Link>
-          <Link href="/features/auth/signup"  className="text-center text-s font-medium leading-6 font-roboto flex justify-center items-center bg-[#7C56CF] text-white rounded-m w-[102px] h-[48px]">
+          <Link href="/signup"  className="text-center text-s font-medium leading-6 font-roboto flex justify-center items-center bg-[#7C56CF] text-white rounded-m w-[102px] h-[48px]">
             Sign Up
           </Link>
         </div>
@@ -87,7 +87,7 @@ export default function Header() {
                    
                     key={item}
                     onClick={() => handleMenuItemClick(item)}
-                    href={`/features/${item.toLowerCase()}`}
+                    href={`/${item.toLowerCase()}`}
                     className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${activeItem === item ? 'text-[#7C56CF] bg-gray-50' : 'text-gray-900 hover:bg-gray-50'}`}
                   >
                     {item}
@@ -96,13 +96,13 @@ export default function Header() {
               </div>
               <div className="py-6">
                 <Link
-                  href="/features/auth/login"
+                  href="/login"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Log in
                 </Link>
                 <Link
-                  href="/features/auth/signup"
+                  href="/signup"
                   className="-mx-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                 >
                   Sign Up

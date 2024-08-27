@@ -1,9 +1,10 @@
 
 'use client'
+import Input from '@/components/Input';
 import Image from 'next/image';
 import React, { useState } from 'react'
 
-const page = () => {
+const Page = () => {
     const [showAnswers, setShowAnswers] = useState(false);
 
     const [showComments, setShowComments] = useState(false);
@@ -40,11 +41,10 @@ const page = () => {
                     <h3 className="text-s w-[63px] h-[24px] leading-[24px] font-roboto font-semibold mb-4">Search</h3>
                     <hr className="mb-4 border-[#B7B7B7] w-[399.02px]" />
                     <div className="relative  w-[342px] h-[49px] mb-12">
-                        <input
-                            type="text"
-                            placeholder="Search in Community"
-                            className=" px-4 py-2 border rounded w-[342px] h-[45px]"
-                        />
+                       
+                              <Input type='text' placeholder="Search in Community"
+                            className=" px-4 py-2 border rounded w-[342px] h-[45px]" />
+
                         <button className="absolute right-0 top w[45.4px] h-[45.9px] ">
                             <Image src='/images/searchIcon.png' width={45} height={45} alt='searchIcon' />
                         </button>
@@ -267,4 +267,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

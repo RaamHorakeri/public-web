@@ -4,9 +4,10 @@ import React, { useState } from 'react'
 
 import Image from 'next/image';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
+import Input from '@/components/Input';
 
 
-const page = () => {
+const Page = () => {
     const [open, setOpen] = useState(false)
 
     const handleSubmit = (event) => {
@@ -25,17 +26,13 @@ const page = () => {
                     <label className="w-[520px] text-left font-roboto font-normal text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
                         User Name
                     </label>
-                    <input
-                        type="text"
-                        className="w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none"
-                    />
+                    <Input type='text' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+
                     <label className="w-[520px] text-left font-roboto font-normal text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
                         Email
                     </label>
-                    <input
-                        type="email"
-                        className="w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none"
-                    />
+                    <Input type='email' className='w-[520px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+
 
 
                     <div className='flex justify justify-center gap-3 ' >
@@ -43,20 +40,18 @@ const page = () => {
                             <label className="w-[252px] text-left font-roboto font-normal text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
                                 Password
                             </label>
-                            <input
-                                type="text"
-                                className="w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none"
-                            />
+                          
+                                  <Input type='password' className='w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+
                         </div>
 
                         <div className='flex flex-col' >
                             <label className="w-[252px] text-left font-roboto font-normal text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
                                 Re Enter Password
                             </label>
-                            <input
-                                type="text"
-                                className="w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none"
-                            />
+                          
+                                  <Input type='password' className='w-[252px] h-[48px] p-[12px_16px] mb-[24px] border-b border-gray-400 outline-none' />
+
                         </div>
                     </div>
 
@@ -141,4 +136,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
