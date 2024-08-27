@@ -1,6 +1,6 @@
 import React from 'react'
 
-const page = () => {
+const Page = () => {
 
   const courseDetails = [
     { 
@@ -55,7 +55,7 @@ const page = () => {
     <a href="#" className="bg-primary text-secondary-100 text-s leading-[24px] font-medium font-roboto text-center border flex justify-center items-center rounded-m" style={{ width: '336px', height: '48px' }}>
     {card.cardButtons[1]}
     </a>
-    <a href={`/features/courses/${card.courseID}`} className="bg-white text-center text-primary text-s leading-[24px] font-roboto font-medium flex justify-center items-center rounded-m border  border-primary" style={{ width: '336px', height: '48px' }}>
+    <a href={`/courses/${card.courseID}`} className="bg-white text-center text-primary text-s leading-[24px] font-roboto font-medium flex justify-center items-center rounded-m border  border-primary" style={{ width: '336px', height: '48px' }}>
     {card.cardButtons[2]}
     </a>
   </div>
@@ -73,4 +73,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

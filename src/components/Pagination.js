@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image';
-import { useState } from 'react';
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
@@ -64,7 +63,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 disabled={currentPage === 1}
                 className="flex items-center justify-center text-white bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px]"
             >
-                <Image src='/images/left.png' width={12} height={12} />
+                <Image src='/images/left.png' alt='leftIcon' width={12} height={12} />
             </button>
 
             {renderPageNumbers()}
@@ -73,7 +72,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 disabled={currentPage === totalPages}
                 className="flex items-center justify-center text-white bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px] "
             >
-                <Image src='/images/right.png' width={12} height={12} />
+                <Image src='/images/right.png' alt='rightIcon' width={12} height={12} />
             </button>
         </div>
     );
