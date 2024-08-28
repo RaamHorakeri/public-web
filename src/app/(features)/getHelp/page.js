@@ -1,9 +1,28 @@
 
 'use client'
 import React, { useState } from 'react';
-import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Image from 'next/image';
 import Input from '@/components/Input';
+import Modal from './Modal';
+
+
+const expertData = [
+    {
+        name: "John Doe",
+        description: "Acquire a profound understanding of Java programming, encompassing vital concepts such as object-oriented programming, data structures, and algorithms.",
+        id: 1,
+    },
+    {
+        name: "John Doe",
+        description: "Acquire a profound understanding of Java programming, encompassing vital concepts such as object-oriented programming, data structures, and algorithms.",
+        id: 2,
+    },
+    {
+        name: "John Doe",
+        description: "Acquire a profound understanding of Java programming, encompassing vital concepts such as object-oriented programming, data structures, and algorithms.",
+        id: 3,
+    }
+];
 
 
 const Page = () => {
@@ -32,23 +51,7 @@ const Page = () => {
 
     }
 
-    const expertData = [
-        {
-            name: "John Doe",
-            description: "Acquire a profound understanding of Java programming, encompassing vital concepts such as object-oriented programming, data structures, and algorithms.",
-            id: 1,
-        },
-        {
-            name: "John Doe",
-            description: "Acquire a profound understanding of Java programming, encompassing vital concepts such as object-oriented programming, data structures, and algorithms.",
-            id: 2,
-        },
-        {
-            name: "John Doe",
-            description: "Acquire a profound understanding of Java programming, encompassing vital concepts such as object-oriented programming, data structures, and algorithms.",
-            id: 3,
-        }
-    ];
+
 
     return (
         <div className='bg-secondary-100 h-[100%]  flex flex-col gap-20 '>
@@ -83,7 +86,7 @@ const Page = () => {
                             </div>
 
                             <div className='flex h-[202px] w-[317px] flex-col justify-center items-center gap-2 '>
-                            <Image src='/images/edit-2.png' width={24} height={24} alt='editIcon' />
+                                <Image src='/images/edit-2.png' width={24} height={24} alt='editIcon' />
                                 <h3 className="font-semibold mb-2">Write and Edit</h3>
                                 <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">Write a tweet about global warming</div>
                                 <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">Write a poem about flower and love</div>
@@ -92,7 +95,7 @@ const Page = () => {
                             </div>
 
                             <div className=' flex h-[202px] w-[317px] flex-col justify-center items-center gap-2 '>
-                            <Image src='/images/translate.png' width={28} height={28} alt='translateIcon' />
+                                <Image src='/images/translate.png' width={28} height={28} alt='translateIcon' />
                                 <h3 className="font-semibold mb-2">Translate</h3>
                                 <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">How do you say “how are you” in korean?</div>
                                 <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">Write a poem about flower and love</div>
@@ -117,13 +120,13 @@ const Page = () => {
                                 onClick={handleSendMessage}
                                 className="ml-2 absolute  text-white p-2 rounded-full  right-0 top w[45.4px] h-[45.9px]"
                             >
-                                <Image src="/images/send.png" alt='sendIcon' width={24} height={24}  />
+                                <Image src="/images/send.png" alt='sendIcon' width={24} height={24} />
                             </button>
                         </div>
                     </div>
 
 
-                   
+
                 </div>
             </section>
 
@@ -147,64 +150,8 @@ const Page = () => {
             </section>
 
             {open && (
-                  <Dialog open={open} onClose={setOpen} className="relative z-10 ">
-                  <DialogBackdrop
-                      transition
-                      className="fixed  inset-0 bg-gray-500 bg-opacity-75  transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
-                  />
-                  <div className="fixed inset-0 z-10 w-screen ">
-                      <div className="flex min-h-full items-end justify-center p-4 text-center  sm:items-center  sm:p-0">
-                          <DialogPanel
-                              transition
-                              className="relative transform overflow-hidden w-[839px] h-[629px] p-[80px] bg-white text-center shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
-                          >
-                              <div className="bg-white flex items-center justify-center ">
-                                  <div className="flex items-center justify-center ">
-
-                                      <div className=" text-center flex flex-col justify-center items-center  ">
-                                            {isSubmitted ? (
-
-                                                <p className="text-center bg-secondary-100 w-[382px] h-[135px] py-[25px] px-[6px] font-roboto font-bold text-[15.3px] leading-[28px] text-[#21272A]">
-                                                    Submitted Successfully<br />
-                                                    We will get back to you<br />
-                                                    Thank you
-                                                </p>
-                                            ) : (
-
-                                                <>
-                                                    <div className="flex items-center justify-center h-[35px] w-[697px] text-m text-[#21272A] font-roboto font-bold leading-[35.2px] ">
-                                                        <h1 className='mb-5'>Schedule With John Doe</h1>
-                                                    </div>
-                                                    <form className="mt-[40px] flex flex-col items-center  p-[40px] border border-[#DDE1E6] ">
-                                                        <label className="w-[520px] text-left font-roboto font-medium text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
-                                                            Name
-                                                        </label>
-                                                       
-                                                        <Input type='text' className='bg-[#F2F4F8] mb-[24px]' placeholder='Name' />
-                                                        <label className="w-[520px] text-left font-roboto font-medium text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
-                                                            Date & Time
-                                                        </label>
-                                                        <Input type='datetime-local' className='bg-[#F2F4F8] mb-[24px]' placeholder='Name' />
-                                                        <label className="w-[520px] text-left font-roboto font-medium text-[14px] mb-2 leading-[19.6px] text-[#21272A]">
-                                                            Email
-                                                        </label>
-                                                        <Input type='email' className='bg-[#F2F4F8] mb-[24px]' placeholder='Email' />
-                                                        <button
-                                                            onClick={handleScheduleSubmit}
-                                                            className="w-[520px] h-[48px] bg-primary text-secondary-100 rounded-[10px] font-medium text-xs leading-[16px] mt-6"
-                                                        >
-                                                            Submit
-                                                        </button>
-                                                    </form>
-                                                </>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            </DialogPanel>
-                        </div>
-                    </div>
-                </Dialog>
+               
+                <Modal open={open} setOpen={setOpen} handleScheduleSubmit={handleScheduleSubmit} isSubmitted={isSubmitted} />
             )}
         </div>
     );
