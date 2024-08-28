@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Input from '@/components/Input';
-import Modal from '../../../components/Modal/Schedulemodal';
+import ScheduleModal from '@/components/getHelp/ScheduleModal';
 
 
 const expertData = [
@@ -151,7 +151,7 @@ const Page = () => {
 
             {open && (
                
-                <Modal open={open} setOpen={setOpen} handleScheduleSubmit={handleScheduleSubmit} isSubmitted={isSubmitted} />
+                <ScheduleModal open={open} setOpen={setOpen} handleScheduleSubmit={handleScheduleSubmit} isSubmitted={isSubmitted} />
             )}
         </div>
     );

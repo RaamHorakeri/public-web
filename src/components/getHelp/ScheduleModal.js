@@ -3,7 +3,7 @@ import React from 'react'
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 
  
- const Modal = ({ open,setOpen,handleScheduleSubmit,isSubmitted }) => {
+ const ScheduleModal = ({ open,setOpen,handleScheduleSubmit,isSubmitted }) => {
    return (
      <div>
           <Dialog open={open} onClose={setOpen} className="relative z-10 ">
@@ -68,4 +68,4 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
    )
  }
  
- export default Modal
+ export default ScheduleModal
