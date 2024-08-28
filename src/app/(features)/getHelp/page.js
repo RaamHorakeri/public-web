@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Input from '@/components/Input';
-import Modal from './Modal';
+import Modal from '../../../components/Modal/Schedulemodal';
 
 
 const expertData = [
