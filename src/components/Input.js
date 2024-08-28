@@ -15,7 +15,7 @@ const Input = ({type = 'text',
       <input
         type={type}
         placeholder={placeholder}
-       
+       onChange={onChange}
        
         className= {`p-[12px_16px]  border-b border-gray-400 outline-none ${width} ${height}  ${className}`}
         id={id}
