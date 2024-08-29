@@ -1,0 +1,48 @@
+name: react-iam projectt
+on: 
+  push:
+    branches:
+      - sree/VIR-71/Public-web-Automated-CICD
+     
+      
+  pull_request:
+    branches:
+      - sree/VIR-71/Public-web-Automated-CICD    
+   
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+     
+      - name: Build project
+        run: npm run build
+
+     
+
+      - name: build the docker image
+        run: |
+          docker rmi -f react-iam:latest | true
+          docker build -t react-iam:latest .
+
+      - name: build the docker image container
+        run: |
+          docker rm -f my-container | true
+          docker run -d -p 3000:3000 --name my-container react-iam:latest
+
+      - name: Deploy to DigitalOcean
+        uses: digitalocean/app_action/@main
+        with:
+          app_name: my_react_app
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
