@@ -1,7 +1,7 @@
 import Pagination from "@/components/Pagination";
 import Link from "next/link";
 import { getAllQuestions } from "@/api/community";
-import NavlinkSearch from "@/components/NavLinkSearch";
+import NavlinkSearch from "@/components/community/NavLinkSearch";
 
 const page = async () => {
   const featuredQuestions = await getAllQuestions();
