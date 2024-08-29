@@ -49,7 +49,7 @@ const Page = () => {
     </p>
   </div>
   <div className=" flex flex-col items-center justify-around gap-4 " style={{ width: '336px', height: '204px' }}>
-    <a href="#" className="bg-white text-center text-primary leading-[24px] text-s font-roboto font-medium flex justify-center items-center rounded-m border  border-primary" style={{ width: '336px', height: '48px' }}>
+    <a href="/getHelp" className="bg-white text-center text-primary leading-[24px] text-s font-roboto font-medium flex justify-center items-center rounded-m border  border-primary" style={{ width: '336px', height: '48px' }}>
      {card.cardButtons[0]}
     </a>
     <a href="#" className="bg-primary text-secondary-100 text-s leading-[24px] font-medium font-roboto text-center border flex justify-center items-center rounded-m" style={{ width: '336px', height: '48px' }}>
