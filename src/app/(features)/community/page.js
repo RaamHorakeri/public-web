@@ -1,6 +1,7 @@
 "use client";
 import Input from "@/components/Input";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const Page = () => {
@@ -9,6 +10,7 @@ const Page = () => {
   const [showComments, setShowComments] = useState(false);
   const [showCommentForm, setShowCommentForm] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
+  const [acceptedAnswer, setAcceptedAnswer] = useState(false);
 
   const handleMenuItemClick = (item) => {
     setActiveItem(item);
@@ -78,9 +80,12 @@ const Page = () => {
             <p className="text-[14px] text-[#000000] font-normal font-roboto leading-[14.4px] w-[168px]  h-[14px] ">
               Updated on March 1, 2024
             </p>
-            <button className=" font-normal text-xs leading-[19.2px] bg-secondary-100 text-[#0A0A0B] font-roboto  rounded-[22px] border border-primary p-[10px] w-[200px] h-[50px] ">
-              Ask a Question
-            </button>
+            <Link href="/community/askQuestion">
+              {" "}
+              <button className=" font-normal text-xs leading-[19.2px] bg-secondary-100 text-[#0A0A0B] font-roboto  rounded-[22px] border border-primary p-[10px] w-[200px] h-[50px] ">
+                Ask a Question
+              </button>{" "}
+            </Link>
           </div>
 
           {/* Main Section */}
