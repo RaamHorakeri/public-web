@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Page = () => {
@@ -63,40 +64,40 @@ const Page = () => {
               className=" flex flex-col items-center justify-around gap-4 "
               style={{ width: "336px", height: "204px" }}
             >
-              <a
+              <Link
                 href="/getHelp"
                 className="bg-white text-center text-primary leading-[24px] text-s font-roboto font-medium flex justify-center items-center rounded-m border  border-primary"
                 style={{ width: "336px", height: "48px" }}
               >
                 {card.cardButtons[0]}
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/enroll"
                 className="bg-primary text-secondary-100 text-s leading-[24px] font-medium font-roboto text-center border flex justify-center items-center rounded-m"
                 style={{ width: "336px", height: "48px" }}
               >
                 {card.cardButtons[1]}
-              </a>
-              <a
+              </Link>
+              <Link
                 href={`/courses/${card.courseID}`}
                 className="bg-white text-center text-primary text-s leading-[24px] font-roboto font-medium flex justify-center items-center rounded-m border  border-primary"
                 style={{ width: "336px", height: "48px" }}
               >
                 {card.cardButtons[2]}
-              </a>
+              </Link>
             </div>
           </div>
         ))}
       </section>
 
       <div className="flex justify-center">
-        <a
+        <Link
           href="#"
           className="bg-primary text-secondary-100 py-3 px-4 rounded-m font-roboto text-s leading-6 font-medium text-center mt-11 mb-32"
           style={{ width: "179px", height: "48px" }}
         >
           View More
-        </a>
+        </Link>
       </div>
     </div>
   );

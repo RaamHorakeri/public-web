@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Home() {
@@ -30,18 +31,18 @@ export default function Home() {
           learning experiences.
         </p>
         <div className="flex gap-5 mt-4">
-          <a
+          <Link
             href="#"
             className="bg-primary-100 text-primary font-medium text-s flex justify-center items-center leading-6 rounded-m border border-primary w-[138px] h-[48px]"
           >
             Get Started
-          </a>
-          <a
+          </Link>
+          <Link
             href="/enroll"
             className="bg-primary font-medium text-secondary-100 border text-s flex justify-center items-center leading-6 rounded-m w-[129px] h-[48px]"
           >
             Enroll Now
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -90,40 +91,40 @@ export default function Home() {
               className=" flex flex-col items-center justify-around gap-4 "
               style={{ width: "336px", height: "204px" }}
             >
-              <a
+              <Link
                 href="/getHelp"
                 className="bg-white text-center text-primary leading-[24px] text-s font-roboto font-medium flex justify-center items-center rounded-m border  border-primary"
                 style={{ width: "336px", height: "48px" }}
               >
                 {card.cardButtons[0]}
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/enroll"
                 className="bg-primary text-secondary-100 text-s leading-[24px] font-medium font-roboto text-center border flex justify-center items-center rounded-m"
                 style={{ width: "336px", height: "48px" }}
               >
                 {card.cardButtons[1]}
-              </a>
-              <a
+              </Link>
+              <Link
                 href={`/courses/${card.courseId}`}
                 className="bg-white text-center text-primary text-s leading-[24px] font-roboto font-medium flex justify-center items-center rounded-m border  border-primary"
                 style={{ width: "336px", height: "48px" }}
               >
                 {card.cardButtons[2]}
-              </a>
+              </Link>
             </div>
           </div>
         ))}
       </section>
 
       <div className="flex justify-center">
-        <a
+        <Link
           href="/courses"
           className="bg-primary text-secondary-100 py-3 px-4 rounded-m font-roboto text-s leading-6 font-medium text-center mt-11 mb-32"
           style={{ width: "179px", height: "48px" }}
         >
           View More
-        </a>
+        </Link>
       </div>
 
       <section className=" h-[452px] flex flex-col justify-center items-center text-center gap-10 ">
@@ -137,13 +138,13 @@ export default function Home() {
           potenti. Amet non sed eget
         </p>
         <div className="flex justify-center">
-          <a
+          <Link
             href="/community"
             className="bg-primary text-secondary-100 py-3 px-4 rounded-m font-roboto text-s leading-6 font-medium text-center mt-11 mb-32"
             style={{ width: "179px", height: "48px" }}
           >
             View More
-          </a>
+          </Link>
         </div>
       </section>
     </>
