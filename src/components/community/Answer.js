@@ -17,8 +17,8 @@ export default function Answer({ answer }) {
 
   const getComments = async () => {
     let comments = await getAnswerComments(answer.id);
-    comments = isEmptyObject(comments) ? [] : comments;
-    setComments(comments);
+    comments = isEmptyObject(comments.result) ? [] : comments;
+    setComments(comments.result);
   };
   const showCommentsHandler = async () => {
     if (!showComments) {

@@ -7,25 +7,35 @@ export const getAllQuestions = async (limit = 10, offset = 0, sort = "asc") => {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   return response.json();
 };
 
 export const getTags = async (limit = 10, offset = 0, sort = "asc") => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/questions?limit=${limit}&offset=${offset}&sort=${sort}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
-        "Content-Type": "application/json",
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/community/tags?limit=${limit}&offset=${offset}&sort=${sort}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+          "Content-Type": "application/json",
+        },
       },
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `Error ${response.status}: ${errorData.message || "Failed to fetch tags"}`,
+      );
     }
-  );
-
-  return response.json();
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching tags:", error);
+    return { error: error.message || "An unknown error occurred" };
+  }
 };
 
 export const getQuestion = async (id) => {
@@ -38,7 +48,7 @@ export const getQuestion = async (id) => {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   return response.json();
@@ -48,7 +58,7 @@ export const getQuestionAnswers = async (
   id,
   limit = 10,
   offset = 0,
-  sort = "asc"
+  sort = "asc",
 ) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${id}/answers?limit=${limit}&offset=${offset}&sort=${sort}`,
@@ -58,7 +68,7 @@ export const getQuestionAnswers = async (
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   return response.json();
@@ -68,7 +78,7 @@ export const getAnswerComments = async (
   answerId,
   limit = 10,
   offset = 0,
-  sort = "asc"
+  sort = "asc",
 ) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/community/answers/${answerId}/comments?limit=${limit}&offset=${offset}&sort=${sort}`,
@@ -78,7 +88,7 @@ export const getAnswerComments = async (
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   return response.json();
@@ -88,7 +98,7 @@ export const getQuestionComments = async (
   questionId,
   limit = 10,
   offset = 0,
-  sort = "asc"
+  sort = "asc",
 ) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${questionId}/comments?limit=${limit}&offset=${offset}&sort=${sort}`,
@@ -98,7 +108,7 @@ export const getQuestionComments = async (
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   return response.json();
@@ -116,7 +126,7 @@ export const postAnswerComment = async (content, answerId) => {
       body: JSON.stringify({
         body: content,
       }),
-    }
+    },
   );
   return response;
 };
@@ -133,7 +143,7 @@ export const postQuestionComment = async (content, questionId) => {
       body: JSON.stringify({
         body: content,
       }),
-    }
+    },
   );
   return response;
 };
@@ -150,7 +160,7 @@ export const postAnswer = async (content, questionId) => {
       body: JSON.stringify({
         body: content,
       }),
-    }
+    },
   );
   return response;
 };
@@ -164,10 +174,8 @@ export const postQuestion = async (content) => {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        body: content,
-      }),
-    }
+      body: JSON.stringify(content),
+    },
   );
   return response;
 };
@@ -181,7 +189,7 @@ export const upVoteAnswer = async (answerId) => {
         accept: "application/json",
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
       },
-    }
+    },
   );
   return response.json();
 };
@@ -194,7 +202,7 @@ export const downVoteAnswer = async (answerId) => {
         accept: "application/json",
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
       },
-    }
+    },
   );
   return response.json();
 };

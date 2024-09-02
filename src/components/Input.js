@@ -17,6 +17,7 @@ const Input = ({
       type={type}
       placeholder={placeholder}
       onChange={onChange}
+      value={value}
       className={`p-[12px_16px]  border-b border-gray-400 outline-none ${width} ${height}  ${className}`}
       id={id}
       {...props}
