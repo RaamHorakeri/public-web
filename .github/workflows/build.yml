@@ -2,12 +2,12 @@ name: react-iam projectt
 on: 
   push:
     branches:
-      - sree/VIR-71/PublicWebCICD
+      - sree/VIR-71/publicWebCICD
      
       
   pull_request:
     branches:
-      - sree/VIR-71/PublicWebCICD   
+      - sree/VIR-71/publicWebCICD   
    
 jobs:
   build:
