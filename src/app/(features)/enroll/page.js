@@ -1,4 +1,5 @@
 import Input from "@/components/Input";
+import Link from "next/link";
 import React from "react";
 
 const Page = () => {
@@ -93,9 +94,12 @@ const Page = () => {
                 15000
               </td>
               <td className="px-4 py-2 text-[#626262] font-roboto font-normal text-xs leading-[19.2px]">
-                <button className="bg-secondary-100 border font-roboto font-medium text-xs leading-[19.2px] border-primary text-primary px-4 py-2 rounded">
-                  Register
-                </button>
+                <Link href="/register">
+                  {" "}
+                  <button className="bg-secondary-100 border font-roboto font-medium text-xs leading-[19.2px] border-primary text-primary px-4 py-2 rounded">
+                    Register
+                  </button>
+                </Link>
               </td>
             </tr>
           </tbody>
