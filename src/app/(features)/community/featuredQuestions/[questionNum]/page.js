@@ -13,6 +13,7 @@ import Answer from "@/components/community/Answer";
 import Comment from "@/components/community/Comment";
 import { isEmptyObject } from "@/utils";
 import Spinner from "@/components/spinner";
+import { useMemo } from "react";
 
 const Page = () => {
   const params = useParams();
@@ -22,12 +23,16 @@ const Page = () => {
 
   useEffect(() => {
     getQuestionDetails();
-  }, [questionId]);
+  }, [questionId, getQuestionDetails]);
 
-  const getQuestionDetails = async () => {
+  const getQuestionDetails = useMemo(async () => {
     const question = await getQuestion(questionId);
     setQuestion(question);
-  };
+  }, [questionId]);
+  // const getQuestionDetails = async () => {
+  //   const question = await getQuestion(questionId);
+  //   setQuestion(question);
+  // };
 
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
