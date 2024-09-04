@@ -39,7 +39,6 @@ export const getTags = async (limit = 10, offset = 0, sort = "asc") => {
 };
 
 export const getQuestion = async (id) => {
-  // 'use client'
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${id}`,
     {
