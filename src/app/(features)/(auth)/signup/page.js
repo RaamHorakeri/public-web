@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import Input from "@/components/Input";
 import TwoFA from "@/components/TwoFa";
-import { signUp, signUpTwoFa } from "@/api/community";
+import { signUp, signUpTwoFa } from "@/api/auth";
 
 const defaultErrorMsg = {
   username: null,

@@ -6,7 +6,7 @@ import Input from "@/components/Input";
 import { useRouter } from "next/navigation";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import TwoFA from "@/components/TwoFa";
-import { authenticate, twoFaAuthenticate } from "@/api/community";
+import { authenticate, twoFaAuthenticate } from "@/api/auth";
 
 const defaultErrorMsg = {
   email: null,
@@ -43,7 +43,6 @@ const Page = () => {
       const response = await authenticate(email, password);
       if (response.ok) {
         const data = await response.json();
-        console.log("Login successful:", data);
         if (response.status == 202) {
           setActivationId(data.activation_id);
           setOpenTwoFa(true);
