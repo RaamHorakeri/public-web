@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import Input from "@/components/Input";
 import TwoFA from "@/components/TwoFa";
+import { signUp, signUpTwoFa } from "@/api/community";
 
 const defaultErrorMsg = {
   username: null,
@@ -52,17 +53,7 @@ const Page = () => {
     };
 
     try {
-      const response = await fetch(
-        "http://localhost:3050/api/v1/account/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        },
-      );
-
+      const response = await signUp(formData);
       if (response.ok) {
         const data = await response.json();
         setActivationId(data.activation_id);
@@ -81,19 +72,7 @@ const Page = () => {
 
   const onSubmitTwoFa = async (code) => {
     try {
-      const response = await fetch(
-        "http://localhost:3050/api/v1/account/register/activation",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            activation_id: activationId,
-            activation_code: code,
-          }),
-        },
-      );
+      const response = await signUpTwoFa(activationId, code);
 
       if (response.ok) {
         const { access_token, refresh_token, expiry } = await response.json();
@@ -310,7 +289,7 @@ const Page = () => {
                           Cancel
                         </Link>
                         <Link
-                          href="/login"
+                          href="/"
                           type="button"
                           onClick={() => setOpen(false)}
                           className="flex w-[74px] h-[48px] rounded-md bg-primary leading-[24px] items-center justify-center py-2 text-s font-medium text-secondary-100 border border-primary"

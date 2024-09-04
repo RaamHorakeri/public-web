@@ -79,7 +79,7 @@ const Page = () => {
       console.log(formData);
       const res = await postQuestion(formData);
       if (res.ok) {
-        router.push("/community");
+        router.push("/community/featuredQuestions");
       }
     }
   };

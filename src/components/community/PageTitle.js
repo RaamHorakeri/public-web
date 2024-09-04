@@ -2,7 +2,6 @@
 import { usePathname } from "next/navigation";
 export default function PageTitle() {
   const pathname = usePathname();
-  console.log(pathname);
   function getTitleAndPath(input) {
     switch (input) {
       case "/community/featuredQuestions":
@@ -26,7 +25,6 @@ export default function PageTitle() {
   }
 
   const result = getTitleAndPath(pathname);
-  console.log(result);
 
   return (
     <section className="bg-[url('/images/bg1.png')] py-0 px-[87px] h-[320px] bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center gap-6">

@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Input from "@/components/Input";
 import { useRouter } from "next/navigation";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import TwoFA from "@/components/TwoFa";
+import { authenticate, twoFaAuthenticate } from "@/api/community";
 
 const defaultErrorMsg = {
   email: null,
@@ -13,6 +16,9 @@ const Page = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(defaultErrorMsg);
+  const [openTwoFa, setOpenTwoFa] = useState(false);
+  const [activationId, setActivationId] = useState("");
+
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -34,25 +40,39 @@ const Page = () => {
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:3050/api/v1/account/authenticate",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        },
-      );
+      const response = await authenticate(email, password);
       if (response.ok) {
         const data = await response.json();
         console.log("Login successful:", data);
-        router.push("/");
+        if (response.status == 202) {
+          setActivationId(data.activation_id);
+          setOpenTwoFa(true);
+        } else {
+          router.push("/");
+        }
       } else {
         const errorData = await response.json();
 
         setErrorMessage(errorData.message || "login failed. Please try again.");
         console.error("Login failed:", data.error);
+      }
+    } catch (error) {
+      setErrorMessage("An error occurred. Please try again later.");
+      console.error("Error:", error);
+    }
+  };
+
+  const onSubmitTwoFa = async (code) => {
+    try {
+      const response = await twoFaAuthenticate(activationId, code);
+
+      if (response.ok) {
+        const { access_token, refresh_token, expiry } = await response.json();
+        setOpenTwoFa(false);
+        router.push("/");
+      } else {
+        const data = await response.json();
+        throw new Error(data.error || "something went wrong");
       }
     } catch (error) {
       setErrorMessage("An error occurred. Please try again later.");
@@ -189,6 +209,31 @@ const Page = () => {
           </button>
         </form>
       </div>
+      {openTwoFa && (
+        <Dialog
+          open={openTwoFa}
+          onClose={setOpenTwoFa}
+          className="relative z-10"
+        >
+          <DialogBackdrop
+            transition
+            className="fixed inset-0 bg-gray-500 bg-opacity-75  transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+          />
+
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center  sm:items-center  sm:p-0">
+              <DialogPanel
+                transition
+                className="rounded-md relative transform overflow-hidden w-[839px] h-[370px]  text-center shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
+              >
+                <div className="bg-[#F3F3F3] flex items-center justify-center rounded-md">
+                  <TwoFA onSubmitTwoFa={onSubmitTwoFa} />
+                </div>
+              </DialogPanel>
+            </div>
+          </div>
+        </Dialog>
+      )}
     </section>
   );
 };
