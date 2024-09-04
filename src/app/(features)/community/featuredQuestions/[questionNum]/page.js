@@ -20,19 +20,14 @@ const Page = () => {
   const textareaRef = useRef(null);
   const commentTextRef = useRef(null);
 
-  useEffect(() => {
-    getQuestionDetails();
-  }, [questionId, getQuestionDetails]);
-
   const getQuestionDetails = useCallback(async () => {
     const question = await getQuestion(questionId);
     setQuestion(question);
   }, [questionId]);
 
-  // const getQuestionDetails = async () => {
-  //   const question = await getQuestion(questionId);
-  //   setQuestion(question);
-  // };
+  useEffect(() => {
+    getQuestionDetails();
+  }, [questionId, getQuestionDetails]);
 
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
