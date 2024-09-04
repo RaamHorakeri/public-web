@@ -1,4 +1,4 @@
-name: react-iam projectt
+name: react-iam project
 on: 
   push:
     branches:
