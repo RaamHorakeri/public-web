@@ -1,6 +1,11 @@
-export const getAllQuestions = async (limit = 10, offset = 0, sort = "asc") => {
+export const getAllQuestions = async (
+  limit = 10,
+  offset = 0,
+  sort = "asc",
+  query = "",
+) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/questions?limit=${limit}&offset=${offset}&sort=${sort}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/community/questions?limit=${limit}&offset=${offset}&sort=${sort}&query=${query}`,
     {
       method: "GET",
       headers: {
@@ -39,7 +44,6 @@ export const getTags = async (limit = 10, offset = 0, sort = "asc") => {
 };
 
 export const getQuestion = async (id) => {
-  // 'use client'
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${id}`,
     {

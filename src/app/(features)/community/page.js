@@ -1,8 +1,5 @@
 "use client";
-
-import Input from "@/components/Input";
 import Pagination from "@/components/Pagination";
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
