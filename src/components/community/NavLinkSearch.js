@@ -1,5 +1,24 @@
+"use client";
+
 import Image from "next/image";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+
 export default function NavlinkSearch() {
+  const searchParams = useSearchParams();
+  const pathName = usePathname();
+  const { replace } = useRouter();
+
+  const handleSearch = (query) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", "1");
+    if (query) {
+      params.set("query", query);
+    } else {
+      params.delete("query");
+    }
+    replace(`${pathName}?${params.toString()}`);
+  };
+
   return (
     <>
       <div className="w-[399.02px] h-[285.9px] gap-[48px] ">
@@ -10,6 +29,9 @@ export default function NavlinkSearch() {
         <div className="relative mb-4 w-[342px] h-[49px]">
           <input
             type="text"
+            onChange={(e) => {
+              handleSearch(e.target.value);
+            }}
             placeholder="Search in Community"
             className="w-full px-4 py-2 border rounded h-[45px] outline-none"
           />

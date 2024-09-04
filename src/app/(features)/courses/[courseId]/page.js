@@ -36,7 +36,7 @@ const Page = () => {
               </h3>
               <p className="w-[813px] h-[120px] text-left font-roboto font-regular text-[16px] text-[#868686] leading-[30px] mt-[20px]">
                 The Java Software Engineering program is structured to guide you
-                from a beginner level to a professional level. You will start
+                from a beginner level to a professional level. You&apos;ll start
                 with basic Java programming concepts and progress to advanced
                 topics and real-world applications. Each module includes
                 hands-on projects, quizzes, and assessments to reinforce your
