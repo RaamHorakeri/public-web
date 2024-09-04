@@ -139,7 +139,7 @@ export default function Home() {
         </p>
         <div className="flex justify-center">
           <Link
-            href="/community"
+            href="/community/featuredQuestions"
             className="bg-primary text-secondary-100 py-3 px-4 rounded-m font-roboto text-s leading-6 font-medium text-center mt-11 mb-32"
             style={{ width: "179px", height: "48px" }}
           >

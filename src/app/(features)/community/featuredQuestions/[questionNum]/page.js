@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
@@ -20,14 +20,14 @@ const Page = () => {
   const textareaRef = useRef(null);
   const commentTextRef = useRef(null);
 
-  useEffect(() => {
-    getQuestionDetails();
-  }, [questionId]);
-
-  const getQuestionDetails = async () => {
+  const getQuestionDetails = useCallback(async () => {
     const question = await getQuestion(questionId);
     setQuestion(question);
-  };
+  }, [questionId]);
+
+  useEffect(() => {
+    getQuestionDetails();
+  }, [questionId, getQuestionDetails]);
 
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
@@ -72,7 +72,7 @@ const Page = () => {
     const content = textareaRef.current.value;
     await postAnswer(content, questionId);
     const answers = await getQuestionAnswers(questionId);
-    isEmptyObject(answers) ? setAnswers([]) : setAnswers(answers);
+    isEmptyObject(answers.result) ? setAnswers([]) : setAnswers(answers.result);
     setShowAnswerForm(false);
     handleShowAnswers("Show Answers");
     setButtonLoader(false);
