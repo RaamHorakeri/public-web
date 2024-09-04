@@ -1,25 +1,22 @@
 import Pagination from "@/components/Pagination";
 import Link from "next/link";
 import { getAllQuestions } from "@/api/community";
-import NavlinkSearch from "@/components/community/NavLinkSearch";
 
-const page = async () => {
-  const featuredQuestions = await getAllQuestions();
-  // const featuredQuestions = [
-  //     {
-  //         id: 1,
-  //         title: "Why is IP-address of droplet listed on spamlist?",
-  //         totalAnswers: 9,
-  //         questionAge: 7,
-  //         author: "Abraham",
-  //         tags: ["Engineering", "Security"]
-  //     },
+const page = async ({ searchParams }) => {
+  const { query, page } = searchParams;
+  const itemsPerPage = 2;
 
-  // ]
+  const featuredQuestions = await getAllQuestions(10, 0, "asc", query);
 
-  // Calculate the total number of pages
-  // const totalPages = Math.ceil(featuredQuestions.length / itemsPerPage);
-  const totalPages = featuredQuestions?.result?.length;
+  const currentPage = Number(searchParams?.page) || 1;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentQuestions = featuredQuestions.result.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
+
+  const totalPages = Math.ceil(featuredQuestions.count / itemsPerPage);
 
   return (
     <div className=" mb-20 ">
@@ -35,10 +32,7 @@ const page = async () => {
         </Link>
       </div>
 
-      {/* Main Section */}
-
-      {featuredQuestions?.result.map((question, index) => {
-        console.log(question);
+      {currentQuestions.map((question, index) => {
         return (
           <Link
             key={index}
@@ -78,7 +72,7 @@ const page = async () => {
       })}
 
       <div className="flex items-center justify-center">
-        <p className="mr-3">Total 12 items</p>
+        <p className="mr-3">Total {featuredQuestions.count} items</p>
         <Pagination totalPages={totalPages} />
       </div>
     </div>
