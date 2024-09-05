@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import TwoFA from "@/components/TwoFa";
 import { authenticate, twoFaAuthenticate } from "@/api/auth";
+import Spinner from "@/components/spinner";
 
 const defaultErrorMsg = {
   email: null,
@@ -18,6 +19,7 @@ const Page = () => {
   const [errorMessage, setErrorMessage] = useState(defaultErrorMsg);
   const [openTwoFa, setOpenTwoFa] = useState(false);
   const [activationId, setActivationId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -40,18 +42,20 @@ const Page = () => {
     }
 
     try {
+      setLoading(true);
       const response = await authenticate(email, password);
       if (response.ok) {
         const data = await response.json();
         if (response.status == 202) {
           setActivationId(data.activation_id);
+          setLoading(false);
           setOpenTwoFa(true);
         } else {
+          setLoading(false);
           router.push("/");
         }
       } else {
         const errorData = await response.json();
-
         setErrorMessage(errorData.message || "login failed. Please try again.");
         console.error("Login failed:", data.error);
       }
@@ -74,8 +78,7 @@ const Page = () => {
         throw new Error(data.error || "something went wrong");
       }
     } catch (error) {
-      setErrorMessage("An error occurred. Please try again later.");
-      console.error("Error:", error);
+      throw new Error(error.message || "something went wrong");
     }
   };
 
@@ -204,7 +207,7 @@ const Page = () => {
           </div>
 
           <button className="w-[520px] h-[48px] bg-primary text-secondary-100 font-roboto font-medium text-xs leading-[16px] mt-6">
-            Login
+            {loading ? <Spinner /> : "Login"}
           </button>
         </form>
       </div>
