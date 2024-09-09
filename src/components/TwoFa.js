@@ -1,26 +1,35 @@
 import React from "react";
 import Input from "./Input";
 import { useState } from "react";
+import Spinner from "./spinner";
 
 const TwoFA = ({ onSubmitTwoFa }) => {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onChangeHandler = (e) => {
     const code = e.target.value;
     setCode(code);
-    if (error && code.length === 6) {
+    if (error !== "" && code.length === 6) {
       setError("");
     }
   };
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.stopPropagation();
     e.preventDefault();
+    setError("");
     if (code.length !== 6) {
       setError("Code must be exactly 6 characters long.");
     } else {
-      onSubmitTwoFa(code);
+      setLoading(true);
+      try {
+        await onSubmitTwoFa(code);
+      } catch (error) {
+        setError(error.message || "something went wrong");
+      }
+      setLoading(false);
     }
   };
   return (
@@ -48,7 +57,7 @@ const TwoFA = ({ onSubmitTwoFa }) => {
             onClick={onSubmitHandler}
             className="w-[520px] h-[48px] bg-primary text-secondary-100 font-medium text-xs leading-[16px] "
           >
-            Submit
+            {loading ? <Spinner /> : "Submit"}
           </button>
         </form>
       </div>
