@@ -1,12 +1,12 @@
 # Stage 1: Clone the repository using a minimal git Alpine image
 FROM alpine/git as repo
 WORKDIR /app
-RUN git clone https://github.com/sreekanth014/sirr-eactapp-master.git
+RUN git clone https://github.com/eskeon/public-web.git
 
 # Stage 2: Build the React app using a minimal Node.js Alpine image
 FROM node:20-alpine as build
 WORKDIR /app
-COPY --from=repo /app/sirr-eactapp-master /app
+COPY --from=repo /app/public-web /app
 
 # Install only production dependencies
 RUN npm install --production
