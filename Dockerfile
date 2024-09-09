@@ -1,25 +1,33 @@
-# Stage 1: Builder
-FROM node:18-alpine AS builder
+# Stage 1: Clone the repository using a minimal git Alpine image
+FROM alpine/git as repo
+WORKDIR /app
 
-# Install build dependencies
-RUN apk add --no-cache git
+# ARG to accept the GitHub token at build time
+ARG GIT_TOKEN
 
-# Clone the private repository (replace with your credentials)
-RUN git clone https://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@github.com/eskeon/public-web.git /app
+# Use the token securely to clone the private repository
+RUN git clone https://$GIT_TOKEN@github.com/eskeon/public-webb.git
+
+# Stage 2: Build the React app using a minimal Node.js Alpine image
+FROM node:20-alpine as build
+WORKDIR /app
+COPY --from=repo /app/public-webb /app
+
+# Install only production dependencies
+RUN npm install --production
 
 # Build the React app
-WORKDIR /app
-RUN npm install
-RUN npm build
+RUN npm run build
 
-# Stage 2: Runtime
+# Stage 3: Serve the app using a lightweight Nginx image
 FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
 
-# Copy the built React app from the builder stage
-COPY --from=builder /app/build /usr/share/nginx/html
+# Copy the build output from the previous stage to Nginx
+COPY --from=build /app/build .
 
-# Expose the application port
+# Expose port 80 for Nginx
 EXPOSE 80
 
-# Command to run Nginx
+# Run Nginx
 CMD ["nginx", "-g", "daemon off;"]
