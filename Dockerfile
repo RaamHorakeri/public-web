@@ -5,7 +5,7 @@ FROM node:18-alpine AS builder
 RUN apk add --no-cache git
 
 # Remove existing yarn if it exists and install the latest npm and yarn
-RUN rm -f /usr/local/bin/yarn && npm install -g npm@latest yarn
+RUN rm -f /usr/local/bin/yarn /usr/local/bin/yarnpkg && npm install -g npm@latest yarn
 
 # Clone the private repository (replace with your credentials)
 RUN git clone https://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@github.com/eskeon/public-web.git /app
