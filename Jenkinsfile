@@ -2,7 +2,6 @@ pipeline {
     agent {  
         label 'staging-slave'
     }
-   
 
     tools {
         // Use the NodeJS tool you configured in Jenkins
@@ -13,7 +12,8 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 // Clone the repository
-                git branch: 'sree/VIR-71/publicWebCICD', credentialsId: 'git-cred', url: 'https://github.com/eskeon/public-web.git'            }
+                git branch: 'sree/VIR-71/publicWebCICD', credentialsId: 'git-cred', url: 'https://github.com/eskeon/public-web.git'
+            }
         }
         stage('Install Dependencies') {
             steps {
@@ -27,15 +27,13 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Image') {
+        stage('Build Docker Image') {
             steps {
-                // Build the React application
+                // Build the Docker image
                 sh 'docker build -t public-web-app .'
             }
         }
-   
     }
-   
 
     post {
         success {
