@@ -3,7 +3,7 @@ FROM alpine/git as repo
 WORKDIR /app
 ARG GITHUB_TOKEN=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
 
-RUN git clone https://$GITHUB_TOKEN@github.com/sreekanth014/newreactproject.git
+RUN git clone https://$GITHUB_TOKEN@https://github.com/eskeon/public-web.git
 
 #RUN git clone https://github.com/sreekanth014/newreactproject.git
 
