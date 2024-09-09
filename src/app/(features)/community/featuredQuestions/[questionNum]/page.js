@@ -32,7 +32,6 @@ const Page = async () => {
       setQuestion(question);
     } catch (err) {
       setError("Failed to load question details");
-      console.error(err);
     }
   }, [questionId]);
 
@@ -80,7 +79,6 @@ const Page = async () => {
         : setAnswers(answers.result);
     } catch (err) {
       setAnswerError("Failed to load Answers");
-      console.error(err);
     }
   };
 
@@ -97,7 +95,6 @@ const Page = async () => {
         : setComments(comments.result);
     } catch (err) {
       setCommentError("Failed to load Comments");
-      console.error(err);
     }
   };
 
@@ -117,7 +114,6 @@ const Page = async () => {
       setButtonLoader(false);
     } catch (err) {
       setAddAnswerError("Cannot Submit answer");
-      console.error(err);
       setButtonLoader(false);
     }
   };
@@ -138,7 +134,6 @@ const Page = async () => {
       setButtonLoader(false);
     } catch (err) {
       setAddCommentError("Cannot Submit Comment");
-      // console.error(err);
       setButtonLoader(false);
     }
   };

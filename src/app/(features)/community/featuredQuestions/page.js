@@ -22,7 +22,7 @@ const Page = async ({ searchParams }) => {
   //     indexOfFirstItem,
   //     indexOfLastItem,
   //   );
-  console.log(featuredQuestions.count, featuredQuestions.result.length);
+  //console.log(featuredQuestions.count, featuredQuestions.result.length);
 
   const totalPages = Math.ceil(featuredQuestions.count / itemsPerPage);
 

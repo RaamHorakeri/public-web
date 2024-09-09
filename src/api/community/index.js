@@ -16,7 +16,6 @@ export const getAllQuestions = async (
         cache: "no-store",
       },
     );
-    console.log("get all questions");
     if (!response.ok) {
       throw new Error("Something went wrong");
     }
@@ -47,7 +46,6 @@ export const getTags = async (limit = 10, offset = 0, sort = "asc") => {
     }
     return response.json();
   } catch (error) {
-    console.error("Error fetching tags:", error);
     return { error: error.message || "An unknown error occurred" };
   }
 };
