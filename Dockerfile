@@ -12,8 +12,8 @@ RUN git clone https://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@github.com/eskeon
 
 # Build the React app
 WORKDIR /app
-RUN yarn install
-RUN yarn build
+RUN npm install
+RUN npm build
 
 # Stage 2: Runtime
 FROM nginx:alpine
