@@ -10,7 +10,7 @@ RUN git clone https://${GITHUB_TOKEN}@github.com/eskeon/public-web.git
 
 # Stage 2: Build the React app using a minimal Node.js Alpine image
 FROM node:20-alpine as build
-WORKDIR /app/public-web
+WORKDIR /public-web
 COPY --from=repo /app/public-web .
 
 # Install only production dependencies
@@ -24,7 +24,7 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 
 # Copy the build output from the previous stage to Nginx
-COPY --from=build /app/build .
+COPY --from=build /public-web/build .
 
 # Expose port 80 for Nginx
 EXPOSE 80
