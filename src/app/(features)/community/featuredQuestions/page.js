@@ -11,7 +11,7 @@ const Page = async ({ searchParams }) => {
   const featuredQuestions = await getAllQuestions(
     itemsPerPage,
     offset,
-    "asc",
+    "desc",
     query,
   );
 
