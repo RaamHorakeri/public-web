@@ -1,4 +1,4 @@
-"use client"; // Error boundaries must be Client Components
+"use client";
 
 import { useEffect } from "react";
 
@@ -8,7 +8,7 @@ export default function Error({ error, reset }) {
   }, [error]);
 
   return (
-    <div>
+    <div className="container mx-auto  mt-16 flex justify-center items-center flex-col">
       <h2>{error.message || "Something went wrong!"}</h2>
       <button onClick={() => reset()}>Try again</button>
     </div>

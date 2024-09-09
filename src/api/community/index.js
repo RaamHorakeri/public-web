@@ -4,18 +4,27 @@ export const getAllQuestions = async (
   sort = "asc",
   query = "",
 ) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/questions?limit=${limit}&offset=${offset}&sort=${sort}&query=${query}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
-        "Content-Type": "application/json",
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/community/questions?limit=${limit}&offset=${offset}&sort=${sort}&query=${query}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
       },
-    },
-  );
+    );
+    console.log("get all questions");
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
 
-  return response.json();
+    return response.json();
+  } catch (error) {
+    throw new Error("Failed to fetch questions. " + error.message);
+  }
 };
 
 export const getTags = async (limit = 10, offset = 0, sort = "asc") => {
@@ -44,18 +53,27 @@ export const getTags = async (limit = 10, offset = 0, sort = "asc") => {
 };
 
 export const getQuestion = async (id) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${id}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
-        "Content-Type": "application/json",
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+          "Content-Type": "application/json",
+        },
       },
-    },
-  );
+    );
 
-  return response.json();
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error: ${errorData.message || "Something went wrong"}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw new Error("Failed to fetch question: " + error.message);
+  }
 };
 
 export const getQuestionAnswers = async (

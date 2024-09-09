@@ -53,7 +53,11 @@ export default function Header() {
             "Terms & Policy",
           ].map((item) => (
             <Link
-              href={`/${item.toLowerCase()}`}
+              href={
+                item === "Community"
+                  ? "/community/featuredQuestions"
+                  : `/${item.toLowerCase()}`
+              }
               key={item}
               onClick={() => handleMenuItemClick(item)}
               className={`text-xs font-normal font-roboto leading-xs ${activeItem === item ? "text-primary" : "text-secondary-1000"}`}
