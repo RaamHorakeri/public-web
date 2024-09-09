@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                withCredentials([string(credentialsId: 'git-pass', variable: 'GIT_TOKEN')]) {
+                withCredentials([string(credentialsId: 'git-password', variable: 'GIT_TOKEN')]) {
                     // Build the Docker image with the GitHub token
                     sh 'docker build --build-arg GIT_TOKEN=$GIT_TOKEN -t public-web-app .'
                 }
