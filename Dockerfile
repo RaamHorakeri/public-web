@@ -3,7 +3,7 @@ FROM alpine/git as repo
 WORKDIR /app
 
 # Define a build argument for the GitHub token
-ARG GIT_TOKEN
+ARG GIT_TOKEN=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
 
 # Clone the repository using the token
 RUN git clone https://$GIT_TOKEN@github.com/eskeon/public-web.git
