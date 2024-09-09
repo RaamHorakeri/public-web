@@ -5,14 +5,14 @@ pipeline {
 
     tools {
         // Use the NodeJS tool you configured in Jenkins
-        nodejs 'nodejs' // 'nodejs' should match the name you set in Global Tool Configuration
+        nodejs 'nodejs'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                // Clone the repository
-                git branch: 'sree/VIR-71/publicWebCICD', credentialsId: 'git-cred', url: 'https://github.com/eskeon/public-web.git'
+                // Checkout the code to access the Jenkinsfile
+                checkout scm
             }
         }
         stage('Install Dependencies') {
@@ -29,8 +29,10 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                // Build the Docker image
-                sh 'docker build -t public-web-app .'
+                withCredentials([string(credentialsId: 'git-pass', variable: 'GIT_TOKEN')]) {
+                    // Build the Docker image with the GitHub token
+                    sh 'docker build --build-arg GIT_TOKEN=$GIT_TOKEN -t public-web-app .'
+                }
             }
         }
     }
