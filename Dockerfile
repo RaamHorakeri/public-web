@@ -4,7 +4,7 @@ WORKDIR /app
 ARG GITHUB_TOKEN=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
 
 RUN git clone https://$GITHUB_TOKEN@github.com/eskeon/public-web.git
-RUN git checkout sree/VIR-71/publicWebCICD 
+
 
 #RUN git clone https://github.com/sreekanth014/newreactproject.git
 
