@@ -4,6 +4,7 @@ import Input from "@/components/Input";
 import React, { useState, useEffect } from "react";
 import { getTags, postQuestion } from "@/api/community";
 import { useRouter } from "next/navigation";
+import Spinner from "@/components/spinner";
 
 const Page = () => {
   const [inputValue, setInputValue] = useState("");
@@ -11,6 +12,7 @@ const Page = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [tags, setTags] = useState([]);
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const getTagsHandler = async () => {
@@ -77,9 +79,20 @@ const Page = () => {
         tags: selectedOptions.map((item) => item.id),
       };
       console.log(formData);
-      const res = await postQuestion(formData);
-      if (res.ok) {
-        router.push("/community/featuredQuestions");
+      try {
+        setLoading(true);
+        const res = await postQuestion(formData);
+
+        if (res.ok) {
+          router.push("/community/featuredQuestions");
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      } catch (error) {
+        setErrorMessage("An error occurred. Please try again later.");
+        console.error("Error:", error);
+        throw new Error(error.message || "something went wrong");
       }
     }
   };
@@ -220,7 +233,7 @@ const Page = () => {
         onClick={onsubmitHandler}
         className=" h-[50px] w-[200px] border border-primary rounded-[22px] font-roboto font-normal text-xs "
       >
-        Post a question
+        {loading ? <Spinner /> : " Post a question"}
       </button>
     </div>
   );
