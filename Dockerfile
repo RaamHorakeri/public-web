@@ -1,19 +1,16 @@
 # Stage 1: Clone the repository using a minimal git Alpine image
 FROM alpine/git as repo
 WORKDIR /app
+ARG GITHUB_TOKEN=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
 
-# ARG to accept the GitHub token at build time
-ARG GIT_TOKEN
+RUN git clone https://$GITHUB_TOKEN@github.com/sreekanth014/newreactproject.git
 
-# Use the token securely to clone the private repository
-RUN git clone -b sree/VIR-71/publicWebCICD https://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@github.com/eskeon/public-web.git
-RUN ls -al /app
+#RUN git clone https://github.com/sreekanth014/newreactproject.git
 
 # Stage 2: Build the React app using a minimal Node.js Alpine image
 FROM node:20-alpine as build
 WORKDIR /app
-COPY --from=repo /app /app
-RUN ls -al /app
+COPY --from=repo /app/newreactproject /app
 
 # Install only production dependencies
 RUN npm install --production
