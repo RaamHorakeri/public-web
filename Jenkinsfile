@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 // Clone the repository
-                git ''            }
+                git 'https://github.com/eskeon/public-web.git'            }
         }
         stage('Install Dependencies') {
             steps {
@@ -30,7 +30,7 @@ pipeline {
         stage('Image') {
             steps {
                 // Build the React application
-                sh 'docker build -t react-app .'
+                sh 'docker build -t public-web-app .'
             }
         }
    
