@@ -2,8 +2,11 @@
 FROM alpine/git as repo
 WORKDIR /app
 
-# Clone the repository
-RUN git clone https://github.com/eskeon/public-web.git
+# Define a build argument for the GitHub token
+ARG GIT_TOKEN
+
+# Clone the repository using the token
+RUN git clone https://$GIT_TOKEN@github.com/eskeon/public-web.git
 
 # Change to the repository directory
 WORKDIR /app/public-web
