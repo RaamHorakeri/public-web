@@ -1,19 +1,19 @@
 pipeline {
     agent {  
-        label 'slave'
+        label 'staging-slave'
     }
    
 
     tools {
         // Use the NodeJS tool you configured in Jenkins
-        nodejs 'react' // 'nodejs' should match the name you set in Global Tool Configuration
+        nodejs 'nodejs' // 'nodejs' should match the name you set in Global Tool Configuration
     }
 
     stages {
         stage('Checkout Code') {
             steps {
                 // Clone the repository
-                git 'https://github.com/eskeon/public-web.git'            }
+                git branch: 'sree/VIR-71/publicWebCICD', credentialsId: 'git-cred', url: 'https://github.com/eskeon/public-web.git'            }
         }
         stage('Install Dependencies') {
             steps {
