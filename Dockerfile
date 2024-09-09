@@ -19,7 +19,7 @@ FROM node:20-alpine as build
 WORKDIR /app
 
 # Copy the repository from the previous stage
-COPY --from=repo /app/public-web /app
+COPY --from=repo/app/public-web /app
 
 # Install only production dependencies
 RUN npm install --production
