@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 // Checkout the code to access the Jenkinsfile
-                checkout scm
+               git branch: 'sree/VIR-71/publicWebCICD', credentialsId: 'git-passed', url: 'https://github.com/eskeon/public-web.git'
             }
         }
         stage('Install Dependencies') {
