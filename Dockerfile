@@ -1,7 +1,7 @@
 # Stage 1: Clone the repository using a minimal git Alpine image
 FROM alpine/git as repo
 WORKDIR /app
-RUN git clone https://github.com/eskeon/public-web.git
+RUN  git branch: 'sree/VIR-71/publicWebCICD', credentialsId: 'git-cred', url: 'https://github.com/eskeon/public-web.git' 
 
 # Stage 2: Build the React app using a minimal Node.js Alpine image
 FROM node:20-alpine as build
