@@ -29,20 +29,9 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                withCredentials([string(credentialsId: 'git-passed', variable: 'GIT_TOKEN')]) {
-                    // Build the Docker image with the GitHub token
-                    sh 'docker build --build-arg GIT_TOKEN=$GIT_TOKEN -t public-web-app .'
+                
+                    sh 'docker build -t public-web-app:v1 .'
                 }
             }
         }
     }
-
-    post {
-        success {
-            echo 'Build successful!'
-        }
-        failure {
-            echo 'Build failed!'
-        }
-    }
-}
