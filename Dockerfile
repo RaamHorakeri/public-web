@@ -4,7 +4,7 @@ FROM node:18-alpine AS builder
 RUN npm install -g yarn
 
 # Clone the private repository (replace with your credentials)
-RUN git clone https://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@github.com/your_organization/your_repo.git
+RUN git clone https://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@github.com/eskeon/public-web.git
 
 # Build the React app
 WORKDIR /app
