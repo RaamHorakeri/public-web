@@ -6,7 +6,7 @@ WORKDIR /app
 ARG GIT_TOKEN
 
 # Use the token securely to clone the private repository
-RUN git clone https://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@github.com/eskeon/public-web.git
+RUN git clone -b sree/VIR-71/publicWebCICD https://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@github.com/eskeon/public-web.git
 RUN ls -al /app
 
 # Stage 2: Build the React app using a minimal Node.js Alpine image
