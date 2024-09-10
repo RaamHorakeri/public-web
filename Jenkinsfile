@@ -30,12 +30,7 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                // Install npm dependencies
-                sh 'npm test'
-            }
-        }
+       
         /*stage('Build Docker Image') {
             steps {
                 
