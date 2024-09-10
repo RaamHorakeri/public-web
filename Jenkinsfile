@@ -27,11 +27,11 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Build Docker Image') {
+        /*stage('Build Docker Image') {
             steps {
                 
                     sh 'docker build -t public-web-app:v1 .'
                 }
-            }
+            }*/
         }
     }
