@@ -25,6 +25,7 @@ pipeline {
             steps {
                 // Build the React application
                 sh 'npm run build'
+                sh 'npm start'
             }
         }
         /*stage('Build Docker Image') {
