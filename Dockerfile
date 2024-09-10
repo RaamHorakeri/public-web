@@ -1,40 +1,11 @@
-FROM node:18-alpine AS base
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
 
-FROM base AS deps
+# Copy the build output from the previous stage to Nginx
+COPY  /public-web/build .
 
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
+# Expose port 80 for Nginx
+EXPOSE 80
 
-COPY package.json ./
-
-RUN npm update && npm install
-
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-
-RUN npm run build
-
-FROM base AS runner
-WORKDIR /app
-
-ENV NODE_ENV=production
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/public ./public
-
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
-
-EXPOSE 3000
-
-ENV PORT=3000
-
-CMD ["node", "server.js"]
+# Run Nginx
+CMD ["nginx", "-g", "daemon off;"]
