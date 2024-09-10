@@ -1,13 +1,12 @@
 pipeline {
-    agent {  
-        label 'staging-slave'
+    agent { 
+        docker {
+            image "node:latest"
+        }
+        
     }
 
-    tools {
-        // Use the NodeJS tool you configured in Jenkins
-        nodejs 'nodejs'
-    }
-
+    
     stages {
         stage('Checkout Code') {
             steps {
@@ -25,7 +24,14 @@ pipeline {
             steps {
                 // Build the React application
                 sh 'npm run build'
-                sh 'npm start'
+                sh 'ls -l'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Install npm dependencies
+                sh 'npm test'
             }
         }
         /*stage('Build Docker Image') {
