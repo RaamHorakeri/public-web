@@ -1,7 +1,7 @@
 pipeline {
     agent { 
         label 'staging-slave'
-            image "node:latest"
+           
         }
         
         tools {
