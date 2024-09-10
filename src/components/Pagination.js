@@ -69,18 +69,44 @@ const Pagination = ({ totalPages }) => {
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex items-center justify-center text-white bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px]"
+        className="flex items-center justify-center text-black bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px]"
       >
-        <Image src="/images/left.png" alt="leftIcon" width={12} height={12} />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-4"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5 8.25 12l7.5-7.5"
+          />
+        </svg>
       </button>
 
       {renderPageNumbers()}
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex items-center justify-center text-white bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px] "
+        className="flex items-center justify-center text-black bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px] "
       >
-        <Image src="/images/right.png" alt="rightIcon" width={12} height={12} />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-4"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+          />
+        </svg>
       </button>
     </div>
   );

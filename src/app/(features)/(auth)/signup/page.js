@@ -6,6 +6,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import Input from "@/components/Input";
 import TwoFA from "@/components/TwoFa";
 import { signUp, signUpTwoFa } from "@/api/auth";
+import Spinner from "@/components/spinner";
 
 const defaultErrorMsg = {
   username: null,
@@ -21,6 +22,7 @@ const Page = () => {
   const [openTwoFa, setOpenTwoFa] = useState(false);
   const [errorMessage, setErrorMessage] = useState(defaultErrorMsg);
   const [activationId, setActivationId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -53,12 +55,15 @@ const Page = () => {
     };
 
     try {
+      setLoading(true);
       const response = await signUp(formData);
       if (response.ok) {
         const data = await response.json();
         setActivationId(data.activation_id);
+        setLoading(false);
         setOpenTwoFa(true);
       } else {
+        setLoading(false);
         const errorData = await response.json();
         setErrorMessage(
           errorData.message || "Registration failed. Please try again.",
@@ -85,8 +90,7 @@ const Page = () => {
         throw new Error(data.error || "something went wrong");
       }
     } catch (error) {
-      setErrorMessage("An error occurred. Please try again later.");
-      console.error("Error:", error);
+      throw new Error(error.message || "something went wrong");
     }
   };
 
@@ -227,7 +231,7 @@ const Page = () => {
             onClick={handleSubmit}
             className="w-[520px] h-[48px] bg-primary text-secondary-100 font-roboto font-medium text-xs leading-[16px] mt-6"
           >
-            Register
+            {loading ? <Spinner /> : "Register"}
           </button>
         </form>
       </div>
