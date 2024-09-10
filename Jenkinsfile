@@ -1,10 +1,12 @@
 pipeline {
     agent { 
-        docker {
+        label 'staging-slave'
             image "node:latest"
         }
         
-    }
+        tools {
+            nodejs 'nodejs'
+        }    
 
     
     stages {
