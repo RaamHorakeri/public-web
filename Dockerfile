@@ -1,30 +1,36 @@
-# Stage 1: Builder
-FROM node:18-alpine AS builder
+# Stage 1: Clone the repository using a minimal git Alpine image
+FROM alpine/git as repo
+WORKDIR /app
 
-# Install build dependencies
-RUN apk add --no-cache git
+# Use the GitHub token securely to clone the private repository
+ARG GITHUB_TOKEN
+RUN git clone https://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@github.com/eskeon/public-web.git
 
-# Remove existing yarn binaries if they exist and install the latest npm and yarn
-RUN rm -f /usr/local/bin/yarn /usr/local/bin/yarnpkg && npm install -g npm@latest yarn
+# Stage 2: Build the React app using a minimal Node.js Alpine image
+FROM node:20-alpine as build
+WORKDIR /app
 
-# Clone the private repository (replace with your credentials)
-RUN git clone https://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@github.com/eskeon/public-web.git /app
+# Copy only package.json and package-lock.json first to install dependencies
+COPY --from=repo /app/public-web/package*.json ./
 
-# Set working directory to the cloned repository
-WORKDIR /app/public-web
+# Install production dependencies (omit devDependencies)
+RUN npm install --omit=dev
 
-# Install dependencies and build the React app
-RUN yarn install
-RUN yarn build
+# Now copy the rest of the application files
+COPY --from=repo /app/public-web ./
 
-# Stage 2: Runtime
+# Build the React app
+RUN npm run build
+
+# Stage 3: Serve the app using a lightweight Nginx image
 FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
 
-# Copy the built React app from the builder stage
-COPY --from=builder /app/public-web/build /usr/share/nginx/html
+# Copy the build output from the previous stage to Nginx
+COPY --from=build /app/build .
 
-# Expose the application port
+# Expose port 80 for Nginx
 EXPOSE 80
 
-# Command to run Nginx
+# Run Nginx
 CMD ["nginx", "-g", "daemon off;"]
