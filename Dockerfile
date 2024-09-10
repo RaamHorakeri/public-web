@@ -17,7 +17,7 @@ COPY --from=repo /app/public-web/package*.json ./
 RUN npm install --omit=dev
 
 # Now copy the rest of the application files
-COPY --from=repo /app/public-web ./
+COPY --from=repo /app/public-web/public-web/package*.json ./
 
 # Build the React app
 RUN npm run build
