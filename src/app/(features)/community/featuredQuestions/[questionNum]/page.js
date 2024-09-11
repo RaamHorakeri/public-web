@@ -1,5 +1,11 @@
 "use client";
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  Suspense,
+} from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
@@ -14,7 +20,7 @@ import Comment from "@/components/community/Comment";
 import { isEmptyObject } from "@/utils";
 import Spinner from "@/components/spinner";
 
-const Page = async () => {
+const Page = () => {
   const params = useParams();
   const questionId = params.questionNum;
   const textareaRef = useRef(null);

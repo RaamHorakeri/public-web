@@ -78,7 +78,7 @@ const Page = () => {
         body: questionBody,
         tags: selectedOptions.map((item) => item.id),
       };
-      console.log(formData);
+
       try {
         setLoading(true);
         const res = await postQuestion(formData);
@@ -91,7 +91,7 @@ const Page = () => {
         }
       } catch (error) {
         setErrorMessage("An error occurred. Please try again later.");
-        console.error("Error:", error);
+
         throw new Error(error.message || "something went wrong");
       }
     }

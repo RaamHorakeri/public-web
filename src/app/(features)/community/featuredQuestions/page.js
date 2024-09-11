@@ -1,12 +1,15 @@
 import Pagination from "@/components/Pagination";
 import Link from "next/link";
 import { getAllQuestions } from "@/api/community";
-export const dynamic = "force-dynamic";
+
+// export const dynamic = "force-dynamic";
 
 const Page = async ({ searchParams }) => {
   const { query, page } = searchParams;
   const itemsPerPage = 4;
-  const offset = page * itemsPerPage - itemsPerPage;
+  const currentPage = Number(page) || 1;
+  //   const offset = page * itemsPerPage - itemsPerPage;
+  const offset = (currentPage - 1) * itemsPerPage;
 
   const featuredQuestions = await getAllQuestions(
     itemsPerPage,
@@ -14,8 +17,8 @@ const Page = async ({ searchParams }) => {
     "desc",
     query,
   );
+  // await new Promise(resolve => setTimeout(resolve, 1000));
 
-  const currentPage = Number(searchParams?.page) || 1;
   //   const indexOfLastItem = currentPage * itemsPerPage;
   //   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   //   const currentQuestions = featuredQuestions.result.slice(
@@ -97,6 +100,7 @@ const Page = async ({ searchParams }) => {
 
       <div className="flex items-center justify-center">
         <p className="mr-3">Total {featuredQuestions.count} items</p>
+
         <Pagination totalPages={totalPages} />
       </div>
     </div>
