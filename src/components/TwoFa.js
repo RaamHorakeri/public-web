@@ -28,6 +28,7 @@ const TwoFA = ({ onSubmitTwoFa }) => {
         await onSubmitTwoFa(code);
       } catch (error) {
         setError(error.message || "something went wrong");
+        console.log("Error", error);
       }
       setLoading(false);
     }

@@ -56,11 +56,22 @@ const Page = () => {
         }
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.message || "login failed. Please try again.");
+        setErrorMessage((error) => {
+          return {
+            ...error,
+            password: errorData.message || "login failed. Please try again.",
+          };
+        });
         console.error("Login failed:", data.error);
       }
     } catch (error) {
-      setErrorMessage("An error occurred. Please try again later.");
+      setErrorMessage((error) => {
+        return {
+          ...error,
+          password: "An error occurred. Please try again later.",
+        };
+      });
+      setLoading(false);
       console.error("Error:", error);
     }
   };

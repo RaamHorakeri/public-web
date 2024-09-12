@@ -60,18 +60,25 @@ const Page = () => {
       if (response.ok) {
         const data = await response.json();
         setActivationId(data.activation_id);
-        setLoading(false);
         setOpenTwoFa(true);
       } else {
-        setLoading(false);
         const errorData = await response.json();
-        setErrorMessage(
-          errorData.message || "Registration failed. Please try again.",
-        );
+        const errMsg =
+          errorData.message || "Registration failed. Please try again.";
+        setErrorMessage((error) => {
+          return { ...error, password: errMsg };
+        });
       }
-    } catch (error) {
-      setErrorMessage("An error occurred. Please try again later.");
-      console.error("Error:", error);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      setErrorMessage((error) => {
+        return {
+          ...error,
+          password: e.message || "An error occurred. Please try again later.",
+        };
+      });
+      console.error("Error:", e);
     }
   };
 
