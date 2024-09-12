@@ -6,7 +6,7 @@ export default function Layout({ children }) {
   return (
     <div>
       <PageTitle />
-      <div className="container mx-auto  mt-16 flex justify-between">
+      <div className="container mx-auto   mt-16 flex justify-between">
         {/* Left Section */}
         <NavlinkSearch />
 
