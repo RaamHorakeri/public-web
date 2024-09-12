@@ -1,23 +1,33 @@
 "use client";
 
-import Image from "next/image";
+import Link from "next/link"; // Import Link from next/link
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Pagination = ({ totalPages }) => {
   const searchParams = useSearchParams();
+  const pathname = usePathname(); // Get the current pathname
   const router = useRouter();
+  const initialPage = Number(searchParams.get("page")) || 1;
+  const [currentPage, setCurrentPage] = useState(initialPage);
 
-  const [currentPage, setCurrentPage] = useState(
-    Number(searchParams.get("page")),
-  );
+  useEffect(() => {
+    // Update the current page when the URL changes
+    setCurrentPage(initialPage);
+  }, [initialPage]);
 
   const handlePageChange = (pageNumber) => {
     const params = new URLSearchParams(window.location.search);
     params.set("page", pageNumber);
-    router.push(`${window.location.pathname}?${params.toString()}`, undefined, {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    router.push(`${window.location.pathname}?${params.toString()}`, {
       shallow: true,
     });
+
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
     }
@@ -49,13 +59,25 @@ const Pagination = ({ totalPages }) => {
 
     return pageNumbers.map((page, index) =>
       typeof page === "number" ? (
-        <button
+        <Link
           key={index}
-          onClick={() => handlePageChange(page)}
-          className={` flex items-center justify-center p-2 border rounded ${page === currentPage ? "bg-[#D9D9D9] text-white" : "bg-white text-[#000000]"} w-[32px] h-[32px] `}
+          href={{
+            pathname: pathname,
+            query: { ...Object.fromEntries(searchParams.entries()), page }, // Keep existing searchParams and update the page
+          }}
+          shallow
         >
-          {page}
-        </button>
+          <button
+            onClick={() => handlePageChange(page)}
+            className={`flex items-center justify-center p-2 border rounded ${
+              page === currentPage
+                ? "bg-[#D9D9D9] text-white"
+                : "bg-white text-[#000000]"
+            } w-[32px] h-[32px]`}
+          >
+            {page}
+          </button>
+        </Link>
       ) : (
         <span key={index} className="p-2">
           {page}
@@ -66,48 +88,72 @@ const Pagination = ({ totalPages }) => {
 
   return (
     <div className="flex justify-center items-center space-x-2 mt-4 mb-4">
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="flex items-center justify-center text-black bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px]"
+      {/* Previous Button */}
+      <Link
+        href={{
+          pathname: pathname,
+          query: {
+            ...Object.fromEntries(searchParams.entries()),
+            page: currentPage - 1,
+          }, // Decrease page number
+        }}
+        shallow
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-4"
+        <button
+          disabled={currentPage === 1}
+          className="flex items-center justify-center text-black bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px]"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5 8.25 12l7.5-7.5"
+            />
+          </svg>
+        </button>
+      </Link>
 
+      {/* Render Page Numbers */}
       {renderPageNumbers()}
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="flex items-center justify-center text-black bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px] "
+
+      {/* Next Button */}
+      <Link
+        href={{
+          pathname: pathname,
+          query: {
+            ...Object.fromEntries(searchParams.entries()),
+            page: currentPage + 1,
+          }, // Increase page number
+        }}
+        shallow
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-4"
+        <button
+          disabled={currentPage === totalPages}
+          className="flex items-center justify-center text-black bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px]"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m8.25 4.5 7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </button>
+      </Link>
     </div>
   );
 };
