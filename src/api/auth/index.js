@@ -29,12 +29,14 @@ export const signUpTwoFa = async (activationId, code) => {
 };
 
 export const authenticate = async (email, password) => {
+  const basicAuth = "Basic " + btoa(`${email}:${password}`);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AUTH_API_URL}/account/authenticate`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: basicAuth,
       },
       body: JSON.stringify({ email, password }),
     },
