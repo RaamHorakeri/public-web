@@ -1,5 +1,5 @@
-import NavlinkSearch from "@/components/community/NavLinkSearch";
-import PageTitle from "@/components/community/PageTitle";
+import NavlinkSearch from "@/app/community/_components/NavLinkSearch";
+import PageTitle from "@/app/community/_components/PageTitle";
 import { Suspense } from "react";
 
 export default function Layout({ children }) {
