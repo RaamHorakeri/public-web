@@ -16,8 +16,8 @@ import {
   getQuestionComments,
   postQuestionComment,
 } from "@/api/community";
-import Answer from "@/components/community/Answer";
-import Comment from "@/components/community/Comment";
+import Answer from "@/app/community/featuredQuestions/[questionNum]/_components/Answer";
+import Comment from "@/app/community/featuredQuestions/[questionNum]/_components/Comment";
 import { isEmptyObject } from "@/utils";
 import Spinner from "@/components/spinner";
 

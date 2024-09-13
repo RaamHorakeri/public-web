@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Input from "@/components/Input";
-import ScheduleModal from "@/components/getHelp/ScheduleModal";
+import ScheduleModal from "@/app/getHelp/_components/ScheduleModal";
 
 const expertData = [
   {
