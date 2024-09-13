@@ -21,7 +21,7 @@ export default function Header() {
         className="mx-auto flex max-w-7xl items-center justify-between  "
       >
         <div className="flex lg:flex-1 w-[300px] h-[96.61px]">
-          <a href="/" className="-m-1.5 p-1.5 flex items-center gap-6">
+          <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-6">
             <Image
               src="/images/headerIcon.png"
               width={80}
@@ -32,7 +32,7 @@ export default function Header() {
             <span className="text-m font-semibold text-[#7C56CF] w-[198px] h-[38px] leading-m ">
               Brand Name
             </span>
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -53,7 +53,11 @@ export default function Header() {
             "Terms & Policy",
           ].map((item) => (
             <Link
-              href={`/${item.toLowerCase()}`}
+              href={
+                item === "Community"
+                  ? "/community/featuredQuestions"
+                  : `/${item.toLowerCase()}`
+              }
               key={item}
               onClick={() => handleMenuItemClick(item)}
               className={`text-xs font-normal font-roboto leading-xs ${activeItem === item ? "text-primary" : "text-secondary-1000"}`}
@@ -85,7 +89,7 @@ export default function Header() {
         <div className="fixed inset-0 z-10" />
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
+            <Link href="#" className="-m-1.5 p-1.5">
               <Image
                 src="/path-to-logo/logo.png"
                 alt="Logo"
@@ -94,7 +98,7 @@ export default function Header() {
                 height={40}
               />
               <span className="text-xl font-semibold">Brand Name</span>
-            </a>
+            </Link>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
@@ -114,14 +118,14 @@ export default function Header() {
                   "Community",
                   "Terms & Policy",
                 ].map((item) => (
-                  <a
+                  <Link
                     key={item}
                     onClick={() => handleMenuItemClick(item)}
                     href={`/${item.toLowerCase()}`}
                     className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${activeItem === item ? "text-[#7C56CF] bg-gray-50" : "text-gray-900 hover:bg-gray-50"}`}
                   >
                     {item}
-                  </a>
+                  </Link>
                 ))}
               </div>
               <div className="py-6">

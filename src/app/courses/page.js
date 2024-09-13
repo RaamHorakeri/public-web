@@ -1,71 +1,44 @@
 import Link from "next/link";
 import React from "react";
 
-export default function Home() {
-  const cardDetails = [
+const Page = () => {
+  const courseDetails = [
     {
-      courseId: 1,
+      courseID: 1,
       cardHead: "Java Software Engineer",
       cardBody:
         " Gain comprehensive skills in Java programming, covering core concepts, advanced techniques, and industry best practices.Gain comprehensive skills in Java programming, covering core concepts, advanced techniques, and industry best practices.",
       cardButtons: ["Get Help", "Enroll Now", "Learn More"],
     },
     {
-      courseId: 2,
+      courseID: 2,
+      cardHead: "Java Software Engineer",
+      cardBody:
+        " Gain comprehensive skills in Java programming, covering core concepts, advanced techniques, and industry best practices.Gain comprehensive skills in Java programming, covering core concepts, advanced techniques, and industry best practices.",
+      cardButtons: ["Get Help", "Enroll Now", "Learn More"],
+    },
+    {
+      courseID: 3,
       cardHead: "Java Software Engineer",
       cardBody:
         " Gain comprehensive skills in Java programming, covering core concepts, advanced techniques, and industry best practices.Gain comprehensive skills in Java programming, covering core concepts, advanced techniques, and industry best practices.",
       cardButtons: ["Get Help", "Enroll Now", "Learn More"],
     },
   ];
+
   return (
-    <>
-      <section className="bg-primary-100 py-0 px-[87px] h-[500px] flex flex-col items-center justify-center gap-m">
-        <h1 className="font-roboto text-primary-1600 font-semibold text-l leading-l text-center mb-m">
-          Empowering Future Software Engineers
+    <div>
+      <section className="bg-[url('/images/bg1.png')] bg-cover bg-center bg-no-repeat py-0 px-[87px] h-[320px] flex flex-col items-center justify-center gap-6">
+        <h1 className="font-roboto font-semibold text-m leading-m text-center text-primary">
+          Our Courses
         </h1>
-        <p className="font-roboto font-normal text-secondary-1000 text-xs leading-s text-center">
-          Explore endless possibilities with our online education platform.
-          <br />
-          Unlock new career opportunities and enhance your skills with tailored
-          learning experiences.
-        </p>
-        <div className="flex gap-5 mt-4">
-          <Link
-            href="#"
-            className="bg-primary-100 text-primary font-medium text-s flex justify-center items-center leading-6 rounded-m border border-primary w-[138px] h-[48px]"
-          >
-            Get Started
-          </Link>
-          <Link
-            href="/enroll"
-            className="bg-primary font-medium text-secondary-100 border text-s flex justify-center items-center leading-6 rounded-m w-[129px] h-[48px]"
-          >
-            Enroll Now
-          </Link>
-        </div>
-      </section>
-
-      <section className="bg-white py-ml px-[87px] flex flex-col items-center gap-ml mt-2xl mb-m">
-        <h1
-          className="font-roboto font-semibold text-primary-1600 text-m leading-m text-center"
-          style={{ width: "856px", height: "76px" }}
-        >
-          Transform Your Future with Our Comprehensive Software Engineering
-          Programs
-        </h1>
-        <p
-          className="font-roboto font-normal text-secondary-1000 text-xs leading-s text-center"
-          style={{ width: "877px", height: "60px" }}
-        >
-          Our mission is to equip aspiring software engineers with the
-          knowledge, skills, and hands-on experience necessary to excel in the
-          tech industry.
+        <p className="font-roboto font-normal text-[14px] leading-[16.8px] text-center text-primary-1600">
+          Home/Courses
         </p>
       </section>
 
-      <section className="flex flex-col items-center gap-ml py-ml px-[87px] ">
-        {cardDetails.map((card, index) => (
+      <section className="flex flex-col items-center mt-2xl gap-ml py-ml px-[87px] ">
+        {courseDetails.map((card, index) => (
           <div
             key={index}
             className="flex bg-white items-center justify-center rounded-lg border border-primary w-[1266px] h-[264px] gap-ml "
@@ -106,7 +79,7 @@ export default function Home() {
                 {card.cardButtons[1]}
               </Link>
               <Link
-                href={`/courses/${card.courseId}`}
+                href={`/courses/${card.courseID}`}
                 className="bg-white text-center text-primary text-s leading-[24px] font-roboto font-medium flex justify-center items-center rounded-m border  border-primary"
                 style={{ width: "336px", height: "48px" }}
               >
@@ -119,34 +92,15 @@ export default function Home() {
 
       <div className="flex justify-center">
         <Link
-          href="/courses"
+          href="#"
           className="bg-primary text-secondary-100 py-3 px-4 rounded-m font-roboto text-s leading-6 font-medium text-center mt-11 mb-32"
           style={{ width: "179px", height: "48px" }}
         >
           View More
         </Link>
       </div>
-
-      <section className=" h-[452px] flex flex-col justify-center items-center text-center gap-10 ">
-        <h1 className=" w-[746px] h-[134px] font-roboto font-semibold text-[56px] leading-l text-primary-1600 ">
-          Join the biggest Community of learning
-        </h1>
-        <p className=" font-roboto font-bold text-[18px] leading-[24.55px] w-[786px] h-[50px] text-[#494949] ">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          <br />
-          Aliquam, quis malesuada sed tristique sed vulputate eleifend urna
-          potenti. Amet non sed eget
-        </p>
-        <div className="flex justify-center">
-          <Link
-            href="/community/featuredQuestions"
-            className="bg-primary text-secondary-100 py-3 px-4 rounded-m font-roboto text-s leading-6 font-medium text-center mt-11 mb-32"
-            style={{ width: "179px", height: "48px" }}
-          >
-            View More
-          </Link>
-        </div>
-      </section>
-    </>
+    </div>
   );
-}
+};
+
+export default Page;

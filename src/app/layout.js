@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
+import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -12,10 +12,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" >
-    <body className="flex flex-col min-h-screen">
+    <html lang="en">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=optional:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="flex flex-col min-h-screen">
         <Header />
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow">
+          <Suspense fallback={"loading.."}> {children}</Suspense>
+        </main>
         <Footer />
       </body>
     </html>
