@@ -4,7 +4,7 @@ export default function AnimateImages() {
   return (
     <div className="flex items-center animate ">
       <Image
-        src="/courseDetails/code-frame1.png"
+        src="/courseDetails/code-frame1.svg"
         alt="connect image"
         width={500}
         height={100}
@@ -12,7 +12,7 @@ export default function AnimateImages() {
       />
 
       <Image
-        src="/courseDetails/code-frame2.png"
+        src="/courseDetails/code-frame2.svg"
         alt="connect image"
         width={500}
         height={100}
