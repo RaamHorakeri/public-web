@@ -1,5 +1,5 @@
 import AnimateImages from "./AnimateImages";
-export default function SectionTwo() {
+export default function ProductivitySection() {
   return (
     <div className="bg-black min-h-[100vh] w-full text-white font-sans p-10 ">
       <div className="flex justify-between">

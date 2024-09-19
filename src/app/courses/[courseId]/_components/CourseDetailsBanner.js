@@ -1,5 +1,5 @@
 import Image from "next/image";
-export default function SectionOne() {
+export default function CourseDetailsBanner() {
   return (
     <>
       <div className="bg-black min-h-[100vh] w-full text-white font-sans p-10 flex justify-between">
