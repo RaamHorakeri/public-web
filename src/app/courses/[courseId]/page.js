@@ -1,5 +1,6 @@
 import Image from "next/image";
-export default function Page() {
+import AnimateImages from "./_components/AnimateImages";
+export default function CourseId() {
   return (
     <>
       <div className="bg-black min-h-[100vh] w-full text-white font-sans p-10 flex justify-between">
@@ -45,7 +46,7 @@ export default function Page() {
             </div>
             <div className="mr-10">
               <Image
-                src="/images/connect.png"
+                src="/courseDetails/connect.png"
                 alt="connect image"
                 width={450}
                 height={100}
@@ -100,23 +101,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="flex items-center animate ">
-          <Image
-            src="/images/CodeFrame1.png"
-            alt="connect image"
-            width={500}
-            height={100}
-            className="w-[45%]"
-          />
-
-          <Image
-            src="/images/CodeFrame2.png"
-            alt="connect image"
-            width={500}
-            height={100}
-            className="w-[45%] ml-[60px]"
-          />
-        </div>
+        <AnimateImages />
       </div>
       <div className="bg-black min-h-[100vh] w-full text-white font-sans p-10">
         <div className="flex justify-between">
@@ -158,23 +143,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="flex items-center animate">
-          <Image
-            src="/images/CodeFrame1.png"
-            alt="connect image"
-            width={500}
-            height={100}
-            className="w-[45%]"
-          />
-
-          <Image
-            src="/images/CodeFrame2.png"
-            alt="connect image"
-            width={500}
-            height={100}
-            className="w-[45%] ml-[60px]"
-          />
-        </div>
+        <AnimateImages />
         <div className="flex flex-col gap-4 items-center mt-11 min-h-[500px] justify-center">
           <h1 className=" font-[700] text-[48px]">
             Grow
