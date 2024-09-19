@@ -51,11 +51,11 @@ const Globe = () => {
       </div>
       <Image
         src="/images/landingPage/globe.png"
-        layout="responsive"
         alt="globe"
         width={100}
-        height={653}
-        className="w-full h-full"
+        height={500}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1000px"
+        style={{ width: "100%", height: "100%" }}
       />
     </div>
   );

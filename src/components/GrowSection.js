@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Button from "./Button";
 
 const GrowSection = () => {
   return (
@@ -32,18 +33,16 @@ const GrowSection = () => {
           maximize product sales with just one integrated CRMtool
         </p>
         <div className="flex gap-5 mt-4">
-          <Link
+          <Button
             href="#"
-            className=" text-[#ffffff] font-bold text-[16px] flex justify-center items-center leading-[21.82px] rounded-[20px] border border-[#ffffff] w-[138px] h-[48px]"
-          >
-            Get Started
-          </Link>
-          <Link
+            className="text-[#ffffff]  border-[2px] border-[#ffffff]"
+            text="Get Started"
+          />
+          <Button
             href="/enroll"
-            className="bg-[#ffffff] font-bold text-[#0A0A0B] border text-[16px] flex justify-center items-center leading-[21.82px] rounded-[20px] w-[129px] h-[48px]"
-          >
-            Enroll Now
-          </Link>
+            className="bg-[#ffffff]  text-[#0A0A0B] "
+            text="Enroll Now"
+          />
         </div>
       </section>
     </div>

@@ -1,48 +1,48 @@
+import Button from "@/components/Button";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
-const HeroSection = () => {
+const TopBanner = () => {
   return (
-    <section className="bg-[#01010C] relative h-[740px] flex flex-col items-center justify-center gap-m border-b border-[#333333] ">
-      <h1 className="font-roboto text-[#FFFFFF] font-extrabold text-[60px] leading-[81.84px] text-center mb-m">
+    <section className="bg-[#01010C] relative h-[46.25rem] flex flex-col items-center justify-center gap-m border-b border-[#333333] ">
+      <h1 className="font-roboto text-[#FFFFFF] font-extrabold text-[3.75rem] leading-[5.115rem] text-center mb-m">
         Enhance{" "}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#714DFF]   via-[#9C83FF]  to-[#E151FF]">
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#714DFF] via-[#9C83FF] to-[#E151FF]">
           Your Skills to Propel
         </span>{" "}
         <br /> Your Career Forward.
       </h1>
-      <p className="font-roboto font-bold text-[#FFFFFF] text-s leading-[27.8px] text-center">
+      <p className="font-roboto font-bold text-[#FFFFFF] text-[1rem] leading-[1.7375rem] text-center">
         Master the Tools and Knowledge Needed to Excel in Your Professional
         Journey.
       </p>
       <div className="flex gap-5 mt-4">
-        <Link
+        <Button
           href="#"
-          className=" text-[#ffffff] font-bold text-xs flex justify-center items-center leading-[21.82px] rounded-[20px] border border-[#ffffff] w-[162px] h-[46px]"
-        >
-          Get Started
-        </Link>
-        <Link
+          className="text-[#ffffff] border-[2px] border-[#ffffff]"
+          text="Get Started"
+        />
+        <Button
           href="/enroll"
-          className="bg-[#ffffff] font-bold text-[#0A0A0B] border text-xs flex justify-center items-center leading-[21.82px] rounded-[20px] w-[142px] h-[46px]"
-        >
-          Enroll Now
-        </Link>
+          className="bg-[#ffffff] text-[#0A0A0B]"
+          text="Enroll Now"
+        />
       </div>
+
+      {/* Image elements */}
       <Image
         alt="vectorImg"
         src="/images/landingPage/rocket.png"
         width={173}
         height={152}
-        className="absolute top-40 left-32 animate-move-right "
+        className="absolute top-40 left-32 animate-move-right"
       />
       <Image
         alt="vectorImg"
         src="/images/landingPage/baloon.png"
         width={155}
         height={196}
-        className="absolute top-10 right-32 animate-move-up-down "
+        className="absolute top-10 right-32 animate-move-up-down"
       />
       <Image
         alt="vectorImg"
@@ -69,4 +69,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default TopBanner;
