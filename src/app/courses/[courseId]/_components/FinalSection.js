@@ -42,27 +42,6 @@ export default function FinalSection() {
         </div>
       </div>
       <AnimateImages />
-      <div className="flex flex-col gap-4 items-center mt-11 min-h-[500px] justify-center">
-        <h1 className=" font-[700] text-[48px]">
-          Grow
-          <span className="ml-3 mr-3 text-transparent bg-clip-text bg-gradient-to-r from-[#714DFF] via-[#E151FF] to-[#FFF759]">
-            Better With Us
-          </span>
-          Today
-        </h1>
-        <div className="font-[400] text-[18px] w-[44%] text-center">
-          Improve the quality of customer relationships,generate leads,and
-          maximize product sales with just one integrated CRMtool
-        </div>
-        <div className="flex text-[16px] font-[600]">
-          <button className="border-[2px] rounded-lg px-8 p-2 min-w-[140px]">
-            Get Help
-          </button>
-          <button className="border rounded-lg px-8 p-2 ml-4 min-w-[140px] bg-white text-black">
-            Enroll
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
