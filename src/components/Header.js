@@ -15,22 +15,22 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white shadow h-[137px] p-[20px_60px_20px_60px] ">
+    <header className="bg-[#01010C] flex h-[120px]  ">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between  "
+        className="  flex w-full mx-[100px] items-center justify-between  "
       >
-        <div className="flex lg:flex-1 w-[300px] h-[96.61px]">
-          <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-6">
+        <div className="flex items-center w-[203px] h-[60px]">
+          <Link href="/" className=" flex gap-2">
             <Image
-              src="/images/headerIcon.png"
-              width={80}
-              height={96.61}
+              src="/images/headerIcon.svg"
+              width={60}
+              height={60}
               alt="Logo"
-              className=" mr-3"
+              className=""
             />
-            <span className="text-m font-semibold text-[#7C56CF] w-[198px] h-[38px] leading-m ">
-              Brand Name
+            <span className="text-[36px] font-bold text-[#ffffff] w-[198px] h-[38px] leading-[49.1px] ">
+              Learnix
             </span>
           </Link>
         </div>
@@ -44,42 +44,38 @@ export default function Header() {
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
           </button>
         </div>
-        <PopoverGroup className="flex justify-between w-[857px] h-[48px] gap-[50px] items-center ">
-          {[
-            "Home",
-            "Courses",
-            "Consultation",
-            "Community",
-            "Terms & Policy",
-          ].map((item) => (
-            <Link
-              href={
-                item === "Community"
-                  ? "/community/featuredQuestions"
-                  : `/${item.toLowerCase()}`
-              }
-              key={item}
-              onClick={() => handleMenuItemClick(item)}
-              className={`text-xs font-normal font-roboto leading-xs ${activeItem === item ? "text-primary" : "text-secondary-1000"}`}
-            >
-              {item}
-            </Link>
-          ))}
-          <div className="lg:flex  flex justify-between gap-[21px] w-[205px] h-[48px]">
-            <Link
-              href="/login"
-              className=" text-center text-s font-medium leading-6 font-roboto flex justify-center items-center text-primary border border-primary rounded-m w-[82px] h-[48px] "
-            >
-              Login
-            </Link>
-            <Link
-              href="/signup"
-              className="text-center text-s font-medium leading-6 font-roboto flex justify-center items-center bg-[#7C56CF] text-white rounded-m w-[102px] h-[48px]"
-            >
-              Sign Up
-            </Link>
-          </div>
+        <PopoverGroup className="flex justify-between  h-[48px] gap-[44px] items-center ">
+          {["Home", "Courses", "About Us", "Community", "Resources"].map(
+            (item) => (
+              <Link
+                href={
+                  item === "Community"
+                    ? "/community/featuredQuestions"
+                    : `/${item.toLowerCase()}`
+                }
+                key={item}
+                onClick={() => handleMenuItemClick(item)}
+                className={`text-[16px] font-bold font-roboto leading-[21.82px] ${activeItem === item ? "text-[#6C63FF]" : "text-[#ffffff]"}`}
+              >
+                {item}
+              </Link>
+            ),
+          )}
         </PopoverGroup>
+        <div className="lg:flex  flex items-center w-[205px] h-[48px]">
+          <Link
+            href="/login"
+            className=" text-center text-[16px] font-bold leading-[21.82px] font-roboto flex justify-center items-center text-[#ffffff] rounded-[20px] w-[75px] h-[38px] "
+          >
+            Login
+          </Link>
+          <Link
+            href="/signup"
+            className="text-center text-[16px] font-bold leading-[21.82px] font-roboto flex justify-center items-center bg-[#FFFFFF] text-[#1C1C1C] rounded-[20px] w-[92px] h-[38px]"
+          >
+            Sign Up
+          </Link>
+        </div>
       </nav>
       <Dialog
         open={mobileMenuOpen}
