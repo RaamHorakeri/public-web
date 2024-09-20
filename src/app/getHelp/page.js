@@ -1,23 +1,24 @@
 import Image from "next/image";
 import Container from "./_components/Container";
+import JoinNow from "@/components/JoinNow";
 
 const data = [
   {
     id: 1,
     name: "Candy Crom",
-    src: "/needHelp/candy-crom.png",
+    src: "/needHelp/candy-crom.svg",
     text: "Our expert specializes in development with Java",
   },
   {
     id: 2,
     name: "Candy Crom",
-    src: "/needHelp/abraham.png",
+    src: "/needHelp/abraham.svg",
     text: "Our expert specializes in development with Java",
   },
   {
     id: 3,
     name: "Candy Crom",
-    src: "/needHelp/david.png",
+    src: "/needHelp/david.svg",
     text: "Our expert specializes in development with Java",
   },
 ];
@@ -39,7 +40,7 @@ export default function GetHelp() {
         <div className="w-[30%]  max-w-[400px]">
           <div className=" h-full flex flex-col justify-between">
             <Image
-              src="/needHelp/help-chat.png"
+              src="/needHelp/help-chat.svg"
               width={370}
               height={180}
               alt="chat"
@@ -59,6 +60,7 @@ export default function GetHelp() {
           </div>
         </div>
       </div>
+      <JoinNow />
     </>
   );
 }
