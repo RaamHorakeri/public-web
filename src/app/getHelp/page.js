@@ -1,219 +1,171 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import Input from "@/components/Input";
-import ScheduleModal from "@/app/getHelp/_components/ScheduleModal";
 
-const expertData = [
+const ideas = [
   {
-    name: "John Doe",
-    description:
-      "Acquire a profound understanding of Java programming, encompassing vital concepts such as object-oriented programming, data structures, and algorithms.",
     id: 1,
+    icon: "/images/helpPage/bulb3.svg",
+    head: "Come up with concepts",
+    body: "for a retro style arcade game",
   },
   {
-    name: "John Doe",
-    description:
-      "Acquire a profound understanding of Java programming, encompassing vital concepts such as object-oriented programming, data structures, and algorithms.",
     id: 2,
+    icon: "/images/helpPage/bulb.svg",
+    head: "Come up with concepts",
+    body: "for a retro style arcade game",
   },
   {
-    name: "John Doe",
-    description:
-      "Acquire a profound understanding of Java programming, encompassing vital concepts such as object-oriented programming, data structures, and algorithms.",
     id: 3,
+    icon: "/images/helpPage/bulb1.svg",
+    head: "Come up with concepts",
+    body: "for a retro style arcade game",
+  },
+  {
+    id: 4,
+    icon: "/images/helpPage/bulb2.svg",
+    head: "Come up with concepts",
+    body: "for a retro style arcade game",
   },
 ];
 
 const Page = () => {
-  const [open, setOpen] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [firstMessageSent, setFirstMessageSent] = useState(false);
 
-  const [message, setMessage] = useState("");
-  const [chatLog, setChatLog] = useState([]);
-
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      setChatLog([...chatLog, message]);
-      setMessage("");
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setOpen(true);
-    setIsSubmitted(false);
-  };
-
-  const handleScheduleSubmit = (e) => {
+  const sendMessage = (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    if (newMessage.trim() === "") return;
+
+    const userMessage = { id: Date.now(), text: newMessage, type: "sent" };
+    setMessages([...messages, userMessage]);
+    setNewMessage("");
+
+    setFirstMessageSent(true);
+
+    setTimeout(() => {
+      const botMessage = {
+        id: Date.now(),
+        text: "Thank you for your message!",
+        type: "received",
+      };
+      setMessages((prev) => [...prev, botMessage]);
+    }, 1000);
   };
 
   return (
-    <div className="bg-secondary-100 h-[100%]  flex flex-col gap-20 ">
-      <section className="bg-[#F4F1FA] py-0 px-[87px] h-[320px] flex flex-col items-center justify-center gap-6">
-        <h1 className="font-roboto font-semibold text-[32px] leading-[38.4px] text-center text-[#7C56CF]">
-          Get instant help from AI or Connect with our Experts
-        </h1>
-        <p className="font-roboto font-normal text-[14px] leading-[16.8px] text-center">
-          Home/Consultation
-        </p>
-      </section>
-
-      <section className="w-[600px]  bg-[#F2EEFA] mx-auto rounded-b-[30px] ">
-        <div className="flex flex-col h-screen  w-[600px]  ">
-          <div className="flex items-center p-4 mb-4 h-[75px] bg-white ">
-            <Image
-              src="/images/arrow-left.png"
-              alt="leftArrow"
-              width={24}
-              height={24}
-              className="cursor-pointer"
-            />
-            <div className="ml-2">
-              <h2 className="font-bold font-roboto text-s leading-[27.28px] text-primary ">
-                AI is here to help
-              </h2>
-              <span className="text-[17px] font-roboto font-medium leading-[23.19px] text-green-600">
-                Online
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center justify-between overflow-y-auto mt-10 gap-5 ">
-            <div className="flex flex-col  items-center gap-6">
-              <div className=" h-[158px] w-[317px] flex  flex-col justify-center items-center gap-2 ">
-                <Image
-                  src="/images/menuChatIcon.png"
-                  width={28}
-                  height={28}
-                  alt="chat memu"
-                />
-                <h3 className="font-bold font-roboto text-[14px] leading-[19.1px] mb-2">
-                  Explain
-                </h3>
-                <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px] ">
-                  Explain Quantum physics
-                </div>
-                <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">
-                  What are wormholes explain like i am 5
-                </div>
-              </div>
-
-              <div className="flex h-[202px] w-[317px] flex-col justify-center items-center gap-2 ">
-                <Image
-                  src="/images/edit-2.png"
-                  width={24}
-                  height={24}
-                  alt="editIcon"
-                />
-                <h3 className="font-semibold mb-2">Write and Edit</h3>
-                <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">
-                  Write a tweet about global warming
-                </div>
-                <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">
-                  Write a poem about flower and love
-                </div>
-                <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">
-                  Write a rap song lyrics about
-                </div>
-              </div>
-
-              <div className=" flex h-[202px] w-[317px] flex-col justify-center items-center gap-2 ">
-                <Image
-                  src="/images/translate.png"
-                  width={28}
-                  height={28}
-                  alt="translateIcon"
-                />
-                <h3 className="font-semibold mb-2">Translate</h3>
-                <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">
-                  How do you say “how are you” in korean?
-                </div>
-                <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">
-                  Write a poem about flower and love
-                </div>
-                <div className="bg-white flex justify-center items-center rounded-lg shadow-sm w-[317px] h-[40px]">
-                  Write a rap song lyrics about
+    <div className="flex flex-col min-h-screen bg-[#FAFAFA]">
+      <div className="flex flex-col justify-between border-[2px] w-[70%] mx-auto mt-20 border-[#D2D2D2] h-[170vh] mb-20">
+        <div className="flex-1 overflow-y-auto p-4 ">
+          {!firstMessageSent && (
+            <div className="flex flex-col items-center justify-center gap-4 m-5">
+              <Image
+                alt="chatIcon"
+                src="/images/chat.svg"
+                width={350}
+                height={350}
+              />
+              <p className="text-[36px] font-bold leading-[42px] text-[#1C1C1C]">
+                Hello, AI Assistance is here to help.
+              </p>
+              <p className="text-[16px] leading-[21.82px] font-bold text-[#656565] text-center">
+                Choose a prompt below or write your own question
+                <br />
+                to start chatting with Ai
+              </p>
+              <div className="mt-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-4">
+                  {ideas.map((idea, index) => (
+                    <div
+                      key={index}
+                      className="w-[385px] h-[152px] rounded-[30px] border-[2px] border-[#D2D2D2] p-6 flex flex-col gap-2"
+                    >
+                      <Image
+                        alt="icon"
+                        src={idea.icon}
+                        width={32}
+                        height={32}
+                      />
+                      <h2 className="text-[16px] font-bold leading-[21.82px]">
+                        {idea.head}
+                      </h2>
+                      <p className="text-[16px] font-normal leading-[21.82px] text-[#494949]">
+                        {idea.body}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
+          )}
 
-            <div className=" flex flex-col items-end  w-full pr-4 ">
-              {chatLog.map((msg, index) => (
+          {firstMessageSent && (
+            <div className="space-y-4">
+              <Image
+                src="/images/helpPage/ai.svg"
+                alt="replyIcon"
+                width={60}
+                height={60}
+                className="mx-auto mt-[10%] mb-[10%]"
+              />
+
+              {messages.map((message) => (
                 <div
-                  key={index}
-                  className="bg-white max-w-fit p-3 rounded-lg shadow-sm mb-2  "
+                  key={message.id}
+                  className={`flex ${message.type === "sent" ? "justify-end" : "justify-start"}`}
                 >
-                  {msg}
+                  <div className="flex items-start gap-3">
+                    {message.type !== "sent" && (
+                      <Image
+                        src="/images/helpPage/ai.svg"
+                        alt="replyIcon"
+                        width={30}
+                        height={30}
+                      />
+                    )}
+                    <div
+                      className={`rounded-lg p-5 inline-block max-w-[600px] whitespace-normal break-words overflow-hidden text-wrap ${
+                        message.type === "sent"
+                          ? "bg-[#ECECEC] text-[#1C1C1C] text-[16px] font-normal leading-[21.82px]"
+                          : "bg-inherit text-black text-[16px] font-normal leading-[21.82px]"
+                      }`}
+                    >
+                      {message.text}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
-
-            <div className="flex relative  items-center mt-4  ">
-              <Input
-                type="text"
-                value={message}
-                placeholder="Hello ,how are you today?"
-                onChange={(e) => setMessage(e.target.value)}
-                width="w-[500px]"
-                height="h-[56px]"
-                className="flex-1 px-[16px] rounded-[30px] shadow-lg border border-gray-300 resize-none"
-              />
-              <button
-                onClick={handleSendMessage}
-                className="ml-2 absolute  text-white p-2 rounded-full  right-0 top w[45.4px] h-[45.9px]"
-              >
-                <Image
-                  src="/images/send.png"
-                  alt="sendIcon"
-                  width={24}
-                  height={24}
-                />
-              </button>
-            </div>
-          </div>
+          )}
         </div>
-      </section>
 
-      <section className=" flex flex-col items-center justify-center bg-white  h-[500px] gap-[30px] ">
-        <div>
-          <h3 className="font-roboto font-semibold text-m leading-m text-[#3B2174] ">
-            Or You Can Meet With Experts
-          </h3>
-        </div>
-        <div className="flex items-center justify-between w-[1284px] h-[342px] gap-[30px]  ">
-          {expertData.map((expert, index) => (
-            <div
-              key={index}
-              className=" w-[396px] h-[342px] bg-secondary-100 flex flex-col items-center justify-evenly "
+        <form
+          onSubmit={sendMessage}
+          className="relative flex items-center justify-center p-6"
+        >
+          <div className="relative w-[70%] mb-[7%]">
+            <input
+              type="text"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Send a message..."
+              className="p-[24px] rounded-[30px] text-[#1C1C1C] h-[96px] bg-[#ECECEC] w-full resize-none outline-none"
+            />
+            <button
+              type="submit"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-transparent"
             >
-              <h6 className=" font-roboto font-bold text-[15.3px] leading-[28.7px] ">
-                {expert.name}
-              </h6>
-              <p className="text-center w-[370px] font-roboto font-normal text-[15.3px] leading-[28.7px] ">
-                {expert.description}
-              </p>
-              <button
-                onClick={handleSubmit}
-                className=" bg-primary text-secondary-100 w-[353.91px] h-[48px] rounded-[10px] font-roboto font-medium text-s leading-6 "
-              >
-                Schedule Call
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {open && (
-        <ScheduleModal
-          open={open}
-          setOpen={setOpen}
-          handleScheduleSubmit={handleScheduleSubmit}
-          isSubmitted={isSubmitted}
-        />
-      )}
+              <Image
+                src="/images/send.svg"
+                alt="sendIcon"
+                width={48}
+                height={48}
+              />
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
