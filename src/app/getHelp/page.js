@@ -1,5 +1,3 @@
-"use client";
-import React, { useState } from "react";
 import Image from "next/image";
 
 const ideas = [
@@ -169,5 +167,3 @@ const Page = () => {
     </div>
   );
 };
-
-export default Page;
