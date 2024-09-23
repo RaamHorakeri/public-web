@@ -1,5 +1,5 @@
 import Image from "next/image";
-export default function Container({ name, src, text }) {
+export default function ExpertDetails({ name, src, text }) {
   return (
     <div className="w-[20%] flex flex-col gap-3 mt-10">
       <Image src={src} width={180} height={95} alt={name} />

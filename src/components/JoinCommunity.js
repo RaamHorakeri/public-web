@@ -1,6 +1,6 @@
 import Globe from "./Globe";
 import Button from "./Button";
-export default function JoinNow() {
+export default function JoinCommunity() {
   return (
     <section className="flex flex-col justify-center items-center text-center gap-[2.5rem] bg-black">
       <h1 className="w-[46.625rem] h-[8.375rem] font-roboto font-extrabold text-[3.25rem] leading-[4.440625rem] text-[#ffffff] mt-20">

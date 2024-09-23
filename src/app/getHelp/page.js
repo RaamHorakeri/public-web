@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Container from "./_components/Container";
-import JoinNow from "@/components/JoinNow";
+import ExpertDetails from "./_components/ExpertDetails";
+import JoinCommunity from "@/components/JoinCommunity";
 
 const data = [
   {
@@ -33,7 +33,7 @@ export default function GetHelp() {
           </div>
           <div className="flex gap-[90px]">
             {data.map((eachItem) => (
-              <Container {...eachItem} key={eachItem.id} />
+              <ExpertDetails {...eachItem} key={eachItem.id} />
             ))}
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function GetHelp() {
           </div>
         </div>
       </div>
-      <JoinNow />
+      <JoinCommunity />
     </>
   );
 }

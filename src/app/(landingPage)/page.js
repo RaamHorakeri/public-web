@@ -5,7 +5,7 @@ import image2 from "../../../public/images/landingPage/image2.png";
 import image3 from "../../../public/images/landingPage/image3.png";
 import image4 from "../../../public/images/landingPage/image4.png";
 
-import JoinNow from "@/components/JoinNow";
+import JoinCommunity from "@/components/JoinCommunity";
 
 import GrowSection from "@/components/GrowSection";
 import TopBanner from "./_components/TopBanner";
@@ -76,7 +76,7 @@ export default function Home() {
         ))}
       </section>
 
-      <JoinNow />
+      <JoinCommunity />
       <GrowSection />
     </div>
   );
