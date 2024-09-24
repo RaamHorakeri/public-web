@@ -104,6 +104,38 @@ const Page = () => {
     }
   };
 
+  const googleHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const result = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/oauth/url`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            oauth_provider: "google",
+            oauth_purpose: "signup",
+          }),
+        },
+      );
+
+      const data = await result.json();
+
+      console.log(data);
+
+      if (result.ok && data.oauth_url) {
+        window.location.href = data.oauth_url;
+      } else {
+        console.error("Error: Could not get OAuth URL", data);
+      }
+    } catch (error) {
+      console.error("Error occurred during Google Sign-In:", error);
+    }
+  };
+
   return (
     <section className=" bg-[#ffffff] flex h-[1024px] items-center justify-center p-[80px] gap-4 ">
       <div className="flex flex-col justify-between w-[44%] h-[100%]">
@@ -184,11 +216,11 @@ const Page = () => {
               </div>
             </div> */}
 
-            <button className="w-full p-[10px] bg-[#1C1C1C] text-white rounded-[22px] text-[18px] font-bold leading-[24.55px] ">
+            <button className="w-full p-[10px] bg-[#1C1C1C] text-white rounded-[22px] text-[18px] font-bold leading-[24.55px] my-4 ">
               Register
             </button>
 
-            <div className="flex items-center justify-between my-4">
+            <div className="flex items-center justify-between">
               <hr className="w-full border-[#CFCFCF]" />
               <span className="mx-2 text-[#A4A4A4] text-[16px] font-normal leading-[19.2px]">
                 or
@@ -197,7 +229,10 @@ const Page = () => {
             </div>
 
             <div className="flex space-x-4">
-              <button className="w-1/2 p-3 border border-[#A4A4A4] flex items-center justify-center rounded-[22px] text-[18px] leading-[24.55px] font-normal">
+              <button
+                onClick={googleHandler}
+                className="w-1/2 p-3 border border-[#A4A4A4] flex items-center justify-center rounded-[22px] text-[18px] leading-[24.55px] font-normal"
+              >
                 <Image
                   src="/images/google.png"
                   width={20}
