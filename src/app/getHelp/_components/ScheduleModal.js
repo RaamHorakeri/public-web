@@ -21,8 +21,8 @@ const ScheduleModal = ({
           transition
           className="fixed  inset-0 bg-gray-500 bg-opacity-75  transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
         />
-        <div className="fixed inset-0 z-10 w-screen ">
-          <div className="flex  items-end justify-center text-center  sm:items-center  sm:p-0">
+        <div className="fixed inset-0 z-10 w-screen grid place-content-center justify-stretch">
+          <div className="flex  items-end justify-center text-center  sm:items-center  sm:p-0 ">
             <DialogPanel
               transition
               className="rounded-md relative transform overflow-hidden w-[68%] max-w-[990px] bg-white text-center shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
