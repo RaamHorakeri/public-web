@@ -2,14 +2,20 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Cookies from "js-cookie";
 
 const AuthCallback = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    const clientId = Cookies.get("clientId");
+    if (!clientId) {
+      console.error("Error: No client ID found.");
+      return;
+    }
+
     const queryParams = new URLSearchParams(searchParams.toString());
-    const clientId = "123456";
     const callbackUrl = `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/authentication/callback/${clientId}?${queryParams}`;
 
     console.log(callbackUrl);

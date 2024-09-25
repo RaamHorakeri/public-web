@@ -1,12 +1,14 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import Input from "@/components/Input";
 import TwoFA from "@/components/TwoFa";
 import { signUp, signUpTwoFa } from "@/api/auth";
 import Spinner from "@/components/spinner";
+import Cookies from "js-cookie";
+import { nanoid } from "nanoid";
 
 const defaultErrorMsg = {
   username: null,
@@ -26,6 +28,19 @@ const Page = () => {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+  const [publicWebCustomId, setPublicWebCustomId] = useState("");
+
+  useEffect(() => {
+    const existingClientId = Cookies.get("clientId");
+    if (existingClientId) {
+      setPublicWebCustomId(existingClientId);
+    } else {
+      const newClientId = nanoid();
+      Cookies.set("clientId", newClientId);
+      setPublicWebCustomId(newClientId);
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -136,6 +151,38 @@ const Page = () => {
     }
   };
 
+  const gitHubHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const result = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/oauth/url`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            oauth_provider: "github",
+            oauth_purpose: "signup",
+          }),
+        },
+      );
+
+      const data = await result.json();
+
+      console.log(data);
+
+      if (result.ok && data.oauth_url) {
+        window.location.href = data.oauth_url;
+      } else {
+        console.error("Error: Could not get OAuth URL", data);
+      }
+    } catch (error) {
+      console.error("Error occurred during GitHub Sign-In:", error);
+    }
+  };
+
   return (
     <section className=" bg-[#ffffff] flex h-[1024px] items-center justify-center p-[80px] gap-4 ">
       <div className="flex flex-col justify-between w-[44%] h-[100%]">
@@ -240,9 +287,12 @@ const Page = () => {
                   alt="googleLogo"
                   className="mr-2"
                 />
-                Sign In with Google
+                Sign up with Google
               </button>
-              <button className="w-1/2 p-3 border border-[#A4A4A4] flex items-center justify-center rounded-[22px] text-[18px] leading-[24.55px] font-normal ">
+              <button
+                onClick={gitHubHandler}
+                className="w-1/2 p-3 border border-[#A4A4A4] flex items-center justify-center rounded-[22px] text-[18px] leading-[24.55px] font-normal "
+              >
                 <Image
                   src="/images/Github.png"
                   width={20}
@@ -250,7 +300,7 @@ const Page = () => {
                   alt="githubLogo"
                   className="mr-2"
                 />
-                Sign In with Github
+                Sign up with Github
               </button>
             </div>
 

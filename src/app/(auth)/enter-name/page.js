@@ -47,7 +47,7 @@ const EnterName = () => {
       Cookies.set("accessToken", access_token, { expires: expirationDate });
       console.log("Access token:", access_token);
 
-      // router.push('/dashboard');
+      router.push("/");
     }
   };
 
