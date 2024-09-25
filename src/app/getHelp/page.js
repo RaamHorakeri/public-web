@@ -49,7 +49,7 @@ export default function GetHelp() {
 
   const activeSlot = SlotData.filter((item) => item.id === activeID);
 
-  const SelectExpert = (id) => {
+  const selectExpert = (id) => {
     const expert = data.filter((item) => item.id === id);
     setSelectedExpert(expert[0]);
   };
@@ -67,7 +67,7 @@ export default function GetHelp() {
                 {...eachItem}
                 key={eachItem.id}
                 setOpen={setOpen}
-                SelectExpert={SelectExpert}
+                selectExpert={selectExpert}
               />
             ))}
           </div>
@@ -105,7 +105,7 @@ export default function GetHelp() {
           setOpenDetails={setOpenDetails}
           activeId={activeID}
           setActiveId={setActiveId}
-          SlotData={SlotData}
+          slotData={SlotData}
           activeDate={activeDate}
           setActiveDate={setActiveDate}
           selectedExpert={selectedExpert}

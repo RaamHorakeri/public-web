@@ -9,7 +9,7 @@ const ScheduleModal = ({
   setOpenDetails,
   activeId,
   setActiveId,
-  SlotData,
+  slotData,
   activeDate,
   setActiveDate,
   selectedExpert,
@@ -82,7 +82,7 @@ const ScheduleModal = ({
                     </div>
                     {activeDate && (
                       <div className="mt-5 flex flex-wrap gap-4">
-                        {SlotData.map((eachSlot) => (
+                        {slotData.map((eachSlot) => (
                           <TimeSlot
                             slot={eachSlot}
                             key={eachSlot.id}

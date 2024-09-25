@@ -5,7 +5,7 @@ export default function ExpertDetails({
   text,
   id,
   setOpen,
-  SelectExpert,
+  selectExpert,
 }) {
   return (
     <div className="w-[20%] flex flex-col gap-3 mt-10">
@@ -18,7 +18,7 @@ export default function ExpertDetails({
         className="font-[700] text-[16px] text-[#06006C] cursor-pointer"
         onClick={() => {
           setOpen(true);
-          SelectExpert(id);
+          selectExpert(id);
         }}
       >
         Connect Here
