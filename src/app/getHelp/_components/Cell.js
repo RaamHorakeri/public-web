@@ -24,11 +24,10 @@ const Cell = ({
         className={clsx(
           "h-[45px]   flex items-center justify-center select-none transition-colors rounded-[48px]",
           {
-            "cursor-pointer hover:bg-gray-200 active:bg-gray-200 w-[48px]":
-              !isActive && onClick,
+            "cursor-pointer  active:bg-gray-200 w-[48px]": !isActive && onClick,
             "font-bold text-white bg-black w-[48px]":
               isActive && isCurrentMonth,
-            "bg-[#EBEAFF]": isCurrentMonth && isInRange,
+            "bg-[#EBEAFF] hover:bg-gray-200": isCurrentMonth && isInRange,
           },
           className,
         )}

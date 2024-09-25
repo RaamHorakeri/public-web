@@ -6,6 +6,7 @@ import ScheduleModal from "./_components/ScheduleModal";
 import ScheduleDetails from "./_components/ScheduleDetails";
 import Scheduled from "./_components/Scheduled";
 import { useState } from "react";
+import Link from "next/link";
 
 const SlotData = [
   { id: 1, slot: "9.30 - 10.00 AM" },
@@ -87,9 +88,11 @@ export default function GetHelp() {
                 Our expert specializes in development with Java Our expert
                 specializes in development with Java
               </div>
-              <div className="font-[700] text-[16px] text-[#06006C] cursor-pointer">
-                Chat Here
-              </div>
+              <Link href="/getHelp/chat">
+                <div className="font-[700] text-[16px] text-[#06006C] cursor-pointer">
+                  Chat Here
+                </div>
+              </Link>
             </div>
           </div>
         </div>
