@@ -12,9 +12,6 @@ const SlotData = [
   { id: 2, slot: "10.00 - 10.30 AM" },
   { id: 3, slot: "10.30 - 11.00 AM" },
   { id: 4, slot: "11.00 - 11.30 AM" },
-  { id: 5, slot: "11.30 - 12.00 PM" },
-  { id: 6, slot: "12.00 - 12.30 PM" },
-  { id: 7, slot: "12.30 - 1.00 PM" },
   { id: 8, slot: "1.00 - 1.30 PM" },
   { id: 9, slot: "1.30 - 2.00 PM" },
   { id: 10, slot: "2.00 - 2.30 PM" },
@@ -106,6 +103,7 @@ export default function GetHelp() {
           activeId={activeID}
           setActiveId={setActiveId}
           SlotData={SlotData}
+          activeDate={activeDate}
           setActiveDate={setActiveDate}
           selectedExpert={selectedExpert}
         />

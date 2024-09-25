@@ -23,7 +23,7 @@ const ScheduleDetails = ({
           <div className="flex min-h-full items-end justify-center p-4 text-center  sm:items-center  sm:p-0">
             <DialogPanel
               transition
-              className="rounded-md relative transform overflow-hidden w-[68%] bg-white text-center shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
+              className="max-w-[900px] rounded-[12px] relative transform overflow-hidden w-[68%] bg-white text-center shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
             >
               <div className="flex p-8">
                 <div className=" flex flex-col  w-[45%]">
