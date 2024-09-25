@@ -36,3 +36,12 @@ export const isEmptyObject = (res) =>
   !Array.isArray(res) &&
   res !== null &&
   Object.keys(res).length === 0;
+
+export const formatDate = (date) => {
+  return date.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
