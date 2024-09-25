@@ -26,7 +26,7 @@ const Scheduled = ({
               transition
               className="rounded-[12px] relative transform overflow-hidden w-[40%] max-w-[500px] bg-white text-center shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
             >
-              <div className="flex flex-col items-center p-5">
+              <div className="flex flex-col items-center p-5 py-10">
                 <div className="flex justify-center items-center">
                   <span
                     className="material-symbols-outlined text-[#5BD3C5] mr-3"

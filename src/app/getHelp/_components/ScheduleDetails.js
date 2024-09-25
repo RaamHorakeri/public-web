@@ -80,7 +80,7 @@ const ScheduleDetails = ({
                     placeholder="Enter Email"
                     className="p-2 rounded-md w-full border-[#D2D2D2] border-[1px] mt-1 outline-none"
                   />
-                  <div className="flex justify-between items-center mt-3">
+                  <div className="flex justify-between items-center mt-6">
                     <div
                       onClick={() => {
                         setOpenDetails(false);
