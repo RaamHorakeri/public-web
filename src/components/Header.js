@@ -1,14 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = Cookies.get("accessToken");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    Cookies.remove("accessToken");
+    setIsLoggedIn(false);
+
+    router.push("/");
+  };
 
   const handleMenuItemClick = (item) => {
     setActiveItem(item);
@@ -16,13 +34,13 @@ export default function Header() {
 
   return (
     <div>
-      <header className="bg-[#01010C] flex h-[120px]  ">
+      <header className="bg-[#01010C] flex h-[120px]">
         <nav
           aria-label="Global"
-          className="  flex w-full mx-[100px] items-center justify-between  "
+          className="flex w-full mx-[100px] items-center justify-between"
         >
           <div className="flex items-center w-[203px] h-[60px]">
-            <Link href="/" className=" flex gap-2">
+            <Link href="/" className="flex gap-2">
               <Image
                 src="/images/headerIcon.svg"
                 width={60}
@@ -30,7 +48,7 @@ export default function Header() {
                 alt="Logo"
                 className=""
               />
-              <span className="text-[36px] font-bold text-[#ffffff] w-[198px] h-[38px] leading-[49.1px] ">
+              <span className="text-[36px] font-bold text-[#ffffff] w-[198px] h-[38px] leading-[49.1px]">
                 Learnix
               </span>
             </Link>
@@ -45,7 +63,7 @@ export default function Header() {
               <Bars3Icon aria-hidden="true" className="h-6 w-6" />
             </button>
           </div>
-          <PopoverGroup className="flex justify-between  h-[48px] gap-[44px] items-center ">
+          <PopoverGroup className="flex justify-between h-[48px] gap-[44px] items-center">
             {["Home", "Courses", "About Us", "Community", "Resources"].map(
               (item) => (
                 <Link
@@ -56,26 +74,40 @@ export default function Header() {
                   }
                   key={item}
                   onClick={() => handleMenuItemClick(item)}
-                  className={`text-[16px] font-bold font-roboto leading-[21.82px] ${activeItem === item ? "text-[#6C63FF]" : "text-[#ffffff]"}`}
+                  className={`text-[16px] font-bold font-roboto leading-[21.82px] ${
+                    activeItem === item ? "text-[#6C63FF]" : "text-[#ffffff]"
+                  }`}
                 >
                   {item}
                 </Link>
               ),
             )}
           </PopoverGroup>
-          <div className="lg:flex  flex items-center w-[205px] h-[48px]">
-            <Link
-              href="/login"
-              className=" text-center text-[16px] font-bold leading-[21.82px] font-roboto flex justify-center items-center text-[#ffffff] rounded-[20px] w-[75px] h-[38px] "
-            >
-              Login
-            </Link>
-            <Link
-              href="/signup"
-              className="text-center text-[16px] font-bold leading-[21.82px] font-roboto flex justify-center items-center bg-[#FFFFFF] text-[#1C1C1C] rounded-[20px] w-[92px] h-[38px]"
-            >
-              Sign Up
-            </Link>
+
+          <div className="lg:flex flex items-center w-[205px] h-[48px]">
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="text-center text-[16px] font-bold leading-[21.82px] font-roboto flex justify-center items-center bg-[#FFFFFF] text-[#1C1C1C] rounded-[20px] w-[92px] h-[38px]"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-center text-[16px] font-bold leading-[21.82px] font-roboto flex justify-center items-center text-[#ffffff] rounded-[20px] w-[75px] h-[38px]"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="text-center text-[16px] font-bold leading-[21.82px] font-roboto flex justify-center items-center bg-[#FFFFFF] text-[#1C1C1C] rounded-[20px] w-[92px] h-[38px]"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </nav>
 
@@ -87,7 +119,7 @@ export default function Header() {
           <div className="fixed inset-0 z-10" />
           <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <Link href="#" className="-m-1.5 p-1.5">
+              <Link href="/" className="-m-1.5 p-1.5">
                 <Image
                   src="/path-to-logo/logo.png"
                   alt="Logo"
@@ -95,7 +127,7 @@ export default function Header() {
                   width={40}
                   height={40}
                 />
-                <span className="text-xl font-semibold">Brand Name</span>
+                <span className="text-xl font-semibold">Learnix</span>
               </Link>
               <button
                 type="button"
@@ -120,7 +152,11 @@ export default function Header() {
                       key={item}
                       onClick={() => handleMenuItemClick(item)}
                       href={`/${item.toLowerCase()}`}
-                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${activeItem === item ? "text-[#7C56CF] bg-gray-50" : "text-gray-900 hover:bg-gray-50"}`}
+                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
+                        activeItem === item
+                          ? "text-[#7C56CF] bg-gray-50"
+                          : "text-gray-900 hover:bg-gray-50"
+                      }`}
                     >
                       {item}
                     </Link>
@@ -145,7 +181,7 @@ export default function Header() {
           </DialogPanel>
         </Dialog>
       </header>
-      <div className="w-full h-[1px] bg-[#393939]  "></div>
+      <div className="w-full h-[1px] bg-[#393939]"></div>
     </div>
   );
 }
