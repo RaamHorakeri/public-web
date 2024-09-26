@@ -114,7 +114,7 @@ export default function Community() {
             Click of free credit to try DigitalOcean on us for the next 60 days.
             Thank you for being a part of our community!
           </div>
-          <button className="font-[700] text-[16px] w-[60%] py-3 text-white bg-black my-2 rounded-md">
+          <button className="font-[700] text-[16px] w-[60%] py-3 text-white bg-black my-3 mb-8 rounded-md">
             Join Now
           </button>
         </div>
