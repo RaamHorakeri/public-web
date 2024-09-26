@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import Input from "@/components/Input";
 import TwoFA from "@/components/TwoFa";
-import { signUp, signUpTwoFa } from "@/api/auth";
+import { getOAuthUrl, signUp, signUpTwoFa } from "@/api/auth";
 import Spinner from "@/components/spinner";
 import Cookies from "js-cookie";
 import { nanoid } from "nanoid";
@@ -121,65 +121,25 @@ const Page = () => {
 
   const googleHandler = async (e) => {
     e.preventDefault();
-
     try {
-      const result = await fetch(
-        `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/oauth/url`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            oauth_provider: "google",
-            oauth_purpose: "signup",
-          }),
-        },
-      );
-
-      const data = await result.json();
-
-      console.log(data);
-
-      if (result.ok && data.oauth_url) {
-        window.location.href = data.oauth_url;
-      } else {
-        console.error("Error: Could not get OAuth URL", data);
-      }
+      const oauthUrl = await getOAuthUrl("google");
+      window.location.href = oauthUrl;
     } catch (error) {
-      console.error("Error occurred during Google Sign-In:", error);
+      alert(
+        "An error occurred while trying to sign up with Google. Please try again.",
+      );
     }
   };
 
   const gitHubHandler = async (e) => {
     e.preventDefault();
-
     try {
-      const result = await fetch(
-        `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/oauth/url`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            oauth_provider: "github",
-            oauth_purpose: "signup",
-          }),
-        },
-      );
-
-      const data = await result.json();
-
-      console.log(data);
-
-      if (result.ok && data.oauth_url) {
-        window.location.href = data.oauth_url;
-      } else {
-        console.error("Error: Could not get OAuth URL", data);
-      }
+      const oauthUrl = await getOAuthUrl("github");
+      window.location.href = oauthUrl;
     } catch (error) {
-      console.error("Error occurred during GitHub Sign-In:", error);
+      alert(
+        "An error occurred while trying to sign up with GitHub. Please try again.",
+      );
     }
   };
 
