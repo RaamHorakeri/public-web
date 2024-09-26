@@ -1,3 +1,121 @@
+export const getOAuthUrl = async (oauthProvider, oauthPurpose = "signup") => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/oauth/url`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          oauth_provider: oauthProvider,
+          oauth_purpose: oauthPurpose,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(`Error fetching OAuth URL: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data?.oauth_url) {
+      return data.oauth_url;
+    } else {
+      throw new Error("Error: Could not get OAuth URL");
+    }
+  } catch (error) {
+    console.error(`Error occurred during ${oauthProvider} Sign-Up:`, error);
+    throw error;
+  }
+};
+
+export const registerUser = async (name, email) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Error registering user");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error registering user:", error);
+    throw error;
+  }
+};
+
+export const verifyOtp = async (activation_id, activation_code) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/password/activation`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ activation_id, activation_code }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Error verifying OTP");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error verifying OTP:", error);
+    throw error;
+  }
+};
+
+export const setPasswordApi = async (
+  activationId,
+  activationCode,
+  clientId,
+  password,
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/password/reset`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          activation_id: activationId,
+          activation_code: activationCode,
+          client_id: clientId,
+          password,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Error setting password");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error setting password:", error);
+    throw error;
+  }
+};
+
 export const signUp = async (formData) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AUTH_API_URL}/account/register`,

@@ -15,14 +15,14 @@ export default function Header() {
   const router = useRouter();
 
   useEffect(() => {
-    const token = Cookies.get("accessToken");
+    const token = Cookies.get("access_token");
     if (token) {
       setIsLoggedIn(true);
     }
   }, []);
 
   const handleLogout = () => {
-    Cookies.remove("accessToken");
+    Cookies.remove("access_token");
     setIsLoggedIn(false);
 
     router.push("/");

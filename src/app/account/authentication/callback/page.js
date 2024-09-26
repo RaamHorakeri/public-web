@@ -3,27 +3,32 @@
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
+import Spinner from "@/components/spinner";
 
 const AuthCallback = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const clientId = Cookies.get("clientId");
-    if (!clientId) {
-      console.error("Error: No client ID found.");
-      return;
-    }
+    const handleAuthCallback = async () => {
+      const clientId = Cookies.get("clientId");
+      if (!clientId) {
+        console.error("Error: No client ID found.");
+        alert("An error occurred: No client ID found.");
+        return;
+      }
 
-    const queryParams = new URLSearchParams(searchParams.toString());
-    const callbackUrl = `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/authentication/callback/${clientId}?${queryParams}`;
+      const queryParams = new URLSearchParams(searchParams.toString());
+      const callbackUrl = `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/authentication/callback/${clientId}?${queryParams}`;
 
-    console.log(callbackUrl);
+      try {
+        const response = await fetch(callbackUrl);
 
-    fetch(callbackUrl)
-      .then((response) => response.json())
-      .then(async (authData) => {
-        console.log("Callback API Response:", authData);
+        if (!response.ok) {
+          throw new Error(`Error fetching callback: ${response.status}`);
+        }
+
+        const authData = await response.json();
         const { data } = authData;
 
         if (data) {
@@ -31,18 +36,22 @@ const AuthCallback = () => {
             `/enter-name?data=${encodeURIComponent(JSON.stringify(data))}`,
           );
         } else {
-          console.error("Error: No data found in callback response.");
+          throw new Error("Error: No data found in callback response.");
         }
-      })
-      .catch((err) =>
-        console.error("Error during authentication callback:", err),
-      );
+      } catch (err) {
+        if (err.message.includes("409")) {
+          alert("User already exists. Please Login.");
+          router.push("/login");
+        }
+      }
+    };
+
+    handleAuthCallback();
   }, [searchParams, router]);
 
   return (
-    <div>
-      <h1>Processing Authentication...</h1>
-      <p>Please wait while we process your authentication.</p>
+    <div className="h-screen mt-52">
+      <Spinner />
     </div>
   );
 };
