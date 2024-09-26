@@ -59,8 +59,8 @@ const EnterName = () => {
 
       if (access_token) {
         const expirationDate = new Date(expires_at);
-        Cookies.set("accessToken", access_token, { expires: expirationDate });
-        console.log("Access token:", access_token);
+        Cookies.set("access_token", access_token, { expires: expirationDate });
+
         router.push("/");
       } else {
         throw new Error("Error: Access token not found in response.");

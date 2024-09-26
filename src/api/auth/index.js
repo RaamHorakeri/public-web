@@ -31,6 +31,91 @@ export const getOAuthUrl = async (oauthProvider, oauthPurpose = "signup") => {
   }
 };
 
+export const registerUser = async (name, email) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Error registering user");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error registering user:", error);
+    throw error;
+  }
+};
+
+export const verifyOtp = async (activation_id, activation_code) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/password/activation`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ activation_id, activation_code }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Error verifying OTP");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error verifying OTP:", error);
+    throw error;
+  }
+};
+
+export const setPasswordApi = async (
+  activationId,
+  activationCode,
+  clientId,
+  password,
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/password/reset`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          activation_id: activationId,
+          activation_code: activationCode,
+          client_id: clientId,
+          password,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Error setting password");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error setting password:", error);
+    throw error;
+  }
+};
+
 export const signUp = async (formData) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AUTH_API_URL}/account/register`,
