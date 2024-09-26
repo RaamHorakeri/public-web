@@ -69,10 +69,8 @@ const Pagination = ({ totalPages }) => {
         >
           <button
             onClick={() => handlePageChange(page)}
-            className={`flex items-center justify-center p-2 border rounded ${
-              page === currentPage
-                ? "bg-[#D9D9D9] text-white"
-                : "bg-white text-[#000000]"
+            className={`flex items-center justify-center p-2  rounded font-[400] text-[24px] ${
+              page === currentPage ? "text-black" : "text-[#8E8E8E]"
             } w-[32px] h-[32px]`}
           >
             {page}
@@ -101,22 +99,14 @@ const Pagination = ({ totalPages }) => {
       >
         <button
           disabled={currentPage === 1}
-          className="flex items-center justify-center text-black bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px]"
+          className="flex items-center justify-center text-black rounded-lg disabled:bg-black bg-black w-[32px] h-[32px]"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-4"
+          <span
+            className="material-symbols-outlined text-white "
+            style={{ fontSize: "15px" }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 19.5 8.25 12l7.5-7.5"
-            />
-          </svg>
+            west
+          </span>
         </button>
       </Link>
 
@@ -136,22 +126,14 @@ const Pagination = ({ totalPages }) => {
       >
         <button
           disabled={currentPage === totalPages}
-          className="flex items-center justify-center text-black bg-white rounded disabled:bg-white border border-[#D9D9D9] w-[32px] h-[32px]"
+          className="flex items-center justify-center text-black rounded-lg disabled:bg-black bg-black w-[32px] h-[32px]"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-4"
+          <span
+            className="material-symbols-outlined text-white"
+            style={{ fontSize: "15px" }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m8.25 4.5 7.5 7.5-7.5 7.5"
-            />
-          </svg>
+            east
+          </span>
         </button>
       </Link>
     </div>
