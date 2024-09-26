@@ -63,7 +63,7 @@ export default function Community() {
         ))}
         <div className=" flex items-center rounded-lg border border-[#E8E8E8] p-1">
           <Image
-            src="/community/vector.svg"
+            src="/community/search-icon.svg"
             alt="search"
             className="material-symbols-outlined mt-[2px] mr-2 text-[#494949] text-[20px] ml-1"
             width={18}
@@ -131,7 +131,7 @@ export default function Community() {
               </div>
               <div className=" flex items-center rounded-[10px] border border-[#E8E8E8] p-1 bg-white w-[68%] max-w-[500px] my-5">
                 <Image
-                  src="/community/vector.svg"
+                  src="/community/search-icon.svg"
                   alt="search"
                   className="material-symbols-outlined mt-[2px] mr-2 text-[#494949] text-[20px] ml-1"
                   width={18}
@@ -153,7 +153,7 @@ export default function Community() {
             </div>
             <div className=" w-[300px] h-[300px] ">
               <Image
-                src="/community/group.svg"
+                src="/community/flowers.svg"
                 height={100}
                 width={200}
                 alt="flowers"
