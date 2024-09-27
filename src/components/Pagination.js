@@ -2,9 +2,9 @@
 
 import Link from "next/link"; // Import Link from next/link
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef } from "react";
 
-const Pagination = ({ totalPages }) => {
+const Pagination = forwardRef(({ totalPages }, ref) => {
   const searchParams = useSearchParams();
   const pathname = usePathname(); // Get the current pathname
   const router = useRouter();
@@ -19,17 +19,21 @@ const Pagination = ({ totalPages }) => {
   const handlePageChange = (pageNumber) => {
     const params = new URLSearchParams(window.location.search);
     params.set("page", pageNumber);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
 
     router.push(`${window.location.pathname}?${params.toString()}`, {
       shallow: true,
+      scroll: false,
     });
 
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
+    }
+
+    if (ref?.current) {
+      ref.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
@@ -59,23 +63,15 @@ const Pagination = ({ totalPages }) => {
 
     return pageNumbers.map((page, index) =>
       typeof page === "number" ? (
-        <Link
+        <button
           key={index}
-          href={{
-            pathname: pathname,
-            query: { ...Object.fromEntries(searchParams.entries()), page }, // Keep existing searchParams and update the page
-          }}
-          shallow
+          onClick={() => handlePageChange(page)}
+          className={`flex items-center justify-center p-2  rounded font-[400] text-[24px] ${
+            page === currentPage ? "text-black" : "text-[#8E8E8E]"
+          } w-[32px] h-[32px]`}
         >
-          <button
-            onClick={() => handlePageChange(page)}
-            className={`flex items-center justify-center p-2  rounded font-[400] text-[24px] ${
-              page === currentPage ? "text-black" : "text-[#8E8E8E]"
-            } w-[32px] h-[32px]`}
-          >
-            {page}
-          </button>
-        </Link>
+          {page}
+        </button>
       ) : (
         <span key={index} className="p-2">
           {page}
@@ -138,6 +134,7 @@ const Pagination = ({ totalPages }) => {
       </Link>
     </div>
   );
-};
+});
 
+Pagination.displayName = "Pagination";
 export default Pagination;

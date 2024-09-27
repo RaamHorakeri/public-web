@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import FeaturedQuestions from "@/app/community/_components/FeaturedQuestions";
@@ -28,6 +28,7 @@ const NavData = [
 export default function Community() {
   const [selectedTitle, setSelectedTitle] = useState("Questions");
   const [count, setCount] = useState();
+  const paginationRef = useRef(null);
 
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -160,7 +161,7 @@ export default function Community() {
               />
             </div>
           </div>
-          <div className="flex justify-between my-10 ">
+          <div className="flex justify-between my-9 pt-1" ref={paginationRef}>
             <button className="font-[700] text-[16px]  py-3 text-white bg-black rounded-md px-5">
               Ask a Question
             </button>
@@ -169,7 +170,10 @@ export default function Community() {
             </div>
           </div>
           <div className="font-[700] text-[32px]">Featured Questions</div>
-          <FeaturedQuestions setCount={setCount} />
+          <FeaturedQuestions
+            setCount={setCount}
+            paginationRef={paginationRef}
+          />
         </div>
       </div>
     </>

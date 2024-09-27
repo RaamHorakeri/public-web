@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getAllQuestions } from "@/api/community";
 import { useSearchParams } from "next/navigation";
 
-const FeaturedQuestions = ({ setCount }) => {
+const FeaturedQuestions = ({ setCount, paginationRef }) => {
   const [featuredQuestions, setFeaturedQuestions] = useState();
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -35,7 +35,7 @@ const FeaturedQuestions = ({ setCount }) => {
 
     setLoading(true);
     fetchQuestions();
-  }, [query, itemsPerPage, offset]);
+  }, [query, itemsPerPage, offset, setCount]);
 
   const totalPages = Math.ceil(featuredQuestions?.count / itemsPerPage);
 
@@ -54,8 +54,8 @@ const FeaturedQuestions = ({ setCount }) => {
           Loading...
         </div>
       ) : (
-        <div className=" mb-20 ">
-          <div className="">
+        <div className=" mb-20">
+          <div>
             {featuredQuestions?.result.length == 0 ? (
               <NotFound />
             ) : (
@@ -117,7 +117,7 @@ const FeaturedQuestions = ({ setCount }) => {
             </div>
           ) : (
             <div className="flex items-center justify-center">
-              <Pagination totalPages={totalPages} />
+              <Pagination totalPages={totalPages} ref={paginationRef} />
             </div>
           )}
         </div>
