@@ -16,7 +16,7 @@ export default function MyCalendar({ setActiveId, activeDate, setActiveDate }) {
     ) {
       setActiveDate(value);
     }
-  }, [value, setActiveDate]);
+  }, [value, setActiveDate, activeDate]);
   return (
     <div>
       <Calendar
