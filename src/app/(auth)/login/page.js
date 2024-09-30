@@ -214,6 +214,12 @@ const Page = () => {
                 className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
                 disabled={!!activationId}
               />
+              <Link
+                href="/forgotpassword"
+                className=" float-right mt-2 text-blue-500 "
+              >
+                Forgot password
+              </Link>
             </div>
             {activationId && (
               <div>
