@@ -1,4 +1,4 @@
-export const getOAuthUrl = async (oauthProvider, oauthPurpose = "signup") => {
+export const getOAuthUrl = async (oauthProvider, oauthPurpose) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/oauth/url`,
@@ -116,6 +116,63 @@ export const setPasswordApi = async (
   }
 };
 
+export const loginApi = async (email, password, clientId) => {
+  const credentials = "Basic " + btoa(`${email}:${password}`);
+  // console.log(credentials);
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/login`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: credentials,
+      },
+      body: JSON.stringify({ client_id: clientId }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to log in");
+  }
+
+  return response.json();
+};
+
+export const twoFA_Api = async (
+  email,
+  password,
+  clientId,
+  activation_id,
+  activation_code,
+) => {
+  const credentials = "Basic " + btoa(`${email}:${password}`);
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/login/activation`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: credentials,
+      },
+      body: JSON.stringify({
+        activation_id,
+        activation_code,
+        client_id: clientId,
+        expiry_option: "transactional",
+      }),
+    },
+  );
+
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message || "OTP verification failed");
+  }
+
+  return result;
+};
+
 export const signUp = async (formData) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AUTH_API_URL}/account/register`,
@@ -129,6 +186,7 @@ export const signUp = async (formData) => {
   );
   return response;
 };
+
 export const signUpTwoFa = async (activationId, code) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AUTH_API_URL}/account/register/activation`,

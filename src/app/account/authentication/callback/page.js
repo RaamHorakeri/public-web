@@ -12,11 +12,6 @@ const AuthCallback = () => {
   useEffect(() => {
     const handleAuthCallback = async () => {
       const clientId = Cookies.get("clientId");
-      if (!clientId) {
-        console.error("Error: No client ID found.");
-        alert("An error occurred: No client ID found.");
-        return;
-      }
 
       const queryParams = new URLSearchParams(searchParams.toString());
       const callbackUrl = `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/authentication/callback/${clientId}?${queryParams}`;
@@ -29,14 +24,30 @@ const AuthCallback = () => {
         }
 
         const authData = await response.json();
+
         const { data } = authData;
 
-        if (data) {
-          router.push(
-            `/enter-name?data=${encodeURIComponent(JSON.stringify(data))}`,
-          );
+        if (authData.action === "login") {
+          const { access_token, expires_at } = data;
+
+          if (access_token) {
+            const expirationDate = new Date(expires_at);
+            Cookies.set("access_token", access_token, {
+              expires: expirationDate,
+            });
+
+            router.push("/");
+          } else {
+            throw new Error("Error: Access token not found in response.");
+          }
         } else {
-          throw new Error("Error: No data found in callback response.");
+          if (data) {
+            router.push(
+              `/enter-name?data=${encodeURIComponent(JSON.stringify(data))}`,
+            );
+          } else {
+            throw new Error("Error: No data found in callback response.");
+          }
         }
       } catch (err) {
         if (err.message.includes("409")) {
