@@ -8,6 +8,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import TwoFA from "@/components/TwoFa";
 import {
   authenticate,
+  getOAuthUrl,
   loginApi,
   twoFA_Api,
   twoFaAuthenticate,
@@ -113,11 +114,11 @@ const Page = () => {
   const googleHandler = async (e) => {
     e.preventDefault();
     try {
-      const oauthUrl = await getOAuthUrl("google");
+      const oauthUrl = await getOAuthUrl("google", "login");
       window.location.href = oauthUrl;
     } catch (error) {
       alert(
-        "An error occurred while trying to sign up with Google. Please try again.",
+        "An error occurred while trying to sign in with Google. Please try again.",
       );
     }
   };
@@ -125,11 +126,11 @@ const Page = () => {
   const gitHubHandler = async (e) => {
     e.preventDefault();
     try {
-      const oauthUrl = await getOAuthUrl("github");
+      const oauthUrl = await getOAuthUrl("github", "login");
       window.location.href = oauthUrl;
     } catch (error) {
       alert(
-        "An error occurred while trying to sign up with GitHub. Please try again.",
+        "An error occurred while trying to sign in with GitHub. Please try again.",
       );
     }
   };

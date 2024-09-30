@@ -1,4 +1,4 @@
-export const getOAuthUrl = async (oauthProvider, oauthPurpose = "signup") => {
+export const getOAuthUrl = async (oauthProvider, oauthPurpose) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/oauth/url`,
@@ -118,7 +118,7 @@ export const setPasswordApi = async (
 
 export const loginApi = async (email, password, clientId) => {
   const credentials = "Basic " + btoa(`${email}:${password}`);
-  console.log(credentials);
+  // console.log(credentials);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/login`,

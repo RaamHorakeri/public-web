@@ -28,7 +28,7 @@ const Page = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [activationId, setActivationId] = useState("");
+  // const [activationId, setActivationId] = useState("");
   const [activationCode, setActivationCode] = useState("");
   const [password, setPassword] = useState("");
 
@@ -46,16 +46,16 @@ const Page = () => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    const existingClientId = Cookies.get("clientId");
-    if (existingClientId) {
-      setPublicWebCustomId(existingClientId);
-    } else {
-      const newClientId = nanoid();
-      Cookies.set("clientId", newClientId);
-      setPublicWebCustomId(newClientId);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const existingClientId = Cookies.get("clientId");
+  //   if (existingClientId) {
+  //     setPublicWebCustomId(existingClientId);
+  //   } else {
+  //     const newClientId = nanoid();
+  //     Cookies.set("clientId", newClientId);
+  //     setPublicWebCustomId(newClientId);
+  //   }
+  // }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -137,7 +137,7 @@ const Page = () => {
   const googleHandler = async (e) => {
     e.preventDefault();
     try {
-      const oauthUrl = await getOAuthUrl("google");
+      const oauthUrl = await getOAuthUrl("google", "signup");
       window.location.href = oauthUrl;
     } catch (error) {
       alert(
