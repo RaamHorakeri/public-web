@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import CourseCard from "./_components/CourseCard";
 import image1 from "../../../public/images/landingPage/image1.png";
 import image2 from "../../../public/images/landingPage/image2.png";
@@ -9,6 +11,8 @@ import JoinCommunity from "@/components/JoinCommunity";
 
 import GrowSection from "@/components/GrowSection";
 import TopBanner from "./_components/TopBanner";
+import { nanoid } from "nanoid";
+import Cookies from "js-cookie";
 
 const cardDetails = [
   {
@@ -50,6 +54,19 @@ const cardDetails = [
 ];
 
 export default function Home() {
+  const [publicWebCustomId, setPublicWebCustomId] = useState("");
+
+  useEffect(() => {
+    const existingClientId = Cookies.get("clientId");
+    if (existingClientId) {
+      setPublicWebCustomId(existingClientId);
+    } else {
+      const newClientId = nanoid();
+      Cookies.set("clientId", newClientId);
+      setPublicWebCustomId(newClientId);
+    }
+  }, []);
+
   return (
     <div className="bg-[#01010C]">
       <TopBanner />
