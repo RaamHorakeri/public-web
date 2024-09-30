@@ -21,7 +21,7 @@ const Page = () => {
     e.preventDefault();
 
     try {
-      console.log(email);
+      //   console.log(email);
       const result = await forgotPassword(email);
 
       if (result.activation_id) {
@@ -30,7 +30,7 @@ const Page = () => {
         setStep(2);
       }
     } catch (error) {
-      console.log(error.message);
+      //   console.log(error.message);
       alert(error.message || "Login failed, please try again.");
     }
   };
@@ -65,7 +65,7 @@ const Page = () => {
       alert("Password set successful!");
       router.push("/");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       alert("Password setup failed, please try again.");
     }
   };
