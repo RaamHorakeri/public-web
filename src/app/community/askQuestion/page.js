@@ -76,6 +76,9 @@ export default function AskQuestion() {
   };
 
   const onsubmitHandler = async () => {
+    if (access_token === undefined) {
+      router.push("/login");
+    }
     if (validateForm()) {
       const formData = {
         title: title,
@@ -216,7 +219,6 @@ export default function AskQuestion() {
           <button
             className="font-[400] text-[14px] border border-black p-3 min-w-[150px]"
             onClick={onsubmitHandler}
-            disabled={access_token !== undefined ? false : true}
           >
             {loading ? (
               <Spinner />
