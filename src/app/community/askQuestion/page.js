@@ -103,7 +103,7 @@ export default function AskQuestion() {
 
   return (
     <>
-      <div className="p-20 px-[20%]">
+      <div className="p-20 mx-[20%]">
         <div className="font-[800] text-[44px]">Ask the Community</div>
         <div className="font-[400] text-[18px] w-[69%]">
           Running into trouble? Our developer community is here to help! Ask
