@@ -131,7 +131,7 @@ export default function AskQuestion() {
         </div>
         <input
           type="textarea"
-          className="h-[60px] bg-[#E8E8E8] w-full rounded-md outline-none p-1"
+          className="h-[60px] bg-[#E8E8E8] w-full rounded-md outline-none p-2"
           disabled={access_token !== undefined ? false : true}
           onChange={(e) => {
             let value = e.target.value;
