@@ -1,22 +1,26 @@
 "use client";
-
-import Input from "@/components/Input";
 import React, { useState, useEffect } from "react";
 import { getTags, postQuestion } from "@/api/community";
-import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 import Spinner from "@/components/spinner";
+import { useRouter } from "next/navigation";
+import QuilEditor from "@/app/community/_components/QuillEditor/QuilEditor";
 
-const Page = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [questionBody, setQuestionBody] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState([]);
+export default function AskQuestion() {
+  const access_token = Cookies.get("access_token");
+  const [title, setTitle] = useState("");
+  const [value, setValue] = useState("");
   const [tags, setTags] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const getTagsHandler = async () => {
     const tags = await getTags();
+    if (tags.error) {
+      throw new Error("Failed to fetch tags");
+    }
     setTags(tags);
   };
 
@@ -55,10 +59,10 @@ const Page = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!inputValue.trim()) {
+    if (!title.trim()) {
       newErrors.title = "Title is required";
     }
-    if (!questionBody.trim()) {
+    if (!value.trim()) {
       newErrors.body = "Question body is required";
     }
     if (selectedOptions.length === 0) {
@@ -72,17 +76,19 @@ const Page = () => {
   };
 
   const onsubmitHandler = async () => {
+    if (access_token === undefined) {
+      router.push("/login");
+    }
     if (validateForm()) {
       const formData = {
-        title: inputValue,
-        body: questionBody,
+        title: title,
+        body: value,
         tags: selectedOptions.map((item) => item.id),
       };
 
       try {
         setLoading(true);
         const res = await postQuestion(formData);
-
         if (res.ok) {
           router.push("/community/featuredQuestions");
           setLoading(false);
@@ -90,7 +96,8 @@ const Page = () => {
           setLoading(false);
         }
       } catch (error) {
-        setErrorMessage("An error occurred. Please try again later.");
+        setLoading(false);
+        console.error("An error occurred. Please try again later.");
 
         throw new Error(error.message || "something went wrong");
       }
@@ -98,145 +105,131 @@ const Page = () => {
   };
 
   return (
-    <div className="w-[788px] mb-20">
-      <div className="h-[58px] flex items-center justify-between mb-20 ">
-        <h2 className="text-m leading-m bg-red ml-2 text-primary-1600 font-bold">
-          Ask the Community
-        </h2>
-      </div>
+    <>
+      <div className="p-20 mx-[20%]">
+        <div className="font-[800] text-[44px]">Ask the Community</div>
+        <div className="font-[400] text-[18px] w-[69%]">
+          Running into trouble? Our developer community is here to help! Ask
+          anything related to system administration, programming, devops, open
+          source, or the DigitalOcean platform.
+        </div>
+        <div>
+          <div className="font-[700] text-[18px] mt-10">
+            Question Title{" "}
+            <sup className="text-[#494949]  font-[400] text-[14px]">
+              (required)
+            </sup>
+          </div>
+        </div>
+        <div className="flex items-center justify-between mb-1">
+          <div className="font-[400] text-[14px]">
+            Enter 15 characters or more
+          </div>
+          <div className="bg-[#F84040] text-white p-1 rounded-sm w-[70px] text-center">
+            {title.length}/140
+          </div>
+        </div>
+        <input
+          type="textarea"
+          className="h-[60px] bg-[#E8E8E8] w-full rounded-md outline-none p-2"
+          disabled={access_token !== undefined ? false : true}
+          onChange={(e) => {
+            let value = e.target.value;
 
-      <section className="w-[788px] h-[149px] border border-[#D9D9D9] mt-l ">
-        <div className="flex items-center gap-5 h-[54px] bg-secondary-100 py-3 px-4  ">
-          <h4 className=" font-roboto font-medium text-s leading-[24px] text-primary-1600 ">
-            Question Title
-          </h4>
-          <p className="font-roboto text-[#868686] font-normal text-xs leading-[50px] ">
-            Enter 15 Characters or More
+            if (value.length > 140) return;
+
+            setTitle(value);
+            setErrors((errors) => {
+              return {
+                ...errors,
+                title: "",
+              };
+            });
+          }}
+          value={title}
+        />
+        {errors.title && (
+          <p className="text-[#E74C3C] font-roboto font-normal text-xs pl-3">
+            *{errors.title}
           </p>
+        )}
+        <div className="font-[700] text-[18px] mt-10">
+          Question Body{" "}
+          <sup className="text-[#494949]  font-[400] text-[14px]">
+            (required)
+          </sup>
         </div>
 
-        <div className="flex flex-col py-[10px]  h-[50px] ">
-          <Input
-            type="text"
-            width="w-[788px]"
-            height="h-[50px]"
-            placeholder="Question title"
-            value={inputValue}
-            onChange={(e) => {
-              let value = e.target.value;
-
-              if (value.length > 140) return;
-
-              setInputValue(value);
-              setErrors((errors) => {
-                return {
-                  ...errors,
-                  title: "",
-                };
-              });
-            }}
-            className="border-b-[#D9D9D9]"
-          />
+        <div className="font-[400] text-[14px]">
+          Write your full question here, including any relevant information like
+          operating system, error logs, and steps taken.
         </div>
-        <div className="flex items-center justify-end mr-2  py-[10px]  h-[50px] border-b-0 ">
-          <p className="text-[#E74C3C] font-roboto font-normal text-xs ">
-            {inputValue.length}/140
+
+        <div className="my-5 ">
+          <QuilEditor value={value} setValue={setValue} />
+        </div>
+        {errors.body && (
+          <p className="text-[#E74C3C] font-roboto font-normal text-xs pl-3">
+            *{errors.body}
           </p>
-        </div>
-      </section>
-      {errors.title && (
-        <p className="text-[#E74C3C] font-roboto font-normal text-xs pl-3">
-          *{errors.title}
-        </p>
-      )}
-
-      <section className="w-[788px] h-[200px] border border-[#D9D9D9] mt-l  ">
-        <div className="flex items-center h-[50px] bg-secondary-100 py-3 px-4  ">
-          <h4 className=" font-roboto font-medium text-s leading-[24px] text-primary-1600 ">
-            Question Body
-          </h4>
-        </div>
-
-        <div className="flex flex-col py-[10px]  h-[150px] ">
-          <textarea
-            rows="4"
-            className="block p-2.5 w-full h-[146px] text-sm text-gray-900 "
-            placeholder="Question body ....."
-            value={questionBody}
-            onChange={(e) => {
-              setQuestionBody(e.target.value);
-              setErrors((errors) => {
-                return {
-                  ...errors,
-                  body: "",
-                };
-              });
-            }}
-          ></textarea>
-        </div>
-      </section>
-      {errors.body && (
-        <p className="text-[#E74C3C] font-roboto font-normal text-xs pl-3">
-          *{errors.body}
-        </p>
-      )}
-
-      <section className="w-[788px]  border border-[#D9D9D9] mt-l ">
-        <div className="flex items-center gap-5 h-[54px] bg-secondary-100 py-3 px-4  ">
-          <h4 className=" font-roboto font-medium text-s leading-[24px] text-primary-1600 ">
-            Tags & Topics
-          </h4>
-        </div>
-
-        <div className="flex flex-col px-4 py-[10px]  h-[86px]">
+        )}
+        <div className="relative top-5">
+          <div className="font-[700] text-[18px] mt-10 ">
+            Tags and Topics{" "}
+            <sup className="text-[#494949]  font-[400] text-[14px]">
+              (required)
+            </sup>
+          </div>
           <select
-            className="w-[788px] h-[50px]  border-b border-b-[#D9D9D9] outline-none"
+            className="w-full h-[60px] bg-[#E8E8E8] mt-4 rounded-md px-2 outline-none"
             value={""}
             onChange={handleSelectChange}
+            disabled={access_token !== undefined ? false : true}
           >
-            <option value="" disabled>
-              Select...
-            </option>
+            <option>select</option>
             {tags?.map((tag, index) => (
               <option key={index} value={tag.id}>
                 {tag.name}
               </option>
             ))}
           </select>
-        </div>
-      </section>
-      {errors.tags && (
-        <p className="text-[#E74C3C] font-roboto font-normal text-xs pl-3">
-          *{errors.tags}
-        </p>
-      )}
-
-      <div className="flex mb-3 p-2 ">
-        {selectedOptions.map((option) => (
-          <div
-            key={option.id}
-            className="mr-3 border border-primary rounded-[5px] p-1 flex items-center"
-          >
-            <span className="mr-3 ">{option?.name}</span>
-            <span
-              onClick={() => onCloseTag(option.id)}
-              className="material-symbols-outlined text-gray-400  cursor-pointer"
-              style={{ fontSize: "24px" }}
-            >
-              close
-            </span>
+          {errors.tags && (
+            <p className="text-[#E74C3C] font-roboto font-normal text-xs pl-3">
+              *{errors.tags}
+            </p>
+          )}
+          <div className="flex mb-3 p-2 ">
+            {selectedOptions.map((option) => (
+              <div
+                key={option.id}
+                className="mr-3 border border-[#E8E8E8] rounded-[5px] p-1 flex items-center"
+              >
+                <span className="mr-3 ">{option?.name}</span>
+                <span
+                  onClick={() => onCloseTag(option.id)}
+                  className="material-symbols-outlined text-gray-400  cursor-pointer"
+                  style={{ fontSize: "24px" }}
+                >
+                  close
+                </span>
+              </div>
+            ))}
           </div>
-        ))}
+
+          <button
+            className="font-[400] text-[14px] border border-black p-3 min-w-[150px]"
+            onClick={onsubmitHandler}
+          >
+            {loading ? (
+              <Spinner />
+            ) : access_token !== undefined ? (
+              "Post the Question"
+            ) : (
+              "Login to Post the Question"
+            )}
+          </button>
+        </div>
       </div>
-
-      <button
-        onClick={onsubmitHandler}
-        className=" h-[50px] w-[200px] border border-primary rounded-[22px] font-roboto font-normal text-xs "
-      >
-        {loading ? <Spinner /> : " Post a question"}
-      </button>
-    </div>
+    </>
   );
-};
-
-export default Page;
+}
