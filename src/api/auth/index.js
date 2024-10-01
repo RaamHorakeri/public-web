@@ -173,6 +173,25 @@ export const twoFA_Api = async (
   return result;
 };
 
+export const forgotPassword = async (email) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/password/forgot`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to validate");
+  }
+  const data = await response.json();
+  return data;
+};
+
 export const signUp = async (formData) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AUTH_API_URL}/account/register`,

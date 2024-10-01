@@ -28,7 +28,7 @@ const Page = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  // const [activationId, setActivationId] = useState("");
+  const [activationId, setActivationId] = useState("");
   const [activationCode, setActivationCode] = useState("");
   const [password, setPassword] = useState("");
 
