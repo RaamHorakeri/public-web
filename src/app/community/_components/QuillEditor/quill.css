@@ -24,6 +24,7 @@
   margin: 0;
   padding: 0;
 }
+
 .ql-editor {
   box-sizing: border-box;
   line-height: 1.42;
@@ -36,7 +37,7 @@
   text-align: left;
   white-space: pre-wrap;
   word-wrap: break-word;
-  background-color: #e8e8e8;
+  /* background-color: #e8e8e8; */
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   border: 1px solid #ccc;
