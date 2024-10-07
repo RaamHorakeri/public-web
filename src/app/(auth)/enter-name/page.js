@@ -34,19 +34,16 @@ const EnterName = () => {
     }
 
     try {
-      const registerResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/oauth/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name,
-            data,
-          }),
+      const registerResponse = await fetch(`${AUTH_URL}/oauth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          name,
+          data,
+        }),
+      });
 
       if (!registerResponse.ok) {
         throw new Error(

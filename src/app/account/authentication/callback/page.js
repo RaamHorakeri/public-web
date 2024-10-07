@@ -15,7 +15,7 @@ const AuthCallback = () => {
       const clientId = Cookies.get("clientId");
 
       const queryParams = new URLSearchParams(searchParams.toString());
-      const callbackUrl = `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/authentication/callback/${clientId}?${queryParams}`;
+      const callbackUrl = `${AUTH_URL}/authentication/callback/${clientId}?${queryParams}`;
 
       try {
         const response = await fetch(callbackUrl);

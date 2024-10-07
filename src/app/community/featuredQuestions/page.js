@@ -4,6 +4,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import FeaturedQuestions from "@/app/community/_components/FeaturedQuestions";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const TitleData = [
   "Tutorials",
@@ -162,9 +163,11 @@ export default function Community() {
             </div>
           </div>
           <div className="flex justify-between my-9 pt-1" ref={paginationRef}>
-            <button className="font-[700] text-[16px]  py-3 text-white bg-black rounded-md px-5">
-              Ask a Question
-            </button>
+            <Link href={"/community/askQuestion"}>
+              <button className="font-[700] text-[16px]  py-3 text-white bg-black rounded-md px-5">
+                Ask a Question
+              </button>
+            </Link>
             <div className="text-[#01010C] font-[400] text-[14px]">
               {count} questions asked
             </div>
