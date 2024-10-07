@@ -78,8 +78,6 @@ export default function Answer({ answer, questionId }) {
               <span
                 className="material-symbols-outlined cursor-pointer"
                 onClick={() => {
-                  // setShowReplies((prev) => !prev);
-                  // setReply((prev) => !prev);
                   setHideAnswer((prev) => !prev);
                 }}
               >
@@ -87,10 +85,12 @@ export default function Answer({ answer, questionId }) {
               </span>
             </div>
           </div>
-          <div
-            className="text-[#494949] font-[400] text-[16px]"
-            dangerouslySetInnerHTML={{ __html: answer?.body }}
-          ></div>
+          {!hideAnswer && (
+            <div
+              className="text-[#494949] font-[400] text-[16px]"
+              dangerouslySetInnerHTML={{ __html: answer?.body }}
+            ></div>
+          )}
           <div className="text-[#01010C]  flex items-center gap-3 font-[600] text-[14px] mt-3">
             <div
               className="flex items-center  gap-2 cursor-pointer"
@@ -123,7 +123,7 @@ export default function Answer({ answer, questionId }) {
               </div>
               <div className="mt-[50px]  pb-[50px]">
                 <button
-                  className="text-white bg-black font-[600] text-[16px] p-2 rounded-md px-10"
+                  className="text-white bg-black font-[600] text-[16px] p-2 rounded-md px-10 w-[150px]"
                   onClick={commentAction}
                 >
                   {loader ? <Spinner /> : "Comment"}

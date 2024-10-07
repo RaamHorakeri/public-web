@@ -5,6 +5,7 @@ import Image from "next/image";
 import FeaturedQuestions from "@/app/community/_components/FeaturedQuestions";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import DigitalSupport from "@/components/DigitalSupport";
 
 const TitleData = [
   "Tutorials",
@@ -98,15 +99,7 @@ export default function Community() {
               </div>
             ))}
           </div>
-          <hr className="text-[#E8E8E8] h-2 w-[60%] my-6" />
-          <div className=" w-[60%] flex items-center gap-3">
-            <div className="font-[700] text-[16px] cursor-pointer">
-              Digital Ocean Support
-            </div>
-            <span className="material-symbols-outlined text-[45px]">
-              trending_flat
-            </span>
-          </div>
+          <DigitalSupport />
           <hr className="text-[#E8E8E8] h-2 w-[60%] my-6" />
           <div className="font-[700] text-[16px] w-[60%]">
             Enjoy <span className="text-[#6C63FF]">$200</span> to try

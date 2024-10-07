@@ -15,6 +15,7 @@ import {
 } from "@/api/community";
 import Spinner from "@/components/spinner";
 import Comment from "@/app/community/featuredQuestions/[questionNum]/_components/Comment";
+import DigitalSupport from "@/components/DigitalSupport";
 
 const NavData = [
   "AWS",
@@ -55,12 +56,10 @@ export default function QuestionDetails() {
 
   const getQuestionDetails = useCallback(async () => {
     try {
-      // setError(null);
       const question = await getQuestion(questionId);
       setQuestion(question);
     } catch (err) {
       console.error("Failed to load question details");
-      // setError("Failed to load question details");
     }
   }, [questionId]);
 
@@ -77,7 +76,6 @@ export default function QuestionDetails() {
       setButtonLoader(false);
       setValue("");
     } catch (err) {
-      // setAddAnswerError("Cannot Submit answer");
       setButtonLoader(false);
     }
   };
@@ -115,8 +113,8 @@ export default function QuestionDetails() {
   }, [questionId, getQuestionDetails, getAllAnswers]);
 
   return (
-    <div className="flex">
-      <div className="p-10">
+    <div className="flex ">
+      <div className="p-10 px-[100px] pl-[150px]">
         <div className="mb-2 pb-10 border-b-[#E8E8E8] border-b-[3px]">
           <div className="text-[#1E6F65] font-[700] text-[16px]">
             {"// Question //"}
@@ -149,9 +147,10 @@ export default function QuestionDetails() {
               Asked by <span className="text-[#6C63FF]">Rick Wagenmakers</span>
             </div>
           </div>
-          <div className="text-[#494949] font-[400] text-[16px] mt-5">
-            {question?.body}
-          </div>
+          <div
+            className="text-[#494949] font-[400] text-[16px] mt-5"
+            dangerouslySetInnerHTML={{ __html: question?.body }}
+          ></div>
           <div className="flex gap-3 items-center mt-3 mb-3">
             <div
               onClick={() => setAddComment((prev) => !prev)}
@@ -218,7 +217,7 @@ export default function QuestionDetails() {
         </div>
         <div className="mt-[50px] border-b-2 pb-[50px]">
           <button
-            className="text-white bg-black font-[600] text-[16px] p-2 rounded-md px-10"
+            className="text-white bg-black font-[600] text-[16px] p-2 rounded-md px-10 w-[140px]"
             onClick={onSubmitAnswer}
           >
             {buttonLoader ? <Spinner /> : "Submit"}
@@ -257,24 +256,8 @@ export default function QuestionDetails() {
             </div>
           ))}
         </div>
-        <hr className="text-[#E8E8E8] h-2 w-[60%] my-6" />
-        <div className=" w-[60%] flex items-center gap-3">
-          <div className="font-[700] text-[16px] cursor-pointer">
-            Digital Ocean Support
-          </div>
-          <span className="material-symbols-outlined text-[45px]">
-            trending_flat
-          </span>
-        </div>
-        <hr className="text-[#E8E8E8] h-2 w-[60%] my-6" />
-        <div className=" w-[60%] flex items-center gap-3">
-          <div className="font-[700] text-[16px] cursor-pointer">
-            Digital Ocean Support
-          </div>
-          <span className="material-symbols-outlined text-[45px]">
-            trending_flat
-          </span>
-        </div>
+        <DigitalSupport width="80%" />
+        <DigitalSupport width="80%" />
       </div>
     </div>
   );
