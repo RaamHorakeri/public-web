@@ -121,8 +121,8 @@ export default function Answer({ answer, questionId }) {
                   placeholder=""
                 />
               </div>
-              <div className="mt-[50px]  pb-[50px]">
-                <div className="my-5 text-[#494949] font-[400] text-[16px]">
+              <div className="mt-[20px]  pb-[50px]">
+                <div className="mb-5 text-[#494949] font-[400] text-[16px]">
                   This textbox defaults to using Markdown to format your answer.
                 </div>
                 <button
