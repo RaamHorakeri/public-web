@@ -166,7 +166,7 @@ export default function AskQuestion() {
         </div>
 
         <div className="my-5 ">
-          <QuilEditor value={value} setValue={setValue} />
+          <QuilEditor value={value} setValue={setValue} className="h-[140px]" />
         </div>
         {errors.body && (
           <p className="text-[#E74C3C] font-roboto font-normal text-xs pl-3">
