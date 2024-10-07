@@ -2,114 +2,19 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-import Input from "@/components/Input";
 import { useRouter } from "next/navigation";
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import TwoFA from "@/components/TwoFa";
-import {
-  authenticate,
-  getOAuthUrl,
-  loginApi,
-  twoFA_Api,
-  twoFaAuthenticate,
-} from "@/api/auth";
-import Spinner from "@/components/spinner";
+import { getOAuthUrl, loginApi, twoFA_Api } from "@/api/auth";
 import { nanoid } from "nanoid";
 import Cookies from "js-cookie";
 
-const defaultErrorMsg = {
-  email: null,
-  password: null,
-};
 const Page = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(defaultErrorMsg);
-  const [openTwoFa, setOpenTwoFa] = useState(false);
   const [otp, setOtp] = useState("");
   const [activationId, setActivationId] = useState("");
-  const [loading, setLoading] = useState(false);
   const [clientId] = useState(nanoid());
 
   const router = useRouter();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setErrorMessage(defaultErrorMsg);
-    let errors = {};
-    if (!email) {
-      errors.email = "email should not be empty.";
-    }
-
-    if (!password) {
-      errors.password = "password should not be empty.";
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setErrorMessage(errors);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const response = await authenticate(email, password);
-      if (response.ok) {
-        const data = await response.json();
-        if (response.status == 202) {
-          setActivationId(data.activation_id);
-          setLoading(false);
-          setOpenTwoFa(true);
-        } else {
-          setLoading(false);
-          router.push("/");
-        }
-      } else {
-        const errorData = await response.json();
-        setErrorMessage((error) => {
-          return {
-            ...error,
-            password: errorData.message || "login failed. Please try again.",
-          };
-        });
-        console.error("Login failed:", data.error);
-      }
-    } catch (error) {
-      setErrorMessage((error) => {
-        return {
-          ...error,
-          password: "An error occurred. Please try again later.",
-        };
-      });
-      setLoading(false);
-      console.error("Error:", error);
-    }
-  };
-
-  const onSubmitTwoFa = async (code) => {
-    try {
-      const response = await twoFaAuthenticate(activationId, code);
-
-      if (response.ok) {
-        const { access_token, refresh_token, expiry } = await response.json();
-        setOpenTwoFa(false);
-        router.push("/");
-      } else {
-        const data = await response.json();
-        throw new Error(data.error || "something went wrong");
-      }
-    } catch (error) {
-      throw new Error(error.message || "something went wrong");
-    }
-  };
-
-  const handleGoogleLogin = () => {
-    // window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=http://localhost:3000/&response_type=code&scope=openid%20email%20profile`;
-  };
-
-  const handleGitHubLogin = () => {
-    // window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}&redirect_uri=http://localhost:3000/&scope=user:email`;
-  };
 
   const googleHandler = async (e) => {
     e.preventDefault();

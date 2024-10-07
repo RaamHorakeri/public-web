@@ -1,28 +1,17 @@
 "use client";
+import React, { useState } from "react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import Input from "@/components/Input";
-import TwoFA from "@/components/TwoFa";
 import {
   getOAuthUrl,
   registerUser,
   setPasswordApi,
-  signUp,
-  signUpTwoFa,
   verifyOtp,
 } from "@/api/auth";
-import Spinner from "@/components/spinner";
 import Cookies from "js-cookie";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 
-const defaultErrorMsg = {
-  username: null,
-  email: null,
-  password: null,
-};
 const Page = () => {
   const [step, setStep] = useState(1);
   const [name, setName] = useState("");
@@ -32,96 +21,7 @@ const Page = () => {
   const [activationCode, setActivationCode] = useState("");
   const [password, setPassword] = useState("");
 
-  const [rePassword, setRePassword] = useState("");
-  const [open, setOpen] = useState(false);
-  const [openTwoFa, setOpenTwoFa] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(defaultErrorMsg);
-
-  const [loading, setLoading] = useState(false);
-
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-
-  const [publicWebCustomId, setPublicWebCustomId] = useState("");
-
   const router = useRouter();
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setErrorMessage(defaultErrorMsg);
-    let errors = {};
-
-    if (!username) {
-      errors.username = "Username should not be empty.";
-    }
-
-    if (!email) {
-      errors.email = "Email should not be empty.";
-    }
-
-    if (!password || !rePassword) {
-      errors.password = "Passwords should not be empty";
-    } else if (password !== rePassword) {
-      errors.password = "Passwords do not match";
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setErrorMessage(errors);
-      return;
-    }
-
-    const formData = {
-      name: username,
-      email: email,
-      password: password,
-    };
-
-    try {
-      setLoading(true);
-      const response = await signUp(formData);
-      if (response.ok) {
-        const data = await response.json();
-        setActivationId(data.activation_id);
-        setOpenTwoFa(true);
-      } else {
-        const errorData = await response.json();
-        const errMsg =
-          errorData.message || "Registration failed. Please try again.";
-        setErrorMessage((error) => {
-          return { ...error, password: errMsg };
-        });
-      }
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      setErrorMessage((error) => {
-        return {
-          ...error,
-          password: e.message || "An error occurred. Please try again later.",
-        };
-      });
-      console.error("Error:", e);
-    }
-  };
-
-  const onSubmitTwoFa = async (code) => {
-    try {
-      const response = await signUpTwoFa(activationId, code);
-
-      if (response.ok) {
-        const { access_token, refresh_token, expiry } = await response.json();
-        console.log({ access_token, refresh_token, expiry });
-        setOpenTwoFa(false);
-        setOpen(true);
-        // return { access_token, refresh_token, expiry };
-      } else {
-        const data = await response.json();
-        throw new Error(data.error || "something went wrong");
-      }
-    } catch (error) {
-      throw new Error(error.message || "something went wrong");
-    }
-  };
 
   const googleHandler = async (e) => {
     e.preventDefault();

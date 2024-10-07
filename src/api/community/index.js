@@ -1,3 +1,5 @@
+import { COMMUNITY_URL, AUTH_TOKEN } from "../../utils";
+
 export const getAllQuestions = async (
   limit = 10,
   offset = 0,
@@ -6,11 +8,11 @@ export const getAllQuestions = async (
 ) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/community/questions?limit=${limit}&offset=${offset}&sort=${sort}&query=${query}`,
+      `${COMMUNITY_URL}/questions?limit=${limit}&offset=${offset}&sort=${sort}&query=${query}`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+          Authorization: `Bearer ${AUTH_TOKEN}`,
           "Content-Type": "application/json",
         },
         cache: "no-store",
@@ -29,11 +31,11 @@ export const getAllQuestions = async (
 export const getTags = async (limit = 10, offset = 0, sort = "asc") => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/community/tags?limit=${limit}&offset=${offset}&sort=${sort}`,
+      `${COMMUNITY_URL}/tags?limit=${limit}&offset=${offset}&sort=${sort}`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+          Authorization: `Bearer ${AUTH_TOKEN}`,
           "Content-Type": "application/json",
         },
       },
@@ -52,16 +54,13 @@ export const getTags = async (limit = 10, offset = 0, sort = "asc") => {
 
 export const getQuestion = async (id) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${id}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
-          "Content-Type": "application/json",
-        },
+    const response = await fetch(`${COMMUNITY_URL}/questions/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${AUTH_TOKEN}`,
+        "Content-Type": "application/json",
       },
-    );
+    });
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -81,11 +80,11 @@ export const getQuestionAnswers = async (
   sort = "asc",
 ) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${id}/answers?limit=${limit}&offset=${offset}&sort=${sort}`,
+    `${COMMUNITY_URL}/questions/${id}/answers?limit=${limit}&offset=${offset}&sort=${sort}`,
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+        Authorization: `Bearer ${AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
     },
@@ -101,11 +100,11 @@ export const getAnswerComments = async (
   sort = "asc",
 ) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/answers/${answerId}/comments?limit=${limit}&offset=${offset}&sort=${sort}`,
+    `${COMMUNITY_URL}/answers/${answerId}/comments?limit=${limit}&offset=${offset}&sort=${sort}`,
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+        Authorization: `Bearer ${AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
     },
@@ -121,11 +120,11 @@ export const getQuestionComments = async (
   sort = "asc",
 ) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${questionId}/comments?limit=${limit}&offset=${offset}&sort=${sort}`,
+    `${COMMUNITY_URL}/questions/${questionId}/comments?limit=${limit}&offset=${offset}&sort=${sort}`,
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+        Authorization: `Bearer ${AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
     },
@@ -136,11 +135,11 @@ export const getQuestionComments = async (
 
 export const postAnswerComment = async (content, answerId) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/answers/${answerId}/comments`,
+    `${COMMUNITY_URL}/answers/${answerId}/comments`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+        Authorization: `Bearer ${AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -153,11 +152,11 @@ export const postAnswerComment = async (content, answerId) => {
 
 export const postQuestionComment = async (content, questionId) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${questionId}/comments`,
+    `${COMMUNITY_URL}/questions/${questionId}/comments`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+        Authorization: `Bearer ${AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -170,11 +169,11 @@ export const postQuestionComment = async (content, questionId) => {
 
 export const postAnswer = async (content, questionId) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/questions/${questionId}/answers`,
+    `${COMMUNITY_URL}/questions/${questionId}/answers`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+        Authorization: `Bearer ${AUTH_TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -186,41 +185,35 @@ export const postAnswer = async (content, questionId) => {
 };
 
 export const postQuestion = async (content) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/questions`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(content),
+  const response = await fetch(`${COMMUNITY_URL}/questions`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${AUTH_TOKEN}`,
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify(content),
+  });
   return response;
 };
 
 export const upVoteAnswer = async (answerId) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/answers/${answerId}/upvote`,
-    {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
-      },
+  const response = await fetch(`${COMMUNITY_URL}/answers/${answerId}/upvote`, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${AUTH_TOKEN}`,
     },
-  );
+  });
   return response.json();
 };
 export const downVoteAnswer = async (answerId) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/community/answers/${answerId}/downvote`,
+    `${COMMUNITY_URL}/answers/${answerId}/downvote`,
     {
       method: "POST",
       headers: {
         accept: "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_AUTH_TOKEN}`,
+        Authorization: `Bearer ${AUTH_TOKEN}`,
       },
     },
   );
