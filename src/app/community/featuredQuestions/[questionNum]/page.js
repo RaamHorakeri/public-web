@@ -175,7 +175,7 @@ export default function QuestionDetails() {
                   value={commentValue}
                   setValue={setCommentValue}
                   className="min-h-16"
-                  placeholder=""
+                  placeholder="Leave a Comment....."
                 />
               </div>
               <div className="mt-[20px]  pb-[50px]">
@@ -217,7 +217,7 @@ export default function QuestionDetails() {
             value={value}
             setValue={setValue}
             className="min-h-16"
-            placeholder=""
+            placeholder="Answer a Question....."
           />
         </div>
         <div className="mt-[20px] border-b pb-[50px]">

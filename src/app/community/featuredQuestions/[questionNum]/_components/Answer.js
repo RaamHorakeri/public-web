@@ -118,7 +118,7 @@ export default function Answer({ answer, questionId }) {
                   value={value}
                   setValue={setValue}
                   className="min-h-16"
-                  placeholder=""
+                  placeholder="Leave a Comment....."
                 />
               </div>
               <div className="mt-[20px]  pb-[50px]">
