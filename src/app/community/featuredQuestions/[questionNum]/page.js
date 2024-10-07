@@ -115,7 +115,7 @@ export default function QuestionDetails() {
   return (
     <div className="flex ">
       <div className="p-10 px-[100px] pl-[150px]">
-        <div className="mb-2 pb-10 border-b-[#E8E8E8] border-b-[3px]">
+        <div className="mb-2 pb-10 border-b-[#E8E8E8] border-b-[1px]">
           <div className="text-[#1E6F65] font-[700] text-[16px]">
             {"// Question //"}
           </div>
@@ -205,7 +205,9 @@ export default function QuestionDetails() {
           )}
         </div>
         <div>
-          <div className="font-[600] text-[24px]">Submit an answer</div>
+          <div className="font-[600] text-[24px] pt-10 pb-5">
+            Submit an answer
+          </div>
         </div>
         <div className="p-2">
           <QuilEditor
@@ -215,7 +217,7 @@ export default function QuestionDetails() {
             placeholder=""
           />
         </div>
-        <div className="mt-[50px] border-b-2 pb-[50px]">
+        <div className="mt-[50px] border-b pb-[50px]">
           <button
             className="text-white bg-black font-[600] text-[16px] p-2 rounded-md px-10 w-[140px]"
             onClick={onSubmitAnswer}
@@ -223,7 +225,7 @@ export default function QuestionDetails() {
             {buttonLoader ? <Spinner /> : "Submit"}
           </button>
         </div>
-        <div className="flex gap-3 items-center mt-3 border p-2 rounded-md">
+        <div className="flex gap-3 items-center  border p-2 rounded-md my-10 mt-12">
           <span className="material-symbols-outlined">error</span>
           <div className="font-[400] text-[14px] p-2">
             These answers are provided by our Community. If you find them
