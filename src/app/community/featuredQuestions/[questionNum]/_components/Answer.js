@@ -117,11 +117,14 @@ export default function Answer({ answer, questionId }) {
                 <QuilEditor
                   value={value}
                   setValue={setValue}
-                  className="h-16"
+                  className="min-h-16"
                   placeholder=""
                 />
               </div>
               <div className="mt-[50px]  pb-[50px]">
+                <div className="my-5 text-[#494949] font-[400] text-[16px]">
+                  This textbox defaults to using Markdown to format your answer.
+                </div>
                 <button
                   className="text-white bg-black font-[600] text-[16px] p-2 rounded-md px-10 w-[150px]"
                   onClick={commentAction}
