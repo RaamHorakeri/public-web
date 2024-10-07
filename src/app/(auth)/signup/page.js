@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import Input from "@/components/Input";
 import TwoFA from "@/components/TwoFa";
 import {
@@ -18,6 +17,8 @@ import Cookies from "js-cookie";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 
+import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+
 const defaultErrorMsg = {
   username: null,
   email: null,
@@ -31,9 +32,10 @@ const Page = () => {
   const [activationId, setActivationId] = useState("");
   const [activationCode, setActivationCode] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [rePassword, setRePassword] = useState("");
-  const [open, setOpen] = useState(false);
+
   const [openTwoFa, setOpenTwoFa] = useState(false);
   const [errorMessage, setErrorMessage] = useState(defaultErrorMsg);
 
@@ -41,6 +43,13 @@ const Page = () => {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [otpError, setOtpError] = useState("");
+  let [isOpen, setIsOpen] = useState(false);
+
+  const [isSwapped, setIsSwapped] = useState(false);
 
   const [publicWebCustomId, setPublicWebCustomId] = useState("");
 
@@ -104,6 +113,15 @@ const Page = () => {
     }
   };
 
+  function open() {
+    setIsOpen(true);
+  }
+
+  function close() {
+    setIsOpen(false);
+    router.push("/");
+  }
+
   const onSubmitTwoFa = async (code) => {
     try {
       const response = await signUpTwoFa(activationId, code);
@@ -152,9 +170,13 @@ const Page = () => {
     try {
       const result = await registerUser(name, email);
       setActivationId(result.activation_id);
-
+      setIsSwapped(!isSwapped);
       setStep(2);
-    } catch (error) {}
+    } catch (error) {
+      if (error) {
+        setEmailError("User already registered,Please Login");
+      }
+    }
   };
 
   const handleOtpVerification = async (e) => {
@@ -166,35 +188,53 @@ const Page = () => {
       setActivationCode(result.activation_code);
       setStep(3);
     } catch (error) {
-      alert("OTP verification failed, please try again.");
+      setOtpError("OTP verification failed, please try again.");
     }
+  };
+
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    return passwordRegex.test(password);
   };
 
   const handleSetPassword = async (e) => {
     e.preventDefault();
     const clientId = nanoid();
-    try {
-      const result = await setPasswordApi(
-        activationId,
-        activationCode,
-        clientId,
-        password,
+    if (password !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match.");
+    } else if (!validatePassword(password)) {
+      setPasswordError(
+        "Password must be at least 8 characters long, include 1 uppercase, 1 lowercase, 1 number, and 1 symbol.",
       );
-      const expiresAt = new Date(result.expires_at);
-      Cookies.set("access_token", result.access_token, {
-        expires: expiresAt,
-        path: "/",
-      });
-      alert("Signup successful!");
-      router.push("/");
-    } catch (error) {
-      alert("Password setup failed, please try again.");
+    } else {
+      setConfirmPasswordError("");
+      setPassword("");
+      open();
+      try {
+        const result = await setPasswordApi(
+          activationId,
+          activationCode,
+          clientId,
+          password,
+        );
+        const expiresAt = new Date(result.expires_at);
+        Cookies.set("access_token", result.access_token, {
+          expires: expiresAt,
+          path: "/",
+        });
+      } catch (error) {
+        setPasswordError(error);
+      }
     }
   };
 
   return (
     <section className=" bg-[#ffffff] flex h-[1024px] items-center justify-center p-[80px] gap-4 ">
-      <div className="flex flex-col justify-between w-[44%] h-[100%]">
+      <div
+        className={` flex flex-col justify-between w-[44%] h-[100%] transition-transform duration-500 ease-in-out transform ${
+          isSwapped ? "  order-2 animate-move " : "  order-1 "
+        } `}
+      >
         <div className=" bg-[#F3F3F3] rounded-[20px] p-[32px] gap-[50px] h-[80%] flex flex-col ">
           <p className=" text-[18px] font-normal leading-[24.55px] text-[#777777] ">
             Sign up now to unlock a world of lettarning opportunities and take
@@ -209,7 +249,7 @@ const Page = () => {
                   ? handleOtpVerification
                   : handleSetPassword
             }
-            className="space-y-4"
+            className="space-y-4 relative"
           >
             {step === 1 && (
               <>
@@ -237,6 +277,7 @@ const Page = () => {
                     className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
                   />
                 </div>
+                <p className="text-red-500 text-sm mt-2">{emailError}</p>
                 <button
                   type="submit"
                   className="w-full p-[10px] bg-[#1C1C1C] text-white rounded-[22px] text-[18px] font-bold leading-[24.55px] my-4 "
@@ -291,24 +332,119 @@ const Page = () => {
             )}
 
             {step === 2 && (
-              <>
-                <div>
-                  <label>OTP</label>
+              <div className="flex flex-col p-4 py-10 border-[2px] border-[#D3D3D3] bg-[#FFFFFF] gap-[25px] shadow-md  ">
+                <p className=" text-[32px] font-extrabold leading-[43.65px] text-[#01010C] text-center ">
+                  2Factor Authentication
+                </p>
+                <div className="flex flex-col gap-4">
+                  <label className=" text-[#01010C] text-[16px font-normal leading-[21.82px] ] ">
+                    Enter 6-digit Code that you recieved in your mail
+                  </label>
                   <input
                     type="text"
-                    placeholder="Enter the OTP"
+                    placeholder="OTP"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
                     required
+                    className=" bg-[#F2F1F2] h-[50px] rounded-[22px] px-4 py-4 outline-none"
                   />
                 </div>
-                <button type="submit">Verify OTP</button>
-              </>
+                <p className="text-red-500 text-sm mt-2">{otpError}</p>
+                <button
+                  type="submit"
+                  className=" bg-[#1C1C1C] h-[50px] text-[#FFFFFF] text-[18px] leading-[24.55px] font-bold rounded-[22px] "
+                >
+                  Submit
+                </button>
+              </div>
             )}
 
             {step === 3 && (
               <>
-                <div>
+                <div className="flex flex-col gap-4 transition duration-500 ease-in-out transform opacity-100 ">
+                  <div className="">
+                    <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        type={passwordVisible ? "text" : "password"}
+                        placeholder="Password"
+                        className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setPasswordVisible(!passwordVisible)}
+                        className="absolute right-3 top-1/3 text-gray-400"
+                      >
+                        {passwordVisible ? (
+                          "🙈"
+                        ) : (
+                          <Image
+                            src="/images/eye.svg"
+                            width={19}
+                            height={13}
+                            alt="show"
+                          />
+                        )}
+                      </button>
+                    </div>
+                    {passwordError && (
+                      <p className="text-red-500 text-sm mt-2">
+                        {passwordError}
+                      </p>
+                    )}
+                  </div>
+                  <div className="">
+                    <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
+                      Confirm Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={confirmPasswordVisible ? "text" : "password"}
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setConfirmPasswordVisible(!confirmPasswordVisible)
+                        }
+                        className="absolute right-3 top-1/3 text-gray-400"
+                      >
+                        {confirmPasswordVisible ? (
+                          "🙈"
+                        ) : (
+                          <Image
+                            src="/images/eye.svg"
+                            width={19}
+                            height={13}
+                            alt="show"
+                          />
+                        )}
+                      </button>
+                    </div>
+                    {confirmPasswordError && (
+                      <p className="text-red-500 text-sm mt-2">
+                        {confirmPasswordError}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    type="submit"
+                    className=" bg-[#1C1C1C] h-[50px] text-[#FFFFFF] text-[18px] leading-[24.55px] font-bold rounded-[22px] "
+                  >
+                    Set Password
+                  </button>
+                </div>
+
+                {/* <div>
+
                   <label>Password</label>
                   <input
                     type="password"
@@ -317,8 +453,7 @@ const Page = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                </div>
-                <button type="submit">Set Password</button>
+                </div> */}
               </>
             )}
           </form>
@@ -327,25 +462,25 @@ const Page = () => {
           <div className="flex items-center">
             <div className="flex relative mr-10 w-[75px] h-[45px]">
               <Image
-                src="/images/ellipse6.svg"
+                src="/images/Ellipse6.svg"
                 alt="userIcon"
                 width={45}
                 height={45}
-                className="absolute left-0 rounded-full z-10" // First image
+                className="absolute left-0 rounded-full z-10"
               />
               <Image
-                src="/images/ellipse7.svg"
+                src="/images/Ellipse7.svg"
                 alt="userIcon"
                 width={45}
                 height={45}
-                className="absolute left-[25px] rounded-full z-20" // Second image overlaps 1st by 50%
+                className="absolute left-[25px] rounded-full z-20"
               />
               <Image
-                src="/images/ellipse6.svg"
+                src="/images/Ellipse6.svg"
                 alt="userIcon"
                 width={45}
                 height={45}
-                className="absolute left-[50px] rounded-full z-30" // Third image overlaps 2nd by 50%
+                className="absolute left-[50px] rounded-full z-30"
               />
             </div>
 
@@ -368,7 +503,11 @@ const Page = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col justify-between w-[44%] h-[100%] bg-[url('/images/loginBg.png')] bg-cover bg-center rounded-[20px] p-[28px] ">
+      <div
+        className={`flex flex-col justify-between w-[44%] h-[100%] bg-[url('/images/loginBg.png')] bg-cover bg-center rounded-[20px] p-[28px] transition-transform duration-500 ease-in-out transform  ${
+          isSwapped ? "  order-1 " : "  order-2 "
+        } `}
+      >
         <p className=" text-[#ffffff] text-[36px] leading-[42px] font-bold ">
           Al Revolutionizing the way we create, render, and experience content.
         </p>
@@ -387,7 +526,7 @@ const Page = () => {
             </div>
             <div className=" flex items-center justify-center ">
               <Image
-                src="/images/topArrowleft.svg"
+                src="/images/topArrowLeft.svg"
                 alt="topRightArrow"
                 width={55}
                 height={55}
@@ -407,6 +546,42 @@ const Page = () => {
           </p>
         </div>
       </div>
+
+      <Dialog
+        open={isOpen}
+        as="div"
+        className="relative z-10 focus:outline-none"
+        onClose={close}
+      >
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4">
+            <DialogPanel
+              transition
+              className=" flex flex-col gap-3 text-center justify-center items-center w-full max-w-md rounded-xl bg-white p-10 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+            >
+              <div className=" flex flex-col items-center gap-3 ">
+                <Image
+                  src="/images/check_circle.svg"
+                  alt="check_circle"
+                  width={34}
+                  height={34}
+                />
+                <p className="text-[#1A1A1A] font-bold text-[20px] leading-[27.28px] ">
+                  Registered Successfully
+                </p>
+              </div>
+              <div className="  flex gap-3">
+                <button
+                  onClick={close}
+                  className=" bg-[#1C1C1C] text-white h-[42px] px-3 text-[16px] font-bold leading-[21.82px] rounded-[12px] "
+                >
+                  Proceed
+                </button>
+              </div>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
     </section>
   );
 };

@@ -118,25 +118,28 @@ export const setPasswordApi = async (
 
 export const loginApi = async (email, password, clientId) => {
   const credentials = "Basic " + btoa(`${email}:${password}`);
-  // console.log(credentials);
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/login`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: credentials,
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: credentials,
+        },
+        body: JSON.stringify({ client_id: clientId }),
       },
-      body: JSON.stringify({ client_id: clientId }),
-    },
-  );
+    );
 
-  if (!response.ok) {
-    throw new Error("Failed to log in");
+    if (response.status === 401) {
+      throw new Error(response.statusText);
+    }
+
+    return response.json();
+  } catch (error) {
+    throw error;
   }
-
-  return response.json();
 };
 
 export const twoFA_Api = async (
@@ -148,29 +151,32 @@ export const twoFA_Api = async (
 ) => {
   const credentials = "Basic " + btoa(`${email}:${password}`);
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/login/activation`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: credentials,
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/login/activation`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: credentials,
+        },
+        body: JSON.stringify({
+          activation_id,
+          activation_code,
+          client_id: clientId,
+          expiry_option: "transactional",
+        }),
       },
-      body: JSON.stringify({
-        activation_id,
-        activation_code,
-        client_id: clientId,
-        expiry_option: "transactional",
-      }),
-    },
-  );
+    );
 
-  const result = await response.json();
-  if (!response.ok) {
-    throw new Error(result.message || "OTP verification failed");
+    if (response.status === 401) {
+      throw new Error("OTP verification failed, Incorrect OTP");
+    }
+
+    return response.json();
+  } catch (error) {
+    throw error;
   }
-
-  return result;
 };
 
 export const forgotPassword = async (email) => {

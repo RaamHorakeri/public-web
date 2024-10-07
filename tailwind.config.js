@@ -68,6 +68,7 @@ module.exports = {
       },
       animation: {
         "move-right": "moveRight 5s ease-in-out infinite",
+        move: "moveRight 3s ease-in-out",
         "move-up-down": "moveUpDown 5s ease-in-out infinite",
         "scale-up-down": "scaleImage 5s ease-in-out infinite",
       },

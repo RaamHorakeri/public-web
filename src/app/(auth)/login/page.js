@@ -31,6 +31,10 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [clientId] = useState(nanoid());
 
+  const [errorMsg, setErrorMsg] = useState("");
+  const [otpMsg, setOtpMsg] = useState("");
+  const [otpError, setOtpError] = useState("");
+
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -137,20 +141,21 @@ const Page = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       if (!activationId) {
         // First step: login attempt
         const result = await loginApi(email, password, clientId);
-
         if (result.activation_id) {
           setActivationId(result.activation_id); // Store activation ID to ask for OTP
-          alert("OTP sent to your email, please enter it.");
+
+          setOtpMsg("OTP sent to your email, please enter it.");
         } else {
           // No OTP needed, directly login (this might vary based on backend response)
           storeAccessToken(result);
-          alert("Login successful!");
-          router.push("/");
+          setLoading(true);
+
+          //  router.push("/");
         }
       } else {
         // Second step: submit OTP
@@ -162,11 +167,22 @@ const Page = () => {
           otp,
         );
         storeAccessToken(result); // Store token once OTP is verified
-        alert("Login successful!");
-        router.push("/");
+
+        setLoading(true);
+        // router.push("/");
       }
     } catch (error) {
-      alert(error.message || "Login failed, please try again.");
+      // console.log(error.message)
+      setErrorMsg(error.message);
+      setLoading(false);
+      // if(error.message.includes("Unauthorized")){
+      //   setLoading(false)
+      //   setErrorMsg("")
+      //   setOtpError("Incorrect OTP")
+      // }else{
+      //   setLoading(false)
+      // setErrorMsg("Invalid Credentials, Please enter correct details")
+      // }
     }
   };
 
@@ -175,8 +191,6 @@ const Page = () => {
 
     Cookies.set("access_token", result.access_token, { expires: expiresAt });
     // Cookies.set('refresh_token', result.refresh_token, { expires: expiresAt });
-
-    // alert('Token stored successfully!');
   };
 
   return (
@@ -189,6 +203,9 @@ const Page = () => {
           </p>
 
           <form onSubmit={handleLogin} className="space-y-4">
+            {errorMsg && (
+              <p className="text-red-500 text-sm mt-2">{errorMsg}</p>
+            )}
             <div>
               <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
                 Email
@@ -216,13 +233,14 @@ const Page = () => {
               />
               <Link
                 href="/forgotpassword"
-                className=" float-right mt-2 text-blue-500 "
+                className=" float-right mt-2 text-[#1C1C1C] font-normal text-[16px] leading-[21.82px] "
               >
                 Forgot password
               </Link>
             </div>
             {activationId && (
               <div>
+                <p className="text-green-600 text-sm mt-2">{otpMsg}</p>
                 <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
                   OTP
                 </label>
@@ -233,12 +251,14 @@ const Page = () => {
                   placeholder="Enter the OTP sent to your email"
                   className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
                 />
+                <p className="text-red-500 text-sm mt-2">{otpError}</p>
               </div>
             )}
             <button
               type="submit"
               className="w-full p-[10px] bg-[#1C1C1C] text-white rounded-[22px] text-[18px] font-bold leading-[24.55px] my-4"
             >
+              {loading && <Spinner />}
               {activationId ? "Submit OTP" : "Sign In"}
             </button>
 
