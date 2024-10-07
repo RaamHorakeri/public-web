@@ -7,6 +7,7 @@ import { getOAuthUrl, loginApi, twoFA_Api } from "@/api/auth";
 import { nanoid } from "nanoid";
 import Cookies from "js-cookie";
 import Spinner from "@/components/spinner";
+import LoginSection from "../_components/LoginSection";
 
 const Page = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +21,8 @@ const Page = () => {
   const [otpError, setOtpError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const googleHandler = async (e) => {
     e.preventDefault();
@@ -54,16 +57,17 @@ const Page = () => {
         const result = await loginApi(email, password, clientId);
         if (result.activation_id) {
           setActivationId(result.activation_id); // Store activation ID to ask for OTP
-
+          setLoading(false);
           setOtpMsg("OTP sent to your email, please enter it.");
         } else {
           // No OTP needed, directly login (this might vary based on backend response)
           storeAccessToken(result);
-          setLoading(true);
+          setLoading(false);
 
           router.push("/");
         }
       } else {
+        setLoading(false);
         // Second step: submit OTP
         const result = await twoFA_Api(
           email,
@@ -74,7 +78,6 @@ const Page = () => {
         );
         storeAccessToken(result); // Store token once OTP is verified
 
-        setLoading(true);
         router.push("/");
       }
     } catch (error) {
@@ -100,12 +103,12 @@ const Page = () => {
   };
 
   return (
-    <section className=" bg-[#ffffff] flex h-[1024px] items-center justify-center p-[80px] gap-4 ">
-      <div className="flex flex-col justify-between w-[44%] h-[100%]">
-        <div className=" bg-[#F3F3F3] rounded-[20px] p-[32px] gap-[50px] h-[80%] flex flex-col ">
-          <p className=" text-[18px] font-normal leading-[24.55px] text-[#777777] ">
-            Sign in now to unlock a world of lettarning opportunities and take
-            the first step towards becoming a software engineer.
+    <section className="bg-[#ffffff] flex h-[100vh] items-center justify-center p-[40px] gap-4">
+      <div className="flex flex-col justify-between gap-5 w-[35%] h-[100%]">
+        <div className="bg-[#F3F3F3] rounded-[20px] p-[20px] gap-[30px] h-[90%] flex flex-col justify-center">
+          <p className="text-[14px] font-normal leading-[20px] text-[#777777]">
+            Sign in now to unlock a world of learning opportunities and take the
+            first step towards becoming a software engineer.
           </p>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -113,41 +116,87 @@ const Page = () => {
               <p className="text-red-500 text-sm mt-2">{errorMsg}</p>
             )}
             <div>
-              <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
-                disabled={!!activationId}
-              />
+              <div className="flex items-center bg-[#ffffff] rounded-[22px] px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                <Image
+                  src="/images/emialIcon.svg"
+                  alt="email icon"
+                  width={20}
+                  height={20}
+                  className="mr-2"
+                />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="hello@gmail.com"
+                  className="w-full rounded-[22px] outline-none bg-transparent"
+                  disabled={!!activationId}
+                />
+              </div>
             </div>
+
             <div>
-              <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
-                Password
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
-                disabled={!!activationId}
-              />
-              <Link
-                href="/forgotpassword"
-                className=" float-right mt-2 text-[#1C1C1C] font-normal text-[16px] leading-[21.82px] "
-              >
-                Forgot password
-              </Link>
+              <div className="flex relative items-center bg-[#ffffff] rounded-[22px] px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                <Image
+                  src="/images/passwordIcon.svg"
+                  alt="password icon"
+                  width={20}
+                  height={20}
+                  className="mr-2"
+                />
+
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  className="w-full rounded-[22px] outline-none bg-transparent"
+                  disabled={!!activationId}
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3"
+                >
+                  <Image
+                    src={
+                      showPassword
+                        ? "/images/eyeOpenIcon.svg"
+                        : "/images/eyeClosedIcon.svg"
+                    }
+                    alt="toggle password visibility"
+                    width={20}
+                    height={20}
+                  />
+                </button>
+              </div>
+              <div className="flex items-center justify-between mt-2 mb-10">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={() => setRememberMe(!rememberMe)}
+                    className="mr-2 w-[15px] h-[15px]  "
+                  />
+                  <span className="text-[#B7B7B7] font-normal text-[16px] leading-[21.82px]">
+                    Remember me
+                  </span>
+                </div>
+
+                <Link
+                  href="/forgotpassword"
+                  className="text-[#1C1C1C] font-normal text-[14px] leading-[20px]"
+                >
+                  Forgot password
+                </Link>
+              </div>
             </div>
+
             {activationId && (
               <div>
-                <p className="text-green-600 text-sm mt-2">{otpMsg}</p>
-                <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
+                <p className="text-green-600 text-sm mt-1">{otpMsg}</p>
+                <label className="block text-[14px] font-normal leading-[20px] text-[#1C1C1C] mb-1">
                   OTP
                 </label>
                 <input
@@ -155,148 +204,109 @@ const Page = () => {
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                   placeholder="Enter the OTP sent to your email"
-                  className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
+                  className="w-full bg-[#ffffff] rounded-[16px] px-[12px] py-[8px] h-[40px] outline-none"
                 />
-                <p className="text-red-500 text-sm mt-2">{otpError}</p>
+                <p className="text-red-500 text-sm mt-1">{otpError}</p>
               </div>
             )}
             <button
               type="submit"
-              className="w-full p-[10px] bg-[#1C1C1C] text-white rounded-[22px] text-[18px] font-bold leading-[24.55px] my-4"
+              className="w-full p-[8px] bg-[#1C1C1C] text-white rounded-[16px] text-[16px] font-bold leading-[22px] my-3"
             >
-              {loading && <Spinner />}
-              {activationId ? "Submit OTP" : "Sign In"}
+              {loading ? <Spinner /> : activationId ? "Submit OTP" : "Sign In"}
             </button>
 
             <div className="flex items-center justify-between">
               <hr className="w-full border-[#CFCFCF]" />
-              <span className="mx-2 text-[#A4A4A4] text-[16px] font-normal leading-[19.2px]">
+              <span className="mx-2 text-[#A4A4A4] text-[14px] font-normal leading-[20px]">
                 or
               </span>
               <hr className="w-full border-[#CFCFCF]" />
             </div>
 
-            <div className="flex space-x-4">
+            <div className=" flex space-x-8">
               <button
                 onClick={googleHandler}
-                className="w-1/2 p-3 border border-[#A4A4A4] flex items-center justify-center rounded-[22px] text-[18px] leading-[24.55px] font-normal"
+                className="w-1/2 p-[8px] border border-[#A4A4A4] flex items-center justify-center rounded-[16px] text-[14px] leading-[20px] font-normal"
               >
                 <Image
                   src="/images/google.png"
-                  width={20}
-                  height={20}
+                  width={16}
+                  height={16}
                   alt="googleLogo"
-                  className="mr-2"
+                  className="mr-1"
                 />
                 Sign in with Google
               </button>
               <button
                 onClick={gitHubHandler}
-                className="w-1/2 p-3 border border-[#A4A4A4] flex items-center justify-center rounded-[22px] text-[18px] leading-[24.55px] font-normal "
+                className="w-1/2 p-[8px] border border-[#A4A4A4] flex items-center justify-center rounded-[16px] text-[14px] leading-[20px] font-normal"
               >
                 <Image
                   src="/images/Github.png"
-                  width={20}
-                  height={20}
+                  width={16}
+                  height={16}
                   alt="githubLogo"
-                  className="mr-2"
+                  className="mr-1"
                 />
                 Sign in with Github
               </button>
             </div>
-
-            <p className="text-center mt-4 text-[18px] leading-[24.55px] font-normal text-[#4A4A4A] ">
-              Didn&apos;t have an account?{" "}
-              <Link href="/signup" className="text-[#1C1C1C]">
-                Sign Up Here
-              </Link>
-            </p>
           </form>
+          <p className="text-center text-[14px] leading-[20px] font-normal mt-2 text-[#4A4A4A]">
+            Didn&apos;t have an account?{" "}
+            <Link href="/signup" className="text-[#1C1C1C]">
+              Sign Up Here
+            </Link>
+          </p>
         </div>
-        <div className=" bg-[#F3F3F3] flex items-center justify-between rounded-[20px] h-[15%]  p-[20px]">
+
+        <div className="bg-[#F3F3F3] flex items-center justify-between rounded-[20px] h-[10%] p-[16px]">
           <div className="flex items-center">
-            <div className="flex relative mr-10 w-[75px] h-[45px]">
+            <div className="flex relative mr-6 w-[60px] h-[35px]">
               <Image
                 src="/images/ellipse6.svg"
                 alt="userIcon"
-                width={45}
-                height={45}
+                width={35}
+                height={35}
                 className="absolute left-0 rounded-full z-10"
               />
               <Image
                 src="/images/ellipse7.svg"
                 alt="userIcon"
-                width={45}
-                height={45}
-                className="absolute left-[25px] rounded-full z-20"
+                width={35}
+                height={35}
+                className="absolute left-[20px] rounded-full z-20"
               />
               <Image
                 src="/images/ellipse6.svg"
                 alt="userIcon"
-                width={45}
-                height={45}
-                className="absolute left-[50px] rounded-full z-30"
+                width={35}
+                height={35}
+                className="absolute left-[40px] rounded-full z-30"
               />
             </div>
-
             <div>
-              <p className="text-[#262626] text-[20px] leading-[27.28px] font-bold">
+              <p className="text-[#262626] text-[16px] leading-[22px] font-bold">
                 Join with 20k+ Users!
               </p>
-              <p className="text-[#B7B7B7] text-[14px] leading-[19.1px] font-normal">
+              <p className="text-[#B7B7B7] text-[12px] leading-[16px] font-normal">
                 Let&apos;s see our happy customer
               </p>
             </div>
           </div>
-          <button className="p-3 rounded-full">
+          <button className="p-2 rounded-full">
             <Image
               src="/images/topArrowRigth.svg"
               alt="topRightArrow"
-              width={48}
-              height={48}
+              width={40}
+              height={40}
             />
           </button>
         </div>
       </div>
-      <div className="flex flex-col justify-between w-[44%] h-[100%] bg-[url('/images/loginBg.png')] bg-cover bg-center rounded-[20px] p-[28px] ">
-        <p className=" text-[#ffffff] text-[36px] leading-[42px] font-bold ">
-          Al Revolutionizing the way we create, render, and experience content.
-        </p>
-        <div className="flex flex-col justify-between bg-[#8967D4A3] w-[100%] h-[200px] p-[30px] rounded-[20px] ">
-          <div className="  flex justify-between items-center  ">
-            <div className="flex">
-              <Image
-                src="/images/Ellipse8.svg"
-                alt="circleIcon"
-                width={55}
-                height={55}
-              />
-              <p className="-ml-5 border-[2px] border-[#fafafa]  text-center py-[16px] rounded-[20px] w-[170px] text-[16px] font-normal leading-[21.82px] text-[#fafafa] ">
-                Creating
-              </p>
-            </div>
-            <div className=" flex items-center justify-center ">
-              <Image
-                src="/images/topArrowleft.svg"
-                alt="topRightArrow"
-                width={55}
-                height={55}
-              />
-              <Image
-                src="/images/topArrowRigth.svg"
-                alt="topRightArrow"
-                width={55}
-                height={55}
-              />
-            </div>
-          </div>
 
-          <p className=" text-[#FAFAFA] font-normal text-[14px] leading-[19.1px] ">
-            Create design brief with Al voice command to make awesome <br />
-            3d images that suits your needs.
-          </p>
-        </div>
-      </div>
+      <LoginSection />
     </section>
   );
 };

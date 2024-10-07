@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 import Spinner from "@/components/spinner";
+import { AUTH_URL } from "@/utils";
 
 const AuthCallback = () => {
   const router = useRouter();

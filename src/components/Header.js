@@ -19,12 +19,11 @@ export default function Header() {
     if (token) {
       setIsLoggedIn(true);
     }
-  }, []);
+  });
 
   const handleLogout = () => {
     Cookies.remove("access_token");
     setIsLoggedIn(false);
-
     router.push("/");
   };
 
