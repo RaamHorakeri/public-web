@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { getOAuthUrl, loginApi, twoFA_Api } from "@/api/auth";
 import { nanoid } from "nanoid";
 import Cookies from "js-cookie";
@@ -14,7 +14,7 @@ const Page = () => {
   const [activationId, setActivationId] = useState("");
   const [clientId] = useState(nanoid());
 
-  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const googleHandler = async (e) => {
     e.preventDefault();
@@ -42,6 +42,7 @@ const Page = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    const redirect = searchParams.get("redirect");
 
     try {
       if (!activationId) {
@@ -55,7 +56,11 @@ const Page = () => {
           // No OTP needed, directly login (this might vary based on backend response)
           storeAccessToken(result);
           alert("Login successful!");
-          router.push("/");
+          if (redirect) {
+            window.location.href = redirect;
+          } else {
+            window.location.href = "/";
+          }
         }
       } else {
         // Second step: submit OTP
@@ -68,7 +73,11 @@ const Page = () => {
         );
         storeAccessToken(result); // Store token once OTP is verified
         alert("Login successful!");
-        router.push("/");
+        if (redirect) {
+          window.location.href = redirect;
+        } else {
+          window.location.href = "/";
+        }
       }
     } catch (error) {
       alert(error.message || "Login failed, please try again.");

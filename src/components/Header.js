@@ -12,20 +12,19 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const token = Cookies.get("access_token");
     if (token) {
       setIsLoggedIn(true);
     }
-  }, []);
+  });
 
   const handleLogout = () => {
     Cookies.remove("access_token");
     setIsLoggedIn(false);
-
-    router.push("/");
+    window.location.href = "/";
+    // router.push("/");
   };
 
   const handleMenuItemClick = (item) => {
