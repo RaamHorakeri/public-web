@@ -5,7 +5,6 @@ import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 export default function Header() {
@@ -24,7 +23,6 @@ export default function Header() {
     Cookies.remove("access_token");
     setIsLoggedIn(false);
     window.location.href = "/";
-    // router.push("/");
   };
 
   const handleMenuItemClick = (item) => {
