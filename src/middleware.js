@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 export function middleware(request) {
   const access_token = cookies().get("access_token")?.value;
 
-  const PROTECTED_ROUTES = []; //["/community/featuredQuestions"];
+  const PROTECTED_ROUTES = ["/dashboard"];
   const currentPath = request.nextUrl.pathname;
 
   const isProtectedRoute = PROTECTED_ROUTES.some((route) =>
@@ -21,5 +21,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/home", "/", "/community/featuredQuestions/:questionNum*"],
-};
+  matcher: ["/dashboard"],
+}; //[ "/", "/community/featuredQuestions/:questionNum*"]
