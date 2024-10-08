@@ -1,18 +1,17 @@
-export const getOAuthUrl = async (oauthProvider, oauthPurpose = "signup") => {
+import { AUTH_URL } from "@/utils";
+
+export const getOAuthUrl = async (oauthProvider, oauthPurpose) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/oauth/url`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          oauth_provider: oauthProvider,
-          oauth_purpose: oauthPurpose,
-        }),
+    const response = await fetch(`${AUTH_URL}/oauth/url`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        oauth_provider: oauthProvider,
+        oauth_purpose: oauthPurpose,
+      }),
+    });
 
     if (!response.ok) {
       throw new Error(`Error fetching OAuth URL: ${response.status}`);
@@ -33,16 +32,13 @@ export const getOAuthUrl = async (oauthProvider, oauthPurpose = "signup") => {
 
 export const registerUser = async (name, email) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/register`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email }),
+    const response = await fetch(`${AUTH_URL}/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({ name, email }),
+    });
 
     if (!response.ok) {
       throw new Error("Error registering user");
@@ -58,16 +54,13 @@ export const registerUser = async (name, email) => {
 
 export const verifyOtp = async (activation_id, activation_code) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/password/activation`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ activation_id, activation_code }),
+    const response = await fetch(`${AUTH_URL}/password/activation`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({ activation_id, activation_code }),
+    });
 
     if (!response.ok) {
       throw new Error("Error verifying OTP");
@@ -88,21 +81,18 @@ export const setPasswordApi = async (
   password,
 ) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/password/reset`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          activation_id: activationId,
-          activation_code: activationCode,
-          client_id: clientId,
-          password,
-        }),
+    const response = await fetch(`${AUTH_URL}/password/reset`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        activation_id: activationId,
+        activation_code: activationCode,
+        client_id: clientId,
+        password,
+      }),
+    });
 
     if (!response.ok) {
       throw new Error("Error setting password");
@@ -116,66 +106,69 @@ export const setPasswordApi = async (
   }
 };
 
-export const signUp = async (formData) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_AUTH_API_URL}/account/register`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+export const loginApi = async (email, password, clientId) => {
+  const credentials = "Basic " + btoa(`${email}:${password}`);
+  // console.log(credentials);
+
+  const response = await fetch(`${AUTH_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: credentials,
     },
-  );
-  return response;
-};
-export const signUpTwoFa = async (activationId, code) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_AUTH_API_URL}/account/register/activation`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        activation_id: activationId,
-        activation_code: code,
-      }),
-    },
-  );
-  return response;
+    body: JSON.stringify({ client_id: clientId }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to log in");
+  }
+
+  return response.json();
 };
 
-export const authenticate = async (email, password) => {
-  const basicAuth = "Basic " + btoa(`${email}:${password}`);
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_AUTH_API_URL}/account/authenticate`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: basicAuth,
-      },
-      body: JSON.stringify({ email, password }),
+export const twoFA_Api = async (
+  email,
+  password,
+  clientId,
+  activation_id,
+  activation_code,
+) => {
+  const credentials = "Basic " + btoa(`${email}:${password}`);
+
+  const response = await fetch(`${AUTH_URL}/login/activation`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: credentials,
     },
-  );
-  return response;
+    body: JSON.stringify({
+      activation_id,
+      activation_code,
+      client_id: clientId,
+      expiry_option: "transactional",
+    }),
+  });
+
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message || "OTP verification failed");
+  }
+
+  return result;
 };
 
-export const twoFaAuthenticate = async (activationId, code) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_AUTH_API_URL}/account/authenticate/2fa`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        activation_id: activationId,
-        activation_code: code,
-        session_validity: true,
-      }),
+export const forgotPassword = async (email) => {
+  const response = await fetch(`${AUTH_URL}/password/forgot`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
-  return response;
+    body: JSON.stringify({ email }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to validate");
+  }
+  const data = await response.json();
+  return data;
 };

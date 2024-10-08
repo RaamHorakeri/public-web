@@ -1,13 +1,31 @@
+import { useState } from "react";
 export default function Comment({ comment }) {
+  const [showReply, setShowReply] = useState(true);
+
   return (
-    <div className="mt-4 ml-4">
-      <div className="w-[748px]  py-[10px] px-[16px] mb-4 ">
-        Hi, <span className="text-primary">@Mathew Doe</span>
-        <p className="text-xs leading-s font-roboto font-normal w-[716px] ">
-          {comment.body}
-        </p>
+    <div className="pb-10 ">
+      <div className="flex justify-between w-full">
+        <div className="flex  items-center gap-2 font-[600] text-[16px]">
+          <span className="text-[#6C63FF]">Rick Wagenmakers </span>
+          <div className="h-1 w-1 rounded-full bg-black"></div>
+          <span className="text-[#494949]">January 16, 2024</span>
+        </div>
+        <div
+          className="flex gap-2"
+          onClick={() => setShowReply((prev) => !prev)}
+        >
+          <span>{showReply ? "Hide Reply" : "Show Reply"}</span>
+          <span className="material-symbols-outlined cursor-pointer">
+            {showReply ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+          </span>
+        </div>
       </div>
-      <hr className="mb-4 mt-8 border-[#B7B7B7] w-[600px] ml-4" />
+      {showReply && (
+        <div
+          className="text-[#494949]"
+          dangerouslySetInnerHTML={{ __html: comment?.body }}
+        ></div>
+      )}
     </div>
   );
 }
