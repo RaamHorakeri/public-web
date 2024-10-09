@@ -6,7 +6,6 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 
 const HEADER_ITEMS = [
   { id: "1", title: "Home", href: "/" },
@@ -17,7 +16,6 @@ const HEADER_ITEMS = [
 ];
 
 export default function Header() {
-  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(HEADER_ITEMS[0]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,19 +25,15 @@ export default function Header() {
     if (token) {
       setIsLoggedIn(true);
     }
-  }, [setIsLoggedIn]);
+  });
 
   const handleLogout = () => {
     Cookies.remove("access_token");
     setIsLoggedIn(false);
-
-    router.push("/");
-
     window.location.href = "/";
   };
 
   const handleMenuItemClick = (item) => {
-    console.log({ item });
     setActiveItem(item);
   };
 

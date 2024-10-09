@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 import { getOAuthUrl, loginApi, twoFA_Api } from "@/api/auth";
 import { nanoid } from "nanoid";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 import Spinner from "@/components/spinner";
 import LoginSection from "../_components/LoginSection";
 import JoinUsers from "../_components/JoinUsers";
@@ -22,7 +21,6 @@ const Page = () => {
   const [otpMsg, setOtpMsg] = useState("");
   const [otpError, setOtpError] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -70,11 +68,7 @@ const Page = () => {
         } else {
           // No OTP needed, directly login (this might vary based on backend response)
           storeAccessToken(result);
-
           setLoading(false);
-
-          router.push("/");
-
           alert("Login successful!");
           if (redirect) {
             window.location.href = redirect;
@@ -93,9 +87,6 @@ const Page = () => {
           otp,
         );
         storeAccessToken(result); // Store token once OTP is verified
-
-        router.push("/");
-
         alert("Login successful!");
         if (redirect) {
           window.location.href = redirect;
