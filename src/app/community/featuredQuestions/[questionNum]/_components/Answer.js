@@ -36,7 +36,7 @@ export default function Answer({ answer, questionId }) {
       setLoader(false);
     } catch (e) {
       setLoader(false);
-      console.log("failed to post comment", e.message);
+      // console.log("failed to post comment", e.message);
     }
   };
 

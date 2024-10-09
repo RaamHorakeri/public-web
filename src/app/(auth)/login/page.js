@@ -17,12 +17,10 @@ const Page = () => {
   const [activationId, setActivationId] = useState("");
   const [clientId] = useState(nanoid());
 
-
   const [errorMsg, setErrorMsg] = useState("");
   const [otpMsg, setOtpMsg] = useState("");
   const [otpError, setOtpError] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -59,7 +57,6 @@ const Page = () => {
 
     const redirect = searchParams.get("redirect");
 
-
     try {
       if (!activationId) {
         // First step: login attempt
@@ -71,18 +68,13 @@ const Page = () => {
         } else {
           // No OTP needed, directly login (this might vary based on backend response)
           storeAccessToken(result);
-
           setLoading(false);
-
-          router.push("/");
-
           alert("Login successful!");
           if (redirect) {
             window.location.href = redirect;
           } else {
             window.location.href = "/";
           }
-
         }
       } else {
         setLoading(false);
@@ -95,17 +87,12 @@ const Page = () => {
           otp,
         );
         storeAccessToken(result); // Store token once OTP is verified
-
-
-        router.push("/");
-
         alert("Login successful!");
         if (redirect) {
           window.location.href = redirect;
         } else {
           window.location.href = "/";
         }
-
       }
     } catch (error) {
       // console.log(error.message)
