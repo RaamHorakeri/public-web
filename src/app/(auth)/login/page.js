@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { getOAuthUrl, loginApi, twoFA_Api } from "@/api/auth";
 import { nanoid } from "nanoid";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import Spinner from "@/components/spinner";
 import LoginSection from "../_components/LoginSection";
 import JoinUsers from "../_components/JoinUsers";
@@ -16,7 +17,6 @@ const Page = () => {
   const [otp, setOtp] = useState("");
   const [activationId, setActivationId] = useState("");
   const [clientId] = useState(nanoid());
-
 
   const [errorMsg, setErrorMsg] = useState("");
   const [otpMsg, setOtpMsg] = useState("");
@@ -59,7 +59,6 @@ const Page = () => {
 
     const redirect = searchParams.get("redirect");
 
-
     try {
       if (!activationId) {
         // First step: login attempt
@@ -82,7 +81,6 @@ const Page = () => {
           } else {
             window.location.href = "/";
           }
-
         }
       } else {
         setLoading(false);
@@ -96,7 +94,6 @@ const Page = () => {
         );
         storeAccessToken(result); // Store token once OTP is verified
 
-
         router.push("/");
 
         alert("Login successful!");
@@ -105,7 +102,6 @@ const Page = () => {
         } else {
           window.location.href = "/";
         }
-
       }
     } catch (error) {
       // console.log(error.message)

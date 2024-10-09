@@ -6,10 +6,20 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+
+const HEADER_ITEMS = [
+  { id: "1", title: "Home", href: "/" },
+  { id: "2", title: "Courses", href: "/courses" },
+  { id: "3", title: "About Us", href: "/about" },
+  { id: "4", title: "Community", href: "/community/featuredQuestions" },
+  { id: "5", title: "Resources", href: "/resources" },
+];
 
 export default function Header() {
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState(null);
+  const [activeItem, setActiveItem] = useState(HEADER_ITEMS[0]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -17,7 +27,7 @@ export default function Header() {
     if (token) {
       setIsLoggedIn(true);
     }
-  });
+  }, [setIsLoggedIn]);
 
   const handleLogout = () => {
     Cookies.remove("access_token");
@@ -26,10 +36,10 @@ export default function Header() {
     router.push("/");
 
     window.location.href = "/";
-
   };
 
   const handleMenuItemClick = (item) => {
+    console.log({ item });
     setActiveItem(item);
   };
 
@@ -65,24 +75,20 @@ export default function Header() {
             </button>
           </div>
           <PopoverGroup className="flex justify-between h-[48px] gap-[44px] items-center">
-            {["Home", "Courses", "About Us", "Community", "Resources"].map(
-              (item) => (
-                <Link
-                  href={
-                    item === "Community"
-                      ? "/community/featuredQuestions"
-                      : `/${item.toLowerCase()}`
-                  }
-                  key={item}
-                  onClick={() => handleMenuItemClick(item)}
-                  className={`text-[16px] font-bold font-roboto leading-[21.82px] ${
-                    activeItem === item ? "text-[#6C63FF]" : "text-[#ffffff]"
-                  }`}
-                >
-                  {item}
-                </Link>
-              ),
-            )}
+            {HEADER_ITEMS.map((item) => (
+              <Link
+                href={item.href}
+                key={item.id}
+                onClick={() => handleMenuItemClick(item)}
+                className={`text-[16px] font-bold font-roboto leading-[21.82px] ${
+                  activeItem.id === item.id
+                    ? "text-[#6C63FF]"
+                    : "text-[#ffffff]"
+                }`}
+              >
+                {item.title}
+              </Link>
+            ))}
           </PopoverGroup>
 
           <div className="lg:flex flex items-center w-[205px] h-[48px]">
@@ -142,24 +148,18 @@ export default function Header() {
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6">
-                  {[
-                    "Home",
-                    "Courses",
-                    "Consultation",
-                    "Community",
-                    "Terms & Policy",
-                  ].map((item) => (
+                  {HEADER_ITEMS.map((item) => (
                     <Link
-                      key={item}
+                      key={item.id}
                       onClick={() => handleMenuItemClick(item)}
-                      href={`/${item.toLowerCase()}`}
+                      href={`${item.href}`}
                       className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
-                        activeItem === item
+                        activeItem.id === item.id
                           ? "text-[#7C56CF] bg-gray-50"
                           : "text-gray-900 hover:bg-gray-50"
                       }`}
                     >
-                      {item}
+                      {item.title}
                     </Link>
                   ))}
                 </div>
