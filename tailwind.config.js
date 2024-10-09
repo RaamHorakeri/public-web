@@ -16,6 +16,9 @@ module.exports = {
         "secondary-100": "#FAFAFA",
         "secondary-1000": "#868686",
       },
+      boxShadow: {
+        shadow: "0 4px 6px -1px rgba(0, 0, 0, 0.25)",
+      },
       borderRadius: {
         xxs: "2px",
         xs: "2px",
@@ -68,6 +71,7 @@ module.exports = {
       },
       animation: {
         "move-right": "moveRight 5s ease-in-out infinite",
+        move: "moveRight 3s ease-in-out",
         "move-up-down": "moveUpDown 5s ease-in-out infinite",
         "scale-up-down": "scaleImage 5s ease-in-out infinite",
       },
