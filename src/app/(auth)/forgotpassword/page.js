@@ -215,7 +215,12 @@ const Page = () => {
                         className="absolute right-3 top-1/3 text-gray-400"
                       >
                         {passwordVisible ? (
-                          "🙈"
+                          <Image
+                            src="/images/eyeClosedIcon.svg"
+                            alt="toggle password visibility"
+                            width={19}
+                            height={19}
+                          />
                         ) : (
                           <Image
                             src="/images/eye.svg"
@@ -252,7 +257,12 @@ const Page = () => {
                         className="absolute right-3 top-1/3 text-gray-400"
                       >
                         {confirmPasswordVisible ? (
-                          "🙈"
+                          <Image
+                            src="/images/eyeClosedIcon.svg"
+                            alt="toggle password visibility"
+                            width={19}
+                            height={19}
+                          />
                         ) : (
                           <Image
                             src="/images/eye.svg"
