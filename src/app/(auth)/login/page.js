@@ -195,7 +195,9 @@ const Page = () => {
 
             {activationId && (
               <div>
-                <p className="text-green-600 text-sm mt-1">{otpMsg}</p>
+                <p className="text-[#1C1C1C] font-normal text-[14px] leading-[20px]">
+                  {otpMsg}
+                </p>
                 <label className="block text-[14px] font-normal leading-[20px] text-[#1C1C1C] mb-1">
                   OTP
                 </label>

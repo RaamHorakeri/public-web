@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import LoginSection from "../_components/LoginSection";
 
 const Page = () => {
   const [email, setEmail] = useState();
@@ -118,48 +119,8 @@ const Page = () => {
   };
 
   return (
-    <section className=" bg-[#ffffff] flex h-[1024px] items-center justify-center p-[80px] gap-4 ">
-      <div
-        className={`flex flex-col justify-between w-[44%] h-[100%] bg-[url('/images/loginBg.png')] bg-cover bg-center rounded-[20px] p-[28px] transition-transform duration-500 ease-in-out transform `}
-      >
-        <p className=" text-[#ffffff] text-[36px] leading-[42px] font-bold ">
-          Al Revolutionizing the way we create, render, and experience content.
-        </p>
-        <div className="flex flex-col justify-between bg-[#8967D4A3] w-[100%] h-[200px] p-[30px] rounded-[20px] ">
-          <div className="  flex justify-between items-center  ">
-            <div className="flex">
-              <Image
-                src="/images/Ellipse8.svg"
-                alt="circleIcon"
-                width={55}
-                height={55}
-              />
-              <p className="-ml-5 border-[2px] border-[#fafafa]  text-center py-[16px] rounded-[20px] w-[170px] text-[16px] font-normal leading-[21.82px] text-[#fafafa] ">
-                Creating
-              </p>
-            </div>
-            <div className=" flex items-center justify-center ">
-              <Image
-                src="/images/topArrowLeft.svg"
-                alt="topRightArrow"
-                width={55}
-                height={55}
-              />
-              <Image
-                src="/images/topArrowRigth.svg"
-                alt="topRightArrow"
-                width={55}
-                height={55}
-              />
-            </div>
-          </div>
-
-          <p className=" text-[#FAFAFA] font-normal text-[14px] leading-[19.1px] ">
-            Create design brief with Al voice command to make awesome <br />
-            3d images that suits your needs.
-          </p>
-        </div>
-      </div>
+    <section className=" bg-[#ffffff] flex h-[100vh] items-center justify-center p-[40px] gap-4 ">
+      <LoginSection />
 
       <div
         className={` flex flex-col justify-between w-[44%] h-[100%] transition-transform duration-500 ease-in-out transform  `}
