@@ -23,7 +23,6 @@ export default function Header() {
     Cookies.remove("access_token");
     setIsLoggedIn(false);
     window.location.href = "/";
-    // router.push("/");
   };
 
   const handleMenuItemClick = (item) => {
