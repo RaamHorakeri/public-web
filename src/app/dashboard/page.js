@@ -1,5 +1,11 @@
-const Page = () => {
-  return <div />;
+import SideNav from "@/app/dashboard/_components/SideNav";
+
+const Dashboard = () => {
+  return (
+    <>
+      <SideNav />
+    </>
+  );
 };
 
-export default Page;
+export default Dashboard;

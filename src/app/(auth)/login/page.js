@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { getOAuthUrl, loginApi, twoFA_Api } from "@/api/auth";
 import { nanoid } from "nanoid";
 import Cookies from "js-cookie";
@@ -17,6 +17,7 @@ const Page = () => {
   const [activationId, setActivationId] = useState("");
   const [clientId] = useState(nanoid());
 
+
   const [errorMsg, setErrorMsg] = useState("");
   const [otpMsg, setOtpMsg] = useState("");
   const [otpError, setOtpError] = useState("");
@@ -24,6 +25,8 @@ const Page = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+
+  const searchParams = useSearchParams();
 
   const googleHandler = async (e) => {
     e.preventDefault();
@@ -51,7 +54,12 @@ const Page = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     setLoading(true);
+
+    const redirect = searchParams.get("redirect");
+
+
     try {
       if (!activationId) {
         // First step: login attempt
@@ -63,9 +71,18 @@ const Page = () => {
         } else {
           // No OTP needed, directly login (this might vary based on backend response)
           storeAccessToken(result);
+
           setLoading(false);
 
           router.push("/");
+
+          alert("Login successful!");
+          if (redirect) {
+            window.location.href = redirect;
+          } else {
+            window.location.href = "/";
+          }
+
         }
       } else {
         setLoading(false);
@@ -79,7 +96,16 @@ const Page = () => {
         );
         storeAccessToken(result); // Store token once OTP is verified
 
+
         router.push("/");
+
+        alert("Login successful!");
+        if (redirect) {
+          window.location.href = redirect;
+        } else {
+          window.location.href = "/";
+        }
+
       }
     } catch (error) {
       // console.log(error.message)

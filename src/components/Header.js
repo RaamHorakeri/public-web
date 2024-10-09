@@ -5,14 +5,12 @@ import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const token = Cookies.get("access_token");
@@ -24,7 +22,11 @@ export default function Header() {
   const handleLogout = () => {
     Cookies.remove("access_token");
     setIsLoggedIn(false);
+
     router.push("/");
+
+    window.location.href = "/";
+
   };
 
   const handleMenuItemClick = (item) => {

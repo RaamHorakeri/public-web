@@ -1,8 +1,14 @@
 import ReactQuill from "react-quill";
 import Cookies from "js-cookie";
+import clsx from "clsx";
 import "./quill.css";
 
-export default function QuilEditor({ value, setValue }) {
+export default function QuilEditor({
+  value,
+  setValue,
+  className,
+  placeholder,
+}) {
   const access_token = Cookies.get("access_token");
   const modules = {
     toolbar: [
@@ -20,7 +26,8 @@ export default function QuilEditor({ value, setValue }) {
         value={value}
         onChange={setValue}
         modules={modules}
-        className="text-black h-[140px] rounded-sm border-none"
+        className={clsx("text-black  rounded-sm border-none", className)}
+        placeholder={placeholder}
       />
     </div>
   );
