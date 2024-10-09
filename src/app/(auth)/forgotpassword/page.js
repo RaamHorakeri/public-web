@@ -137,7 +137,7 @@ const Page = () => {
             className="space-y-4 relative"
           >
             {step === 1 && (
-              <div className="flex flex-col p-4 py-10 border-[2px] border-[#D3D3D3] bg-[#FFFFFF] gap-[25px] shadow-md  ">
+              <div className="flex flex-col p-4 py-10 border border-[#D3D3D3] bg-[#FFFFFF] gap-[25px]  ">
                 <p className=" text-[32px] font-extrabold leading-[43.65px] text-[#01010C] text-center ">
                   Email
                 </p>
@@ -165,7 +165,7 @@ const Page = () => {
             )}
 
             {step === 2 && (
-              <div className="flex flex-col p-4 py-10 border-[2px] border-[#D3D3D3] bg-[#FFFFFF] gap-[25px] shadow-md  ">
+              <div className="flex flex-col p-4 py-10  border-[#D3D3D3] bg-[#FFFFFF] gap-[25px]   ">
                 <p className=" text-[32px] font-extrabold leading-[43.65px] text-[#01010C] text-center ">
                   2Factor Authentication
                 </p>
@@ -195,7 +195,10 @@ const Page = () => {
 
             {step === 3 && (
               <>
-                <div className="flex flex-col gap-4 transition duration-500 ease-in-out transform opacity-100 ">
+                <div className="flex flex-col gap-4 transition duration-500 ease-in-out transform opacity-100 border-[1px]  bg-[#FFFFFF] p-4 py-10 ">
+                  <p className="text-[#01010C] text-[32px] leading-[43.65px] font-extrabold text-center ">
+                    Set Password
+                  </p>
                   <div className="">
                     <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
                       Password

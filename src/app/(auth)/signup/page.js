@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Spinner from "@/components/spinner";
+import JoinUsers from "../_components/JoinUsers";
 
 const Page = () => {
   const [step, setStep] = useState(1);
@@ -24,8 +25,6 @@ const Page = () => {
   const [activationCode, setActivationCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const [rePassword, setRePassword] = useState("");
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -87,7 +86,7 @@ const Page = () => {
     } catch (error) {
       if (error) {
         setLoading(false);
-        setEmailError("User already registered,Please Login");
+        setEmailError("User already registered, Please Login");
       }
     }
   };
@@ -156,17 +155,23 @@ const Page = () => {
   };
 
   return (
-    <section className=" bg-[#ffffff] flex h-[100vh] items-center justify-center p-[40px] gap-4 ">
+    <section className="bg-[#ffffff] flex h-[100vh] items-center justify-center p-[40px] gap-4">
       <div
-        className={` flex flex-col justify-between gap-5 w-[35%] h-[100%] transition-transform duration-500 ease-in-out transform ${
-          isSwapped ? "  order-2 animate-move " : "  order-1 "
-        } `}
+        className={`flex flex-col justify-between gap-5 w-[35%] h-[100%] transition-transform duration-500 ease-in-out transform ${
+          isSwapped ? "order-2" : "order-1"
+        }`}
       >
-        <div className=" bg-[#F3F3F3] rounded-[20px] p-[20px] gap-[30px] h-[90%] flex flex-col justify-center ">
-          <p className=" text-[14px] font-normal leading-[20px] text-[#777777]">
-            Sign up now to unlock a world of lettarning opportunities and take
-            the first step towards becoming a software engineer.
-          </p>
+        <div
+          className={`${
+            step === 1 ? "bg-[#F3F3F3]" : ""
+          } rounded-[20px] p-[20px] gap-[30px] h-[90%] flex flex-col justify-center`}
+        >
+          {step === 1 && (
+            <p className="text-[14px] font-normal leading-[20px] text-[#777777]">
+              Sign up now to unlock a world of learning opportunities and take
+              the first step towards becoming a software engineer.
+            </p>
+          )}
 
           <form
             onSubmit={
@@ -181,7 +186,7 @@ const Page = () => {
             {step === 1 && (
               <>
                 <div>
-                  <label className="block text-[14px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
+                  <label className="block text-[14px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2 ">
                     Username
                   </label>
                   <input
@@ -189,25 +194,31 @@ const Page = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter your name"
-                    className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[45px] outline-none "
+                    className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[45px] outline-none"
+                    required
                   />
                 </div>
                 <div>
-                  <label className="block text-[14px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
+                  <label className="block text-[14px] font-normal leading-[20px] text-[#1C1C1C] mb-2">
                     Email
                   </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[45px] outline-none"
-                  />
+                  <div className="flex items-center bg-[#ffffff] rounded-[16px] px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="hello@gmail.com"
+                      className="w-full outline-none bg-transparent"
+                      required
+                    />
+                  </div>
+                  {emailError && (
+                    <p className="text-red-500 text-sm ">{emailError}</p>
+                  )}
                 </div>
-                <p className="text-red-500 text-sm mt-2">{emailError}</p>
                 <button
                   type="submit"
-                  className="w-full p-[10px] bg-[#1C1C1C] text-white rounded-[22px] text-[18px] font-bold leading-[24.55px] my-4 "
+                  className="w-full p-[10px] bg-[#1C1C1C] text-white rounded-[22px] text-[18px] font-bold leading-[24.55px] my-4"
                 >
                   {loading ? <Spinner /> : "Register"}
                 </button>
@@ -236,7 +247,7 @@ const Page = () => {
                   </button>
                   <button
                     onClick={gitHubHandler}
-                    className="w-1/2 p-3 border border-[#A4A4A4] flex items-center justify-center rounded-[22px] text-[18px] leading-[24.55px] font-normal "
+                    className="w-1/2 p-3 border border-[#A4A4A4] flex items-center justify-center rounded-[22px] text-[18px] leading-[24.55px] font-normal"
                   >
                     <Image
                       src="/images/Github.png"
@@ -249,7 +260,7 @@ const Page = () => {
                   </button>
                 </div>
 
-                <p className="text-center mt-8 text-[16px] leading-[24.55px] font-normal text-[#4A4A4A] ">
+                <p className="text-center mt-8 text-[16px] leading-[24.55px] font-normal text-[#4A4A4A]">
                   Already have an account?{" "}
                   <Link href="/login" className="text-[#1C1C1C]">
                     Login Here
@@ -259,13 +270,13 @@ const Page = () => {
             )}
 
             {step === 2 && (
-              <div className="flex flex-col p-4 py-10 border-[2px] border-[#D3D3D3] bg-[#FFFFFF] gap-[25px] shadow-md  ">
-                <p className=" text-[32px] font-extrabold leading-[43.65px] text-[#01010C] text-center ">
-                  2Factor Authentication
+              <div className="flex flex-col p-4 py-10 border-[2px]  bg-[#FFFFFF] gap-[25px] ">
+                <p className="text-[32px] font-extrabold leading-[43.65px] text-[#01010C] text-center">
+                  2-Factor Authentication
                 </p>
-                <div className="flex flex-col gap-4">
-                  <label className=" text-[#01010C] text-[16px font-normal leading-[21.82px] ] ">
-                    Enter 6-digit Code that you recieved in your mail
+                <div className="flex flex-col ">
+                  <label className="text-[#01010C] text-[16px] font-normal leading-[21.82px]">
+                    Enter 6-digit Code that you received in your mail
                   </label>
                   <input
                     type="text"
@@ -273,13 +284,16 @@ const Page = () => {
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
                     required
-                    className=" bg-[#F2F1F2] h-[50px] rounded-[22px] px-4 py-4 outline-none"
+                    className="bg-[#F2F1F2] h-[50px] rounded-[22px] mt-2 px-4 py-4 outline-none"
                   />
+                  {otpError && (
+                    <p className="text-red-500 mt-1 text-sm">{otpError}</p>
+                  )}
                 </div>
-                <p className="text-red-500 text-sm mt-2">{otpError}</p>
+
                 <button
                   type="submit"
-                  className=" bg-[#1C1C1C] h-[50px] text-[#FFFFFF] text-[18px] leading-[24.55px] font-bold rounded-[22px] "
+                  className="bg-[#1C1C1C] h-[50px] text-[#FFFFFF] text-[18px] leading-[24.55px] font-bold rounded-[22px]"
                 >
                   {loading ? <Spinner /> : "Submit"}
                 </button>
@@ -288,7 +302,10 @@ const Page = () => {
 
             {step === 3 && (
               <>
-                <div className="flex flex-col gap-4 transition duration-500 ease-in-out transform opacity-100 ">
+                <div className="flex flex-col gap-4 transition duration-500 ease-in-out transform opacity-100 border-[1px]  bg-[#FFFFFF] p-4 py-10  ">
+                  <p className="text-[#01010C] text-[32px] leading-[43.65px] font-extrabold text-center ">
+                    Set Password
+                  </p>
                   <div className="">
                     <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
                       Password
@@ -300,7 +317,7 @@ const Page = () => {
                         required
                         type={passwordVisible ? "text" : "password"}
                         placeholder="Password"
-                        className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
+                        className="w-full bg-[#F2F1F2] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
                       />
                       <button
                         type="button"
@@ -335,7 +352,7 @@ const Page = () => {
                         placeholder="Confirm Password"
                         value={confirmPassword}
                         onChange={handleConfirmPasswordChange}
-                        className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
+                        className="w-full bg-[#F2F1F2] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
                       />
                       <button
                         type="button"
@@ -373,91 +390,49 @@ const Page = () => {
             )}
           </form>
         </div>
-        <div className=" bg-[#F3F3F3] flex items-center justify-between rounded-[20px] h-[10%] p-[16px]">
-          <div className="flex items-center">
-            <div className="flex relative mr-10 w-[75px] h-[45px]">
-              <Image
-                src="/images/Ellipse6.svg"
-                alt="userIcon"
-                width={45}
-                height={45}
-                className="absolute left-0 rounded-full z-10"
-              />
-              <Image
-                src="/images/Ellipse7.svg"
-                alt="userIcon"
-                width={45}
-                height={45}
-                className="absolute left-[25px] rounded-full z-20"
-              />
-              <Image
-                src="/images/Ellipse6.svg"
-                alt="userIcon"
-                width={45}
-                height={45}
-                className="absolute left-[50px] rounded-full z-30"
-              />
-            </div>
 
-            <div>
-              <p className="text-[#262626] text-[20px] leading-[27.28px] font-bold">
-                Join with 20k+ Users!
-              </p>
-              <p className="text-[#B7B7B7] text-[14px] leading-[19.1px] font-normal">
-                Let&apos;s see our happy customer
-              </p>
-            </div>
-          </div>
-          <button className="p-3 rounded-full">
-            <Image
-              src="/images/topArrowRigth.svg"
-              alt="topRightArrow"
-              width={48}
-              height={48}
-            />
-          </button>
-        </div>
+        {step === 1 && <JoinUsers />}
       </div>
       <div
-        className={`flex flex-col justify-between w-[35%] h-[100%] bg-[url('/images/loginBg.png')] bg-cover bg-center rounded-[20px] p-[20px] transition-transform duration-500 ease-in-out transform  ${
-          isSwapped ? "  order-1 " : "  order-2 "
-        } `}
+        className={`flex flex-col justify-between w-[35%] h-[100%] bg-[url('/images/loginBg.png')] bg-cover bg-center rounded-[20px] p-[20px] transition-transform duration-500 ease-in-out transform ${
+          isSwapped ? "order-1" : "order-2"
+        }`}
       >
-        <p className=" text-[#ffffff] text-[28px] leading-[36px] font-bold ">
-          Al Revolutionizing the way we create, render, and experience content.
+        <p className="text-[#ffffff] text-[28px] leading-[36px] font-bold">
+          Revolutionizing the way we create, render, and experience content.
         </p>
-        <div className="flex flex-col justify-between bg-[#8967D4A3] w-[100%] h-[160px] p-[20px] rounded-[16px] ">
-          <div className="  flex justify-between items-center  ">
+        <div className="flex flex-col justify-between bg-[#8967D4A3] w-[100%] h-[160px] p-[20px] rounded-[16px]">
+          <div className="flex justify-between items-center">
             <div className="flex">
               <Image
                 src="/images/Ellipse8.svg"
                 alt="circleIcon"
-                width={55}
-                height={55}
+                width={45}
+                height={45}
               />
-              <p className="-ml-4 border-[2px] border-[#fafafa] text-center py-[12px] rounded-[16px] w-[140px] text-[14px] font-normal leading-[20px] text-[#fafafa] ">
+              <p className="-ml-4 border-[2px] border-[#fafafa] text-center py-[12px] rounded-[16px] w-[140px] text-[14px] font-normal leading-[20px] text-[#fafafa]">
                 Creating
               </p>
             </div>
-            <div className=" flex items-center justify-center ">
+            <div className="flex items-center justify-center">
               <Image
                 src="/images/topArrowLeft.svg"
-                alt="topRightArrow"
-                width={55}
-                height={55}
+                alt="topLeftArrow"
+                width={45}
+                height={45}
               />
               <Image
                 src="/images/topArrowRigth.svg"
                 alt="topRightArrow"
-                width={55}
-                height={55}
+                width={45}
+                height={45}
               />
             </div>
           </div>
 
-          <p className=" text-[#FAFAFA] font-normal text-[12px] leading-[16px] ">
-            Create design brief with Al voice command to make awesome <br />
-            3d images that suits your needs.
+          <p className="text-[#FAFAFA] font-normal text-[12px] leading-[16px]">
+            Create design brief with AI voice command to make awesome 3D images
+            that suit your needs.
           </p>
         </div>
       </div>
@@ -465,30 +440,30 @@ const Page = () => {
       <Dialog
         open={isOpen}
         as="div"
-        className="relative z-10 focus:outline-none"
+        className="relative z-10   focus:outline-none"
         onClose={close}
       >
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
-              className=" flex flex-col gap-3 text-center justify-center items-center w-full max-w-md rounded-xl bg-white p-10 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+              className="flex flex-col gap-3 text-center justify-center items-center w-full max-w-md rounded-[16px] border-2 border-[#1A1A1A1A] bg-white p-10 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
             >
-              <div className=" flex flex-col items-center gap-3 ">
+              <div className="flex flex-col items-center gap-3">
                 <Image
                   src="/images/check_circle.svg"
                   alt="check_circle"
                   width={34}
                   height={34}
                 />
-                <p className="text-[#1A1A1A] font-bold text-[20px] leading-[27.28px] ">
+                <p className="text-[#1A1A1A] font-bold text-[20px] leading-[27.28px]">
                   Registered Successfully
                 </p>
               </div>
-              <div className="  flex gap-3">
+              <div className="flex gap-3">
                 <button
                   onClick={close}
-                  className=" bg-[#1C1C1C] text-white h-[42px] px-3 text-[16px] font-bold leading-[21.82px] rounded-[12px] "
+                  className="bg-[#1C1C1C] text-white h-[42px] px-3 text-[16px] font-bold leading-[21.82px] rounded-[12px]"
                 >
                   Proceed
                 </button>

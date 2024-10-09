@@ -16,6 +16,9 @@ module.exports = {
         "secondary-100": "#FAFAFA",
         "secondary-1000": "#868686",
       },
+      boxShadow: {
+        shadow: "0 4px 6px -1px rgba(0, 0, 0, 0.25)",
+      },
       borderRadius: {
         xxs: "2px",
         xs: "2px",
