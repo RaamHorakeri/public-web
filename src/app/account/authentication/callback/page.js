@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 import Spinner from "@/components/spinner";
+import { AUTH_URL } from "@/utils";
 
 const AuthCallback = () => {
   const router = useRouter();
+  const [error, setError] = useState("");
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -51,8 +53,7 @@ const AuthCallback = () => {
         }
       } catch (err) {
         if (err.message.includes("409")) {
-          alert("User already exists. Please Login.");
-          router.push("/login");
+          setError("User already exists. Please Login.");
         }
       }
     };
@@ -63,6 +64,17 @@ const AuthCallback = () => {
   return (
     <div className="h-screen mt-52">
       <Spinner />
+      {error && (
+        <div className="flex flex-col justify-center items-center mt-10 gap-5">
+          <p className="text-red-500 text-sm mt-2">{error}</p>
+          <button
+            onClick={() => router.push("/login")}
+            className="bg-[#1C1C1C] text-white h-[42px] px-3 text-[16px] font-bold leading-[21.82px] rounded-[12px]"
+          >
+            Login
+          </button>
+        </div>
+      )}
     </div>
   );
 };

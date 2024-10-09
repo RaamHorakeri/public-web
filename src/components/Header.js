@@ -22,7 +22,11 @@ export default function Header() {
   const handleLogout = () => {
     Cookies.remove("access_token");
     setIsLoggedIn(false);
+
+    router.push("/");
+
     window.location.href = "/";
+
   };
 
   const handleMenuItemClick = (item) => {
