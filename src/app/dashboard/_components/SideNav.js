@@ -48,7 +48,7 @@ export default function SideNav() {
   const [iconsView, seticonsView] = useState(false);
   return (
     <div
-      className={`bg-black  text-white min-h-screen flex flex-col justify-between ${iconsView ? "w-[100px]" : "max-w-[300px] "}`}
+      className={`bg-black  text-white h-full flex flex-col justify-between ${iconsView ? "w-[100px]" : "w-[300px] "}`}
     >
       <div>
         <div className="flex items-center justify-center gap-2 pt-6">
