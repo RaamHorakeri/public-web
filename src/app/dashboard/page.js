@@ -1,11 +1,5 @@
-import SideNav from "@/app/dashboard/_components/SideNav";
-
 const Dashboard = () => {
-  return (
-    <>
-      <SideNav />
-    </>
-  );
+  return <div className="w-full h-full "></div>;
 };
 
 export default Dashboard;
