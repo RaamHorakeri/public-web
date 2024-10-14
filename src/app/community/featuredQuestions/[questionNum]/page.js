@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import TryProduct from "@/app/community/featuredQuestions/[questionNum]/_components/TryProduct";
-import QuilEditor from "@/app/community/_components/QuillEditor/QuilEditor";
 import Answer from "@/app/community/featuredQuestions/[questionNum]/_components/Answer";
 import { isEmptyObject } from "@/utils";
 import { useParams } from "next/navigation";
@@ -16,6 +15,13 @@ import {
 import Spinner from "@/components/spinner";
 import Comment from "@/app/community/featuredQuestions/[questionNum]/_components/Comment";
 import DigitalSupport from "@/components/DigitalSupport";
+
+import dynamic from "next/dynamic";
+
+const QuilEditor = dynamic(
+  () => import("@/app/community/_components/QuillEditor/QuilEditor"),
+  { ssr: false },
+);
 
 const NavData = [
   "AWS",
