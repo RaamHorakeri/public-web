@@ -28,12 +28,14 @@ const Page = () => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [otpError, setOtpError] = useState("");
+  const [isSwapped, setIsSwapped] = useState(false);
 
   const router = useRouter();
 
   const handlePassword = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setIsSwapped(true);
     try {
       const result = await forgotPassword(email);
 
@@ -120,10 +122,12 @@ const Page = () => {
 
   return (
     <section className=" bg-[#ffffff] flex h-[100vh] items-center justify-center p-[40px] gap-4 ">
-      <LoginSection isSwapped={true} />
+      <LoginSection isSwapped={!isSwapped} />
 
       <div
-        className={` flex flex-col justify-between w-[44%] h-[100%] transition-transform duration-500 ease-in-out transform  `}
+        className={`flex flex-col justify-between gap-5 w-[35%] h-[100%] transition-transform duration-500 ease-in-out transform ${
+          isSwapped ? "order-2" : "order-1"
+        }`}
       >
         <div className=" rounded-[20px] p-[32px] gap-[50px] h-[100%] flex flex-col justify-center ">
           <form
