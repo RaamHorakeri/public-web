@@ -77,6 +77,7 @@ const Page = () => {
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+    setPasswordError("");
     if (confirmPassword && e.target.value !== confirmPassword) {
       setPasswordError("Passwords do not match.");
     } else {
@@ -169,7 +170,10 @@ const Page = () => {
                     <input
                       type="email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        setEmailError("");
+                      }}
                       placeholder="hello@gmail.com"
                       className="w-full bg-[#f2f1f2]  outline-none"
                       disabled={!!activationId}
@@ -180,7 +184,13 @@ const Page = () => {
 
                 <button
                   type="submit"
-                  className="w-full p-[10px] bg-[#1C1C1C] text-white rounded-[22px] text-[18px] font-bold leading-[24.55px]  "
+                  className={`w-full p-[8px] text-white rounded-[16px] text-[16px] font-bold leading-[22px] my-3 
+    ${
+      !email || emailError
+        ? "bg-gray-400 cursor-not-allowed opacity-50"
+        : "bg-[#1C1C1C] hover:bg-[#333333]"
+    }          
+  `}
                 >
                   {loading ? <Spinner /> : "Submit"}
                 </button>
@@ -200,7 +210,10 @@ const Page = () => {
                     type="text"
                     placeholder="Enter the OTP"
                     value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
+                    onChange={(e) => {
+                      setOtp(e.target.value);
+                      setOtpError("");
+                    }}
                     required
                     className=" bg-[#F2F1F2] h-[50px] rounded-[22px] mt-2 px-4 py-4 outline-none"
                   />
@@ -209,7 +222,13 @@ const Page = () => {
 
                 <button
                   type="submit"
-                  className=" bg-[#1C1C1C] h-[50px] text-[#FFFFFF] text-[18px] leading-[24.55px] font-bold rounded-[22px] "
+                  className={`w-full p-[8px] text-white rounded-[16px] text-[16px] font-bold leading-[22px] my-3 
+                    ${
+                      !otp || otpError
+                        ? "bg-gray-400 cursor-not-allowed opacity-50"
+                        : "bg-[#1C1C1C] hover:bg-[#333333]"
+                    }          
+                  `}
                 >
                   {loading ? <Spinner /> : "Submit"}
                 </button>
@@ -317,7 +336,16 @@ const Page = () => {
                   </div>
                   <button
                     type="submit"
-                    className=" bg-[#1C1C1C] h-[50px] text-[#FFFFFF] text-[18px] leading-[24.55px] font-bold rounded-[22px] "
+                    className={`w-full p-[8px] text-white rounded-[16px] text-[16px] font-bold leading-[22px] my-3 
+                      ${
+                        !confirmPassword ||
+                        !password ||
+                        confirmPasswordError ||
+                        passwordError
+                          ? "bg-gray-400 cursor-not-allowed opacity-50"
+                          : "bg-[#1C1C1C] hover:bg-[#333333]"
+                      }          
+                    `}
                   >
                     {loading ? <Spinner /> : "Set Password"}
                   </button>

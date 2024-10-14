@@ -155,7 +155,10 @@ const Page = () => {
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setErrorMsg("");
+                    }}
                     placeholder="hello@gmail.com"
                     className="w-full bg-[#ffffff]  outline-none"
                     disabled={!!activationId}
@@ -174,7 +177,10 @@ const Page = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        setErrorMsg("");
+                      }}
                       placeholder="Password"
                       className="w-full bg-[#ffffff]  outline-none"
                       disabled={!!activationId}
@@ -245,6 +251,7 @@ const Page = () => {
 
                 <button
                   type="submit"
+                  disabled={!otp || otpError}
                   className="bg-[#1C1C1C] h-[50px] text-[#FFFFFF] text-[18px] leading-[24.55px] font-bold rounded-[22px]"
                 >
                   {loading ? <Spinner /> : "Submit"}
@@ -254,7 +261,14 @@ const Page = () => {
             {!activationId && (
               <button
                 type="submit"
-                className="w-full p-[8px] bg-[#1C1C1C] text-white rounded-[16px] text-[16px] font-bold leading-[22px] my-3"
+                disabled={!email || !password || errorMsg}
+                className={`w-full p-[8px] text-white rounded-[16px] text-[16px] font-bold leading-[22px] my-3 
+                  ${
+                    !email || !password || errorMsg
+                      ? "bg-gray-400 cursor-not-allowed opacity-50"
+                      : "bg-[#1C1C1C] hover:bg-[#333333]"
+                  }          
+                `}
               >
                 {loading ? <Spinner /> : "Sign In"}
               </button>
