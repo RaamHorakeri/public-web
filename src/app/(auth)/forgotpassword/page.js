@@ -95,6 +95,14 @@ const Page = () => {
 
   const handleSetPassword = async (e) => {
     e.preventDefault();
+
+    setPasswordError("");
+    setConfirmPasswordError("");
+
+    if (password !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match.");
+      return;
+    }
     setLoading(true);
 
     const clientId = Cookies.get("clientId");
@@ -146,22 +154,33 @@ const Page = () => {
                   Email
                 </p>
                 <div>
-                  <label className="text-[#01010C] text-[16px font-normal leading-[21.82px] ">
+                  <label className="text-[#1C1C1C] text-[16px] font-normal leading-[21.82px]  ">
                     Enter Email to get OTP
                   </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="bg-[#F2F1F2] h-[50px] rounded-[22px] px-4 py-4 outline-none w-full mt-2"
-                  />
+
+                  <div className="flex items-center bg-[#f2f1f2] mb-2 rounded-[22px] mt-2 px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                    <Image
+                      src="/images/emialIcon.svg"
+                      alt="email icon"
+                      width={20}
+                      height={20}
+                      className="mr-2"
+                    />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="hello@gmail.com"
+                      className="w-full bg-[#f2f1f2]  outline-none"
+                      disabled={!!activationId}
+                    />
+                  </div>
                   <p className="text-red-500 text-sm mt-1">{emailError}</p>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full p-[10px] bg-[#1C1C1C] text-white rounded-[22px] text-[18px] font-bold leading-[24.55px] my-4 "
+                  className="w-full p-[10px] bg-[#1C1C1C] text-white rounded-[22px] text-[18px] font-bold leading-[24.55px]  "
                 >
                   {loading ? <Spinner /> : "Submit"}
                 </button>
@@ -207,37 +226,41 @@ const Page = () => {
                     <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
                       Password
                     </label>
-                    <div className="relative">
+                    <div className="flex relative items-center bg-[#F2F1F2] rounded-[22px] px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                      <Image
+                        src="/images/passwordIcon.svg"
+                        alt="password icon"
+                        width={20}
+                        height={20}
+                        className="mr-2"
+                      />
+
                       <input
+                        type={passwordVisible ? "text" : "password"}
                         value={password}
                         onChange={handlePasswordChange}
-                        required
-                        type={passwordVisible ? "text" : "password"}
                         placeholder="Password"
-                        className="w-full bg-[#F2F1F2] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
+                        className="w-full bg-[#F2F1F2]  outline-none"
                       />
+
                       <button
                         type="button"
                         onClick={() => setPasswordVisible(!passwordVisible)}
-                        className="absolute right-3 top-1/3 text-gray-400"
+                        className="absolute right-3"
                       >
-                        {passwordVisible ? (
-                          <Image
-                            src="/images/eyeClosedIcon.svg"
-                            alt="toggle password visibility"
-                            width={19}
-                            height={19}
-                          />
-                        ) : (
-                          <Image
-                            src="/images/eye.svg"
-                            width={19}
-                            height={13}
-                            alt="show"
-                          />
-                        )}
+                        <Image
+                          src={
+                            passwordVisible
+                              ? "/images/eyeClosedIcon.svg"
+                              : "/images/eyeOpenIcon.svg"
+                          }
+                          alt="toggle password visibility"
+                          width={19}
+                          height={19}
+                        />
                       </button>
                     </div>
+
                     {passwordError && (
                       <p className="text-red-500 text-sm mt-1">
                         {passwordError}
@@ -248,38 +271,44 @@ const Page = () => {
                     <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
                       Confirm Password
                     </label>
-                    <div className="relative">
+
+                    <div className="flex relative items-center bg-[#F2F1F2] rounded-[22px] px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                      <Image
+                        src="/images/passwordIcon.svg"
+                        alt="password icon"
+                        width={20}
+                        height={20}
+                        className="mr-2"
+                      />
+
                       <input
                         type={confirmPasswordVisible ? "text" : "password"}
-                        placeholder="Confirm Password"
                         value={confirmPassword}
                         onChange={handleConfirmPasswordChange}
-                        className="w-full bg-[#F2F1F2] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
+                        placeholder="Password"
+                        className="w-full bg-[#F2F1F2]  outline-none"
                       />
+
                       <button
                         type="button"
                         onClick={() =>
                           setConfirmPasswordVisible(!confirmPasswordVisible)
                         }
-                        className="absolute right-3 top-1/3 text-gray-400"
+                        className="absolute right-3"
                       >
-                        {confirmPasswordVisible ? (
-                          <Image
-                            src="/images/eyeClosedIcon.svg"
-                            alt="toggle password visibility"
-                            width={19}
-                            height={19}
-                          />
-                        ) : (
-                          <Image
-                            src="/images/eye.svg"
-                            width={19}
-                            height={13}
-                            alt="show"
-                          />
-                        )}
+                        <Image
+                          src={
+                            confirmPasswordVisible
+                              ? "/images/eyeClosedIcon.svg"
+                              : "/images/eyeOpenIcon.svg"
+                          }
+                          alt="toggle password visibility"
+                          width={19}
+                          height={19}
+                        />
                       </button>
                     </div>
+
                     {confirmPasswordError && (
                       <p className="text-red-500 text-sm mt-1">
                         {confirmPasswordError}
@@ -309,7 +338,7 @@ const Page = () => {
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
-              className=" flex flex-col gap-3 text-center justify-center items-center w-full max-w-md rounded-xl bg-white p-10 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+              className="flex flex-col gap-3 text-center justify-center items-center w-full max-w-md rounded-[16px] border-2 border-[#1A1A1A1A] bg-white p-10 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
             >
               <div className=" flex flex-col items-center gap-3 ">
                 <Image

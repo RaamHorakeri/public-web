@@ -131,6 +131,15 @@ const Page = () => {
 
   const handleSetPassword = async (e) => {
     e.preventDefault();
+
+    setPasswordError("");
+    setConfirmPasswordError("");
+
+    if (password !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match.");
+      return;
+    }
+
     setLoading(true);
     const clientId = nanoid();
 
@@ -146,7 +155,9 @@ const Page = () => {
         expires: expiresAt,
         path: "/",
       });
+
       open();
+
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -189,29 +200,46 @@ const Page = () => {
                   <label className="block text-[14px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2 ">
                     Username
                   </label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter your name"
-                    className="w-full bg-[#ffffff] rounded-[22px] px-[16px] py-[12px] h-[45px] outline-none"
-                    required
-                  />
+                  <div className="flex items-center bg-[#ffffff] mb-2 rounded-[22px] px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                    <Image
+                      src="/images/person.svg"
+                      alt="email icon"
+                      width={20}
+                      height={20}
+                      className="mr-2"
+                    />
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Enter your name"
+                      className="w-full bg-[#ffffff]   outline-none"
+                      required
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-[14px] font-normal leading-[20px] text-[#1C1C1C] mb-2">
                     Email
                   </label>
-                  <div className="flex items-center bg-[#ffffff] rounded-[16px] px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                  <div className="flex items-center bg-[#ffffff] mb-2 rounded-[22px] px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                    <Image
+                      src="/images/emialIcon.svg"
+                      alt="email icon"
+                      width={20}
+                      height={20}
+                      className="mr-2"
+                    />
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="hello@gmail.com"
-                      className="w-full outline-none bg-transparent"
+                      className="w-full bg-[#ffffff]   outline-none"
                       required
                     />
                   </div>
+
                   {emailError && (
                     <p className="text-red-500 text-sm ">{emailError}</p>
                   )}
@@ -310,30 +338,39 @@ const Page = () => {
                     <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
                       Password
                     </label>
-                    <div className="relative">
+                    <div className="flex relative items-center bg-[#F2F1F2] rounded-[22px] px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                      <Image
+                        src="/images/passwordIcon.svg"
+                        alt="password icon"
+                        width={20}
+                        height={20}
+                        className="mr-2"
+                      />
+
                       <input
+                        type={passwordVisible ? "text" : "password"}
                         value={password}
                         onChange={handlePasswordChange}
-                        required
-                        type={passwordVisible ? "text" : "password"}
                         placeholder="Password"
-                        className="w-full bg-[#F2F1F2] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
+                        className="w-full bg-[#F2F1F2] outline-none"
+                        required
                       />
+
                       <button
                         type="button"
                         onClick={() => setPasswordVisible(!passwordVisible)}
-                        className="absolute right-3 top-1/3 text-gray-400"
+                        className="absolute right-3"
                       >
-                        {passwordVisible ? (
-                          "🙈"
-                        ) : (
-                          <Image
-                            src="/images/eye.svg"
-                            width={19}
-                            height={13}
-                            alt="show"
-                          />
-                        )}
+                        <Image
+                          src={
+                            passwordVisible
+                              ? "/images/eyeClosedIcon.svg"
+                              : "/images/eyeOpenIcon.svg"
+                          }
+                          alt="toggle password visibility"
+                          width={19}
+                          height={19}
+                        />
                       </button>
                     </div>
                     {passwordError && (
@@ -346,31 +383,40 @@ const Page = () => {
                     <label className="block text-[16px] font-normal leading-[21.82px] text-[#1C1C1C] mb-2">
                       Confirm Password
                     </label>
-                    <div className="relative">
+                    <div className="flex relative items-center bg-[#F2F1F2] rounded-[22px] px-[12px] py-[8px] h-[45px] border border-[#e2e2e2]">
+                      <Image
+                        src="/images/passwordIcon.svg"
+                        alt="password icon"
+                        width={20}
+                        height={20}
+                        className="mr-2"
+                      />
+
                       <input
                         type={confirmPasswordVisible ? "text" : "password"}
-                        placeholder="Confirm Password"
                         value={confirmPassword}
                         onChange={handleConfirmPasswordChange}
-                        className="w-full bg-[#F2F1F2] rounded-[22px] px-[16px] py-[12px] h-[50px] outline-none"
+                        placeholder="Password"
+                        className="w-full bg-[#F2F1F2] outline-none"
                       />
+
                       <button
                         type="button"
                         onClick={() =>
                           setConfirmPasswordVisible(!confirmPasswordVisible)
                         }
-                        className="absolute right-3 top-1/3 text-gray-400"
+                        className="absolute right-3"
                       >
-                        {confirmPasswordVisible ? (
-                          "🙈"
-                        ) : (
-                          <Image
-                            src="/images/eye.svg"
-                            width={19}
-                            height={13}
-                            alt="show"
-                          />
-                        )}
+                        <Image
+                          src={
+                            confirmPasswordVisible
+                              ? "/images/eyeClosedIcon.svg"
+                              : "/images/eyeOpenIcon.svg"
+                          }
+                          alt="toggle password visibility"
+                          width={19}
+                          height={19}
+                        />
                       </button>
                     </div>
                     {confirmPasswordError && (

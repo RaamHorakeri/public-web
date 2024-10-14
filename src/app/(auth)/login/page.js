@@ -157,7 +157,7 @@ const Page = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="hello@gmail.com"
-                    className="w-full rounded-[22px] outline-none bg-transparent "
+                    className="w-full bg-[#ffffff]  outline-none"
                     disabled={!!activationId}
                   />
                 </div>
@@ -176,7 +176,7 @@ const Page = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Password"
-                      className="w-full rounded-[22px] outline-none bg-transparent"
+                      className="w-full bg-[#ffffff]  outline-none"
                       disabled={!!activationId}
                     />
 
@@ -188,8 +188,8 @@ const Page = () => {
                       <Image
                         src={
                           showPassword
-                            ? "/images/eyeOpenIcon.svg"
-                            : "/images/eyeClosedIcon.svg"
+                            ? "/images/eyeClosedIcon.svg"
+                            : "/images/eyeOpenIcon.svg"
                         }
                         alt="toggle password visibility"
                         width={19}

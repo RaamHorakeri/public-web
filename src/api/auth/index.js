@@ -142,7 +142,7 @@ export const twoFA_Api = async (
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HOST_API_URL}/api/v1/account/login/activation`,
+      `${AUTH_URL}/api/v1/account/login/activation`,
       {
         method: "POST",
         headers: {

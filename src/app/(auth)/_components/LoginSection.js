@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 
 const LoginSection = ({ isSwapped }) => {
-  console.log(isSwapped);
   return (
     <div
       className={`flex flex-col justify-between w-[35%] h-[100%] bg-[url('/images/loginBg.png')] bg-cover bg-center rounded-[20px] p-[20px] transition-transform duration-500 ease-in-out transform ${
