@@ -63,6 +63,7 @@ const AuthCallback = () => {
 
   return (
     <div className="h-screen mt-52">
+      {!error && <Spinner />}
       {error && (
         <div className="flex flex-col justify-center items-center mt-10 gap-5">
           <p className="text-red-500 text-sm mt-2">{error}</p>
