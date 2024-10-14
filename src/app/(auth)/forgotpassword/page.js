@@ -120,7 +120,7 @@ const Page = () => {
 
   return (
     <section className=" bg-[#ffffff] flex h-[100vh] items-center justify-center p-[40px] gap-4 ">
-      <LoginSection />
+      <LoginSection isSwapped={true} />
 
       <div
         className={` flex flex-col justify-between w-[44%] h-[100%] transition-transform duration-500 ease-in-out transform  `}
@@ -152,7 +152,7 @@ const Page = () => {
                     placeholder="Enter your email"
                     className="bg-[#F2F1F2] h-[50px] rounded-[22px] px-4 py-4 outline-none w-full mt-2"
                   />
-                  <p className="text-red-500 text-sm mt-2">{emailError}</p>
+                  <p className="text-red-500 text-sm mt-1">{emailError}</p>
                 </div>
 
                 <button
@@ -165,11 +165,11 @@ const Page = () => {
             )}
 
             {step === 2 && (
-              <div className="flex flex-col p-4 py-10  border-[#D3D3D3] bg-[#FFFFFF] gap-[25px]   ">
+              <div className="flex flex-col p-4 py-10 border-[1px] border-[#D3D3D3] bg-[#FFFFFF] gap-[25px]  drop-shadow-custom ">
                 <p className=" text-[32px] font-extrabold leading-[43.65px] text-[#01010C] text-center ">
                   2Factor Authentication
                 </p>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col ">
                   <label className=" text-[#01010C] text-[16px font-normal leading-[21.82px] ] ">
                     Enter 6-digit Code that you recieved in your mail
                   </label>
@@ -179,9 +179,9 @@ const Page = () => {
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
                     required
-                    className=" bg-[#F2F1F2] h-[50px] rounded-[22px] px-4 py-4 outline-none"
+                    className=" bg-[#F2F1F2] h-[50px] rounded-[22px] mt-2 px-4 py-4 outline-none"
                   />
-                  <p className="text-red-500 text-sm mt-2">{otpError}</p>
+                  <p className="text-red-500 text-sm mt-1">{otpError}</p>
                 </div>
 
                 <button
@@ -235,7 +235,7 @@ const Page = () => {
                       </button>
                     </div>
                     {passwordError && (
-                      <p className="text-red-500 text-sm mt-2">
+                      <p className="text-red-500 text-sm mt-1">
                         {passwordError}
                       </p>
                     )}
@@ -277,7 +277,7 @@ const Page = () => {
                       </button>
                     </div>
                     {confirmPasswordError && (
-                      <p className="text-red-500 text-sm mt-2">
+                      <p className="text-red-500 text-sm mt-1">
                         {confirmPasswordError}
                       </p>
                     )}
