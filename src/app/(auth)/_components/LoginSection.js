@@ -1,9 +1,13 @@
 import Image from "next/image";
 import React from "react";
 
-const LoginSection = () => {
+const LoginSection = ({ isSwapped }) => {
   return (
-    <div className="flex flex-col justify-between w-[35%] h-[100%] bg-[url('/images/loginBg.png')] bg-cover bg-center rounded-[20px] p-[20px]">
+    <div
+      className={`flex flex-col justify-between w-[35%] h-[100%] bg-[url('/images/loginBg.png')] bg-cover bg-center rounded-[20px] p-[20px] transition-transform duration-500 ease-in-out transform ${
+        isSwapped ? "order-1" : "order-2"
+      }`}
+    >
       <p className="text-[#ffffff] text-[28px] leading-[36px] font-bold">
         Revolutionizing the way we create, render, and experience content.
       </p>

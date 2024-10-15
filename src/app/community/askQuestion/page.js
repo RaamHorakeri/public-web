@@ -4,7 +4,12 @@ import { getTags, postQuestion } from "@/api/community";
 import Cookies from "js-cookie";
 import Spinner from "@/components/spinner";
 import { useRouter } from "next/navigation";
-import QuilEditor from "@/app/community/_components/QuillEditor/QuilEditor";
+import dynamic from "next/dynamic";
+
+const QuilEditor = dynamic(
+  () => import("@/app/community/_components/QuillEditor/QuilEditor"),
+  { ssr: false },
+);
 
 export default function AskQuestion() {
   const access_token = Cookies.get("access_token");

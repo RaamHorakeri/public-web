@@ -6,7 +6,7 @@ import { Suspense, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }) {
-  const [display, setDisplay] = useState(true);
+  const [display, setDisplay] = useState(false);
   const pathName = usePathname();
 
   useEffect(() => {
@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
       setDisplay(true);
     }
   });
+
   return (
     <html lang="en">
       <head>
