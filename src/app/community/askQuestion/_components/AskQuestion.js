@@ -205,7 +205,7 @@ export default function AskQuestion() {
               {tags?.map((tag, index) => (
                 <span
                   key={index}
-                  className="hover:bg-[#E3E8F4] p-2 w-[50%] cursor-pointer"
+                  className="bg-[#F2F1F2] hover:bg-[#E3E8F4] p-2 w-[50%] cursor-pointer"
                   onClick={() => {
                     handleSelectChange(tag.id);
                   }}
