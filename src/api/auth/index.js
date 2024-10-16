@@ -141,22 +141,19 @@ export const twoFA_Api = async (
   const credentials = "Basic " + btoa(`${email}:${password}`);
 
   try {
-    const response = await fetch(
-      `${AUTH_URL}/api/v1/account/login/activation`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: credentials,
-        },
-        body: JSON.stringify({
-          activation_id,
-          activation_code,
-          client_id: clientId,
-          expiry_option: "transactional",
-        }),
+    const response = await fetch(`${AUTH_URL}/login/activation`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: credentials,
       },
-    );
+      body: JSON.stringify({
+        activation_id,
+        activation_code,
+        client_id: clientId,
+        expiry_option: "transactional",
+      }),
+    });
 
     if (response.status === 401) {
       throw new Error("OTP verification failed, Incorrect OTP");
