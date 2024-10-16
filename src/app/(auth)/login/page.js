@@ -252,7 +252,13 @@ const Page = () => {
                 <button
                   type="submit"
                   disabled={!otp || otpError}
-                  className="bg-[#1C1C1C] h-[50px] text-[#FFFFFF] text-[18px] leading-[24.55px] font-bold rounded-[22px]"
+                  className={`w-full p-[8px] text-white rounded-[16px] text-[16px] font-bold leading-[22px] my-3 
+                    ${
+                      !otp || otpError
+                        ? "bg-gray-400 cursor-not-allowed opacity-50"
+                        : "bg-[#1C1C1C] hover:bg-[#333333]"
+                    }          
+                  `}
                 >
                   {loading ? <Spinner /> : "Submit"}
                 </button>
