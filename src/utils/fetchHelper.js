@@ -1,6 +1,7 @@
 const defaultHeaders = {
   "Content-Type": "application/json",
 };
+
 export const fetchHelper = ({
   url,
   method = "POST",
@@ -11,7 +12,7 @@ export const fetchHelper = ({
     fetch(url, {
       method,
       headers: { ...defaultHeaders, ...headers },
-      body: JSON.stringify(body),
+      body: method !== "GET" && body ? JSON.stringify(body) : null,
     })
       .then((response) => {
         if (!response.ok) {
