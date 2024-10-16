@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 export default function DashboardHeader() {
   return (
     <div className="h-[110px]  flex items-center w-full px-7 justify-between bg-white ">
@@ -34,13 +35,15 @@ export default function DashboardHeader() {
           </span>
           <span className="bg-red-600 rounded-full absolute right-5 bottom-7 h-[6px] w-[6px]"></span>
         </div>
-        <Image
-          src="/dashboard/avatar_dashboard.svg"
-          alt="avatar"
-          height={100}
-          width={50}
-          className="cursor-pointer"
-        />
+        <Link href="/dashboard/profile">
+          <Image
+            src="/dashboard/avatar_dashboard.svg"
+            alt="avatar"
+            height={100}
+            width={50}
+            className="cursor-pointer"
+          />
+        </Link>
       </div>
     </div>
   );

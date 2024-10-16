@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 const ProfileInformation = () => {
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [clickChangePassword, setClickChangePassword] = useState(false);
 
   const handleFileChange = (e) => {
@@ -87,36 +87,36 @@ const ProfileInformation = () => {
             <div className="w-[20%] -mt-10">
               <div className="w-full h-full bg-[#E3E8F4] p-[30px] flex flex-col items-center justify-center gap-4 ">
                 {file ? (
-                  <Image
-                    src={file}
-                    alt="Uploaded Photo"
-                    width={150}
-                    height={150}
-                    className=""
-                  />
+                  <div className=" relative ">
+                    <Image
+                      src={file}
+                      alt="Uploaded Photo"
+                      width={100}
+                      height={100}
+                      className="w-[120px] h-[150px] object-cover "
+                    />
+                    <span
+                      onClick={() => setFile(null)}
+                      className="cursor-pointer top-0 right-0 absolute material-symbols-outlined"
+                    >
+                      close
+                    </span>
+                  </div>
                 ) : (
                   <div className="flex flex-col items-center justify-center text-center">
-                    <Image
-                      src="/images/person.svg"
-                      width={64}
-                      height={64}
-                      className="mb-14"
-                    />
+                    <Image src="/images/person.svg" width={64} height={64} />
                   </div>
                 )}
 
-                <label
-                  htmlFor="upload-input"
-                  className="-mt-11 flex items-center text-[#FFFFFF] cursor-pointer text-[14px] font-semibold leading-[19.1px] "
-                >
-                  <Image
-                    src="/images/UploadSimple.svg"
-                    width={24}
-                    height={24}
-                    alt="upload"
-                  />
-                  Upload Photo
-                </label>
+                {file === null && (
+                  <label
+                    htmlFor="upload-input"
+                    className=" flex items-center text-[#1C1C1C] cursor-pointer text-[14px] font-semibold leading-[19.1px] "
+                  >
+                    <span className="material-symbols-outlined">upload</span>
+                    Upload Photo
+                  </label>
+                )}
                 <input
                   id="upload-input"
                   type="file"

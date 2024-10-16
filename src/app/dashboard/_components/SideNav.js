@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const Data = [
@@ -165,16 +166,18 @@ export default function SideNav() {
       <div className="flex flex-col items-center justify-center">
         {!iconsView && (
           <div className="border-[#333333] rounded-md p-2 flex items-center justify-evenly  border w-[95%]">
-            <Image
-              src="/dashboard/profile_avatar.svg"
-              height={30}
-              width={30}
-              alt="avatar"
-            />
-            <div>
-              <div>Tran Mau Tri Tam</div>
-              <div>tam@ui8.net</div>
-            </div>
+            <Link className="flex gap-2" href="/dashboard/profile">
+              <Image
+                src="/dashboard/profile_avatar.svg"
+                height={30}
+                width={30}
+                alt="avatar"
+              />
+              <div>
+                <div>Tran Mau Tri Tam</div>
+                <div>tam@ui8.net</div>
+              </div>
+            </Link>
             <button className="bg-[#3FDD78] p-1 px-5  rounded-md text-black">
               Free
             </button>

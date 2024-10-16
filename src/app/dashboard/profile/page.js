@@ -12,7 +12,7 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen ">
+    <div className="h-screen overflow-y-auto  ">
       <div className="max-w-6xl mx-auto bg-white mb-10 p-[40px]">
         <h1 className="text-[46px] font-bold text-[#01010C] leading-[50px] mb-6">
           Account
