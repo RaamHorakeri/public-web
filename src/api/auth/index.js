@@ -70,7 +70,7 @@ export const twoFA_Api = (
   const credentials = "Basic " + btoa(`${email}:${password}`);
 
   return fetchHelper({
-    url: `${AUTH_URL}/api/v1/account/login/activation`,
+    url: `${AUTH_URL}/login/activation`,
     method: "POST",
     body: {
       activation_id,
