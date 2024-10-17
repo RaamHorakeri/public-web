@@ -1,137 +1,66 @@
+import { fetchHelper } from "@/utils/fetchHelper";
 import { AUTH_URL } from "@/utils";
 
-export const getOAuthUrl = async (oauthProvider, oauthPurpose) => {
-  try {
-    const response = await fetch(`${AUTH_URL}/oauth/url`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        oauth_provider: oauthProvider,
-        oauth_purpose: oauthPurpose,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error fetching OAuth URL: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    if (data?.oauth_url) {
-      return data.oauth_url;
-    } else {
-      throw new Error("Error: Could not get OAuth URL");
-    }
-  } catch (error) {
-    console.error(`Error occurred during ${oauthProvider} Sign-Up:`, error);
-    throw error;
-  }
+export const getOAuthUrl = (oauthProvider, oauthPurpose) => {
+  return fetchHelper({
+    url: `${AUTH_URL}/oauth/url`,
+    method: "POST",
+    body: {
+      oauth_provider: oauthProvider,
+      oauth_purpose: oauthPurpose,
+    },
+  });
 };
 
-export const registerUser = async (name, email) => {
-  try {
-    const response = await fetch(`${AUTH_URL}/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Error registering user");
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error registering user:", error);
-    throw error;
-  }
+export const registerUser = (name, email) => {
+  return fetchHelper({
+    url: `${AUTH_URL}/register`,
+    method: "POST",
+    body: { name, email },
+  });
 };
 
-export const verifyOtp = async (activation_id, activation_code) => {
-  try {
-    const response = await fetch(`${AUTH_URL}/password/activation`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ activation_id, activation_code }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Error verifying OTP");
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error verifying OTP:", error);
-    throw error;
-  }
+export const verifyOtp = (activation_id, activation_code) => {
+  return fetchHelper({
+    url: `${AUTH_URL}/password/activation`,
+    method: "POST",
+    body: {
+      activation_id,
+      activation_code,
+    },
+  });
 };
 
-export const setPasswordApi = async (
+export const setPasswordApi = (
   activationId,
   activationCode,
   clientId,
   password,
 ) => {
-  try {
-    const response = await fetch(`${AUTH_URL}/password/reset`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        activation_id: activationId,
-        activation_code: activationCode,
-        client_id: clientId,
-        password,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        "Password must be at least 8 characters long, include 1 uppercase, 1 lowercase, 1 number, and 1 symbol.",
-      );
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error setting password:", error);
-    throw error;
-  }
+  return fetchHelper({
+    url: `${AUTH_URL}/password/reset`,
+    method: "POST",
+    body: {
+      activation_id: activationId,
+      activation_code: activationCode,
+      client_id: clientId,
+      password,
+    },
+  });
 };
 
-export const loginApi = async (email, password, clientId) => {
+export const loginApi = (email, password, clientId) => {
   const credentials = "Basic " + btoa(`${email}:${password}`);
 
-  try {
-    const response = await fetch(`${AUTH_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: credentials,
-      },
-      body: JSON.stringify({ client_id: clientId }),
-    });
-
-    if (response.status === 401) {
-      throw new Error(response.statusText);
-    }
-
-    return response.json();
-  } catch (error) {
-    throw error;
-  }
+  return fetchHelper({
+    url: `${AUTH_URL}/login`,
+    method: "POST",
+    body: { client_id: clientId },
+    headers: { Authorization: credentials },
+  });
 };
 
-export const twoFA_Api = async (
+export const twoFA_Api = (
   email,
   password,
   clientId,
@@ -140,43 +69,23 @@ export const twoFA_Api = async (
 ) => {
   const credentials = "Basic " + btoa(`${email}:${password}`);
 
-  try {
-    const response = await fetch(`${AUTH_URL}/login/activation`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: credentials,
-      },
-      body: JSON.stringify({
-        activation_id,
-        activation_code,
-        client_id: clientId,
-        expiry_option: "transactional",
-      }),
-    });
-
-    if (response.status === 401) {
-      throw new Error("OTP verification failed, Incorrect OTP");
-    }
-
-    return response.json();
-  } catch (error) {
-    throw error;
-  }
+  return fetchHelper({
+    url: `${AUTH_URL}/login/activation`,
+    method: "POST",
+    body: {
+      activation_id,
+      activation_code,
+      client_id: clientId,
+      expiry_option: "transactional",
+    },
+    headers: { Authorization: credentials },
+  });
 };
 
-export const forgotPassword = async (email) => {
-  const response = await fetch(`${AUTH_URL}/password/forgot`, {
+export const forgotPassword = (email) => {
+  return fetchHelper({
+    url: `${AUTH_URL}/password/forgot`,
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email }),
+    body: { email },
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to validate");
-  }
-  const data = await response.json();
-  return data;
 };
