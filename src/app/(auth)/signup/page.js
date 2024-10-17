@@ -33,6 +33,7 @@ const Page = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [otpError, setOtpError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [socialError, setSocialError] = useState("");
 
   const [isSwapped, setIsSwapped] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -56,21 +57,17 @@ const Page = () => {
       const oauthUrl = await getOAuthUrl("google", "signup");
       window.location.href = oauthUrl;
     } catch (error) {
-      alert(
-        "An error occurred while trying to sign up with Google. Please try again.",
-      );
+      setSocialError("Failed to signup with google, try again");
     }
   };
 
   const gitHubHandler = async (e) => {
     e.preventDefault();
     try {
-      const oauthUrl = await getOAuthUrl("github");
+      const oauthUrl = await getOAuthUrl("github", "signup");
       window.location.href = oauthUrl;
     } catch (error) {
-      alert(
-        "An error occurred while trying to sign up with GitHub. Please try again.",
-      );
+      setSocialError("Failed to signup with github, try again");
     }
   };
 
