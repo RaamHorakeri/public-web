@@ -1,4 +1,3 @@
-version: '3.5'
 services:
   public-web:
     image: "${IMAGE_NAME}"
