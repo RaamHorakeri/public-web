@@ -1,8 +1,8 @@
 version: '3.5'
 services:
   public-web:
-    image: public-web:latest
-    container_name: public-web
+    image: "${IMAGE_NAME}"
+    container_name: "${CONTAINER_NAME}"
     hostname: public-web
     restart: unless-stopped
     ports:
