@@ -1,0 +1,9 @@
+version: '3.5'
+services:
+  public-web:
+    image: public-web:latest
+    container_name: public-web
+    hostname: public-web
+    restart: unless-stopped
+    ports:
+      - "1000:3000"
